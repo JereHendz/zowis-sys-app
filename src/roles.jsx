@@ -16,7 +16,7 @@ export default function Roles() {
 
   return (
     <div>
-      <h1>React aplicattion</h1>
+      <h1>Prueba react</h1>
     </div>
   );
 }
