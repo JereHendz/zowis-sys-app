@@ -4,7 +4,7 @@ import axios from "axios";
 export default function Roles() {
   useEffect(() => {
     axios
-      .get("https://devsoftjson.com/zowis-system-new/api/roles")
+      .get("https://zowis.devsoftjson.com/zowis-system-new/api/roles")
       .then((payload) => {
         console.log(payload);
         // setNotes(payload.data);
