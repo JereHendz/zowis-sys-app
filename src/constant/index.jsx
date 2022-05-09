@@ -1173,6 +1173,8 @@ export const FIREBASE = "FIREBASE"
 export const AUTH0 = "AUTH0"
 export const JWT = "JWT"
 export const LoginWithJWT = "Sign in With Jwt"
+export const LoginNormal = "Sign in jere"
+
 
 export const EnterPassword = "Enter your Password"
 export const Unlock = "Unlock"

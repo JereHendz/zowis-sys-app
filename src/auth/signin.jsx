@@ -9,9 +9,10 @@ import { Facebook, GitHub } from 'react-feather'
 import firebaseImg from '../assets/images/firebase.svg'
 import jwtImg from '../assets/images/jwt.svg'
 import authImg from '../assets/images/auth0.svg'
-import { Password, SignIn, EmailAddress, RememberPassword, ForgotPassword, CreateAccount, FIREBASE, AUTH0, JWT, LoginWithJWT } from '../constant';
+import { Password, SignIn, EmailAddress, RememberPassword, ForgotPassword, CreateAccount, FIREBASE, AUTH0, JWT, LoginWithJWT, LoginNormal } from '../constant';
 import { useNavigate } from 'react-router';
 import { classes } from '../data/layouts';
+import axios from "axios";  
 
 const Logins = (props) => {
 
@@ -19,7 +20,7 @@ const Logins = (props) => {
   const [email, setEmail] = useState("test@gmail.com");
   const [password, setPassword] = useState("test123");
   const [loading, setLoading] = useState(false)
-  const [selected, setSelected] = useState("firebase");
+  const [selected, setSelected] = useState("jwt");
   const [togglePassword, setTogglePassword] = useState(false);
   const history = useNavigate();
   const defaultLayoutObj = classes.find(item => Object.values(item).pop(1) === 'compact-wrapper');
@@ -132,6 +133,34 @@ const Logins = (props) => {
       });
   };
 
+  const loginNormal = (e) => {
+    // const requestOptions = {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: ({ email, password })
+    // };
+
+    const credentialAuth={ email: email, password:password };
+
+
+      axios.post('http://localhost/zowis-system-new/api/login', credentialAuth)
+    .then((payload)=>{
+      console.log(payload);
+      // setNotes([
+      //   ...notes,
+      //   payload.data.data
+      // ]);
+      // setNote(initialNotes);
+
+    })
+    .catch((errors)=>{
+      // const {body, title}= ;
+      // setError(errors.response.data.messages);
+    });
+
+      
+  };
+
   // const loginWithJwt = (email, password) => {
 
   //   const requestOptions = {
@@ -169,7 +198,7 @@ const Logins = (props) => {
                 </a>
               </div>
               <div className="login-main login-tab">
-                <Nav className="border-tab flex-column" tabs>
+                {/* <Nav className="border-tab flex-column" tabs>
                   <NavItem>
                     <NavLink className={selected === 'firebase' ? 'active' : ''} onClick={() => setSelected('firebase')}>
                       <img src={firebaseImg} alt="" />
@@ -188,19 +217,19 @@ const Logins = (props) => {
                       <span>{AUTH0}</span>
                     </NavLink>
                   </NavItem>
-                </Nav>
+                </Nav> */}
                 <TabContent activeTab={selected} className="content-login">
                   <TabPane className="fade show" tabId={selected === "firebase" ? "firebase" : "jwt"}>
                     <Form className="theme-form">
-                      <h4>{selected === "firebase" ? "Sign In With Firebase" : "Sign In With Jwt"}</h4>
+                      <h4>{selected === "firebase" ? "Sign In With Firebase" : "Sign In"}</h4>
                       <p>{"Enter your email & password to login"}</p>
                       <div className="mb-3">
                         <Label className="col-form-label">{EmailAddress}</Label>
-                        <Input className="form-control" type="email" required="" onChange={e => setEmail(e.target.value)} defaultValue={email} />
+                        <Input className="form-control" type="email" required="" onChange={e => setEmail(e.target.value)} defaultValue={""} />
                       </div>
                       <div className="mb-3 position-relative">
                         <Label className="col-form-label">{Password}</Label>
-                        <Input className="form-control" type={togglePassword ? "text" : "password"} onChange={e => setPassword(e.target.value)} defaultValue={password} required="" />
+                        <Input className="form-control" type={togglePassword ? "text" : "password"} onChange={e => setPassword(e.target.value)} defaultValue={""} required="" />
                         <div className="show-hide" onClick={() => setTogglePassword(!togglePassword)}><span className={togglePassword ? "" : "show"}></span></div>
                       </div>
                       <div className="login-btn mb-0">
@@ -211,10 +240,10 @@ const Logins = (props) => {
                         {selected === "firebase" ?
                           <Button color="primary" disabled={loading ? loading : loading} onClick={(e) => loginAuth(e)}>{loading ? "LOADING..." : SignIn}</Button>
                           :
-                          <Button color="primary" onClick={() => loginWithJwt(email, password)}>{LoginWithJWT}</Button>
+                          <Button color="primary" onClick={() => loginNormal(email, password)}>{LoginNormal}</Button>
                         }
                       </div>
-                      <h6 className="text-muted mt-4 or">{"Or Sign in with"}</h6>
+                      {/* <h6 className="text-muted mt-4 or">{"Or Sign in with"}</h6>
                       <div className="social mt-4">
                         <div className="btn-showcase">
                           <Button color="light" onClick={facebookAuth} >
@@ -227,18 +256,18 @@ const Logins = (props) => {
                             <GitHub />
                           </Button>
                         </div>
-                      </div>
+                      </div> */}
                       <p className="mt-4 mb-0">{"Don't have account?"}<a className="ms-2" href="#javascript">{CreateAccount}</a></p>
                     </Form>
                   </TabPane>
-                  <TabPane className="fade show" tabId="auth0">
+                  {/* <TabPane className="fade show" tabId="auth0">
                     <div className="auth-content">
                       <img src={require("../assets/images/auth-img.svg")} alt="" />
                       <h4>{"Welcome to login with Auth0"}</h4>
                       <p>{"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy"}</p>
                       <Button color="info" onClick={loginWithRedirect}>{AUTH0}</Button>
                     </div>
-                  </TabPane>
+                  </TabPane> */}
                 </TabContent>
               </div>
             </div>
