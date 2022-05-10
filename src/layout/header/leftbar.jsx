@@ -3,7 +3,7 @@ import { Container, Row, Col } from 'reactstrap'
 import { X, Layers, GitPullRequest, User, Users, UserMinus, UserCheck, Airplay, Zap, Heart, Inbox, AlignCenter } from 'react-feather'
 import { Link } from 'react-router-dom'
 import { errorPages, authPages, usefullPages, comingsoonPages } from './pages'
-import { BonusUi, MegaMenu, ErrorPage, Authentication, UsefullPages, ComingSoon, FileManager, SocialApp, UserEdit, UsersCards, UserProfile, KanbanBoard, Bookmark, LevelMenu } from '../../constant'
+import { BonusUi, MegaMenu, ErrorPage, Authentication, UsefullPages, ComingSoon, FileManager, SocialApp, UserEdit, UserCreate, UsersCards, UserProfile, KanbanBoard, Bookmark, LevelMenu } from '../../constant'
 import { DefaultLayout } from '../theme-customizer';
 
 const Leftbar = (props) => {
@@ -230,6 +230,7 @@ const Leftbar = (props) => {
               <li><a href="#javascript"><Users /><span>{"Users"}</span></a>
                 <ul className="header-level-sub-menu">
                   <li><Link to={`${process.env.PUBLIC_URL}/app/users/userProfile/${layout}`}><User /><span>{UserProfile}</span></Link></li>
+                  <li><Link to={`${process.env.PUBLIC_URL}/app/users/userCreate/${layout}`}><UserMinus /><span>{UserCreate}</span></Link></li>
                   <li><Link to={`${process.env.PUBLIC_URL}/app/users/userEdit/${layout}`}><UserMinus /><span>{UserEdit}</span></Link></li>
                   <li><Link to={`${process.env.PUBLIC_URL}/app/users/userCards/${layout}`}><UserCheck /><span>{UsersCards}</span></Link></li>
                 </ul>
