@@ -142,8 +142,8 @@ const Logins = (props) => {
 
     const credentialAuth={ email: email, password:password };
 
-
-      axios.post('http://localhost/zowis-system-new/api/login', credentialAuth)
+    // NameServerDomain
+      axios.post(`${process.env.REACT_APP_DOMAIN_SERVER}/api/login`, credentialAuth)
     .then((payload)=>{
 
         setValue(man);
