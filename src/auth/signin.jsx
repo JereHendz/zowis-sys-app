@@ -37,6 +37,7 @@ const Logins = (props) => {
 
     localStorage.setItem('profileURL', value);
     localStorage.setItem('Name', name);
+    localStorage.setItem("loginAccess", false)
   }, [value, name]);
 
   const loginAuth = async (e) => {
@@ -134,28 +135,17 @@ const Logins = (props) => {
   };
 
   const loginNormal = (e) => {
-    // const requestOptions = {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: ({ email, password })
-    // };
-
     const credentialAuth={ email: email, password:password };
 
-    // NameServerDomain
       axios.post(`${process.env.REACT_APP_DOMAIN_SERVER}/api/login`, credentialAuth)
     .then((payload)=>{
 
         setValue(man);
         setName("Emay Walter");
-        localStorage.setItem('token', Jwt_token);
+        localStorage.setItem('loginAccess', true);
+        // localStorage.setItem('token', Jwt_token);
         window.location.href = `${process.env.PUBLIC_URL}/dashboard/default/${layout}`;
         return payload;
-      // setNotes([
-      //   ...notes,
-      //   payload.data.data
-      // ]);
-      // setNote(initialNotes);
 
     })
     .catch((errors)=>{
