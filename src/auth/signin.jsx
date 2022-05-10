@@ -34,7 +34,6 @@ const Logins = (props) => {
   );
 
   useEffect(() => {
-
     localStorage.setItem('profileURL', value);
     localStorage.setItem('Name', name);
   }, [value, name]);

@@ -310,7 +310,7 @@ export const routes = [
         { path: `${process.env.PUBLIC_URL}/app/learning/learning-detail/:layout`, Component: <LearningDeatil /> },
 
         { path: `${process.env.PUBLIC_URL}/app/users/userProfile/:layout`, Component: <UserProfile /> },
-        { path: `${process.env.PUBLIC_URL}/app/users/userCrate/:layout`, Component: <UserCreate /> },
+        { path: `${process.env.PUBLIC_URL}/app/users/userCreate/:layout`, Component: <UserCreate /> },
         { path: `${process.env.PUBLIC_URL}/app/users/userEdit/:layout`, Component: <UserEdit /> },
         { path: `${process.env.PUBLIC_URL}/app/users/userCards/:layout`, Component: <UserCards /> },
 
