@@ -7,6 +7,8 @@ const PrivateRoute = () => {
     const [currentUser, setCurrentUser] = useState(false);
     const [authenticated, setAuthenticated] = useState(false)
     const jwt_token = localStorage.getItem('token');
+    const loginAccess = localStorage.getItem('loginAccess');
+
 
     useEffect(() => {
         const requestOptions = { method: 'GET', headers: authHeader() };
@@ -15,10 +17,12 @@ const PrivateRoute = () => {
         setAuthenticated(JSON.parse(localStorage.getItem('authenticated')))
         localStorage.setItem('authenticated', authenticated);
         localStorage.setItem('currentUser', currentUser);
+        localStorage.setItem('loginAccess', loginAccess);
+
     }, []);
 
     return (
-        currentUser !== null || authenticated || jwt_token ?
+        currentUser !== null || authenticated || jwt_token || loginAccess ?
             <Outlet />
             :
             <Navigate exact to={`${process.env.PUBLIC_URL}/login`} />
