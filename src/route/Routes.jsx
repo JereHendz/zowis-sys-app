@@ -77,6 +77,7 @@ import MegaOption from '../components/forms/form-control/megaOption'
 // Form Layout
 import FormDefault from '../components/forms/form-layout/formDefault'
 import FormWizard1 from '../components/forms/form-layout/form-wizard-1/formwizard1'
+import Registration from '../components/forms/form-layout/form-wizard-1/registration'
 
 // Forms widgets
 import Datepicker from '../components/forms/form-widget/datepicker'
@@ -127,6 +128,7 @@ import BasicCalender from "../components/calendar/basicCalendar"
 
 // Users
 import UserProfile from "../components/users/userProfile"
+import UserCreate from "../components/users/userCreate"
 import UserEdit from "../components/users/userEdit"
 import UserCards from "../components/users/userCards"
 
@@ -270,6 +272,8 @@ export const routes = [
         // { path: `${process.env.PUBLIC_URL}/forms/radio-checkbox/:layout`, Component: <CheckboxandRadio /> },
         { path: `${process.env.PUBLIC_URL}/form-layout/formDefault/:layout`, Component: <FormDefault /> },
         { path: `${process.env.PUBLIC_URL}/form-layout/formWizard/:layout`, Component: <FormWizard1 /> },
+        { path: `${process.env.PUBLIC_URL}/form-layout/formWizardRegister/:layout`, Component: <Registration /> },
+
 
         { path: `${process.env.PUBLIC_URL}/form-widget/datepicker/:layout`, Component: <Datepicker /> },
         { path: `${process.env.PUBLIC_URL}/form-widget/timepicker/:layout`, Component: <Timepicker /> },
@@ -306,6 +310,7 @@ export const routes = [
         { path: `${process.env.PUBLIC_URL}/app/learning/learning-detail/:layout`, Component: <LearningDeatil /> },
 
         { path: `${process.env.PUBLIC_URL}/app/users/userProfile/:layout`, Component: <UserProfile /> },
+        { path: `${process.env.PUBLIC_URL}/app/users/userCrate/:layout`, Component: <UserCreate /> },
         { path: `${process.env.PUBLIC_URL}/app/users/userEdit/:layout`, Component: <UserEdit /> },
         { path: `${process.env.PUBLIC_URL}/app/users/userCards/:layout`, Component: <UserCards /> },
 

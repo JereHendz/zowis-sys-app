@@ -42,6 +42,7 @@ export const MENUITEMS = [
             {
                 title: 'Users', icon: Users, path: `${process.env.PUBLIC_URL}/app/users/userProfile`, type: 'sub', bookmark: true, active: false, children: [
                     { path: `${process.env.PUBLIC_URL}/app/users/userProfile`, type: 'link', title: 'Users Profile ' },
+                    { path: `${process.env.PUBLIC_URL}/app/users/userCreate`, type: 'link', title: 'Users Create' },
                     { path: `${process.env.PUBLIC_URL}/app/users/userEdit`, type: 'link', title: 'Users Edit' },
                     { path: `${process.env.PUBLIC_URL}/app/users/userCards`, type: 'link', title: 'Users Cards' },
                 ]
