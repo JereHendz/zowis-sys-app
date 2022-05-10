@@ -9,7 +9,7 @@ import { Facebook, GitHub } from 'react-feather'
 import firebaseImg from '../assets/images/firebase.svg'
 import jwtImg from '../assets/images/jwt.svg'
 import authImg from '../assets/images/auth0.svg'
-import { Password, SignIn, EmailAddress, RememberPassword, ForgotPassword, CreateAccount, FIREBASE, AUTH0, JWT, LoginWithJWT, LoginNormal } from '../constant';
+import { Password, SignIn, EmailAddress, RememberPassword, ForgotPassword, CreateAccount, FIREBASE, AUTH0, JWT, LoginWithJWT, LoginNormal, NameServerDomain } from '../constant';
 import { useNavigate } from 'react-router';
 import { classes } from '../data/layouts';
 import axios from "axios";  
@@ -143,7 +143,7 @@ const Logins = (props) => {
     const credentialAuth={ email: email, password:password };
 
 
-      axios.post('http://localhost/zowis-system-new/api/login', credentialAuth)
+      axios.post(`${NameServerDomain}/api/login`, credentialAuth)
     .then((payload)=>{
 
         setValue(man);
