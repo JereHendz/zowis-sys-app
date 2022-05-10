@@ -246,7 +246,7 @@ export const BillingDetails = "Billing Details"
 export const FirstName = "First Name"
 export const LastName = "Last Name"
 export const Phone = "Phone"
-export const EmailAddress = "Email Address"
+export const EmailAddress = "Email Address or User Name"
 export const Country = "Country"
 
 export const CountryMenu = ["India", "South Africa", "United State", "Australia"]
