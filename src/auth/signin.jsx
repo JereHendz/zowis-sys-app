@@ -221,7 +221,7 @@ const Logins = (props) => {
                 <TabContent activeTab={selected} className="content-login">
                   <TabPane className="fade show" tabId={selected === "firebase" ? "firebase" : "jwt"}>
                     <Form className="theme-form">
-                      <h4>{selected === "firebase" ? "Sign In With Firebase" : "Sign Up"}</h4>
+                      <h4>{selected === "firebase" ? "Sign In With Firebase" : "Sign Up next"}</h4>
                       <p>{"Enter your email & password to login"}</p>
                       <div className="mb-3">
                         <Label className="col-form-label">{EmailAddress}</Label>
