@@ -145,7 +145,12 @@ const Logins = (props) => {
 
       axios.post('http://localhost/zowis-system-new/api/login', credentialAuth)
     .then((payload)=>{
-      console.log(payload);
+
+        setValue(man);
+        setName("Emay Walter");
+        localStorage.setItem('token', Jwt_token);
+        window.location.href = `${process.env.PUBLIC_URL}/dashboard/default/${layout}`;
+        return payload;
       // setNotes([
       //   ...notes,
       //   payload.data.data
