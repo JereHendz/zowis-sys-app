@@ -1419,10 +1419,6 @@ export const STEP = 10;
 export const MIN = 100;
 export const MAX = 950;
 
-// Constant domain local
-// export const NameServerDomain="http://localhost/zowis-system-new/"
-// Constant domain server
-export const NameServerDomain="https://devsoftjson.com/zowis-system-new/"
 
 
 
