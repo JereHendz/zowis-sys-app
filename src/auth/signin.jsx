@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router';
 import { classes } from '../data/layouts';
 import axios from "axios";  
 
+
 const Logins = (props) => {
 
   const { loginWithRedirect } = useAuth0()
@@ -143,13 +144,18 @@ const Logins = (props) => {
         setName("Emay Walter");
         localStorage.setItem('loginAccess', true);
         // localStorage.setItem('token', Jwt_token);
-        window.location.href = `${process.env.PUBLIC_URL}/dashboard/default/${layout}`;
-        return payload;
+        // window.location.href = `${process.env.PUBLIC_URL}/dashboard/default/${layout}`;
+        // return payload;
+        setTimeout(() => {
+          history(`${process.env.PUBLIC_URL}/dashboard/default/${layout}`);
+        }, 200);
 
     })
     .catch((errors)=>{
-      // const {body, title}= ;
-      // setError(errors.response.data.messages);
+      console.log(errors);
+      setTimeout(() => {
+        toast.error("Oppss.. El usuario o la contraseña son incorrectass.");
+      }, 200);
     });
 
       
@@ -215,7 +221,7 @@ const Logins = (props) => {
                 <TabContent activeTab={selected} className="content-login">
                   <TabPane className="fade show" tabId={selected === "firebase" ? "firebase" : "jwt"}>
                     <Form className="theme-form">
-                      <h4>{selected === "firebase" ? "Sign In With Firebase" : "Sign Up next"}</h4>
+                      <h4>{selected === "firebase" ? "Sign In With Firebase" : "Sign Up"}</h4>
                       <p>{"Enter your email & password to login"}</p>
                       <div className="mb-3">
                         <Label className="col-form-label">{EmailAddress}</Label>
