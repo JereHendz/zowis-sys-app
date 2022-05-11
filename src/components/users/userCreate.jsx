@@ -13,19 +13,34 @@ const CreateUser = () => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passConfirm, setPassConfirm] = useState("");
+
+  // Define const that allow see and hide the password
+  const [togglePassword, setTogglePassword]=useState(false);
+
+  // Define error array
+  const [error, setError] = useState(
+    {
+      'userName':'',
+      'email':'',
+      'passConfirm':''
+    }
+  );
+
   const defaultLayoutObj = classes.find(item => Object.values(item).pop(1) === 'compact-wrapper');
   const layout = localStorage.getItem('layout') || Object.keys(defaultLayoutObj).pop();
 
   const createUser = (e) => {
     setLoading(true);
-    const data = { userName: userName, email: email, password:password };
-      axios.post(`${process.env.REACT_APP_DOMAIN_SERVER}api/create`, data)
+    const data = { userName: userName, email: email, password:password, passConfirm:passConfirm };
+      axios.post(`${process.env.REACT_APP_DOMAIN_SERVER}api/users`, data)
     .then((payload)=>{
       navigate(`${process.env.PUBLIC_URL}/app/users/userEdit/${layout}`);
       console.log(payload);
     })
     .catch((errors)=>{
       console.log(errors);
+      setError(errors.response.data.messages);
     });
   };
 
@@ -45,16 +60,30 @@ const CreateUser = () => {
                 <FormGroup>
                     <Label className="col-form-label pt-0" >{"User Name"}</Label>
                     <Input className="form-control" type="text" placeholder="Enter the user name" required="" onChange={e => setUserName(e.target.value)} defaultValue={""} />
-                    <small className="form-text text-muted">{"We'll never share your user name with anyone else."}</small>
+                    {/* <small className="form-text text-muted">{"We'll never share your user name with anyone else."}</small> */}
+                    <span className="help is-danger">{error.userName}</span>
                   </FormGroup>
                   <FormGroup>
                     <Label className="col-form-label pt-0" >{EmailAddress}</Label>
                     <Input className="form-control" type="email" placeholder="Enter email" required="" onChange={e => setEmail(e.target.value)} defaultValue={""} />
-                    <small className="form-text text-muted">{"We'll never share your email with anyone else."}</small>
+                    {/* <small className="form-text text-muted">{"We'll never share your email with anyone else."}</small> */}
+                    <span className="help is-danger">{error.email}</span>
                   </FormGroup>
                   <FormGroup>
+                  <div className="position-relative">
                     <Label htmlFor="exampleInputPassword1">{Password}</Label>
-                    <Input className="form-control" type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} defaultValue={""} />
+                    <Input className="form-control" type={togglePassword ? "text" : "password"} placeholder="Password" onChange={e => setPassword(e.target.value)} defaultValue={""} />
+                    <div className="show-hide" onClick={() => setTogglePassword(!togglePassword)}><span className={togglePassword ? "" : "show"}></span></div>
+                  </div>
+                  </FormGroup>
+                  <FormGroup>
+                  <div className="position-relative">
+
+                    <Label htmlFor="exampleInputPassword1">Confirmar contraseña</Label>
+                    <Input className="form-control" type={togglePassword ? "text" : "password"} placeholder="Password" onChange={e => setPassConfirm(e.target.value)} defaultValue={""} />
+                    <div className="show-hide" onClick={() => setTogglePassword(!togglePassword)}><span className={togglePassword ? "" : "show"}></span></div>
+                    <span className="help is-danger">{error.passConfirm}</span>
+                    </div>
                   </FormGroup>
                 </Form>
               </CardBody>
