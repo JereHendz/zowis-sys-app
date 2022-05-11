@@ -23,6 +23,7 @@ const CreateUser = () => {
     {
       'userName':'',
       'email':'',
+      'password':'',
       'passConfirm':''
     }
   );
@@ -40,6 +41,7 @@ const CreateUser = () => {
     })
     .catch((errors)=>{
       console.log(errors);
+      setLoading(false);
       setError(errors.response.data.messages);
     });
   };
@@ -74,6 +76,8 @@ const CreateUser = () => {
                     <Label htmlFor="exampleInputPassword1">{Password}</Label>
                     <Input className="form-control" type={togglePassword ? "text" : "password"} placeholder="Password" onChange={e => setPassword(e.target.value)} defaultValue={""} />
                     <div className="show-hide" onClick={() => setTogglePassword(!togglePassword)}><span className={togglePassword ? "" : "show"}></span></div>
+                    <span className="help is-danger">{error.password}</span>
+                
                   </div>
                   </FormGroup>
                   <FormGroup>
