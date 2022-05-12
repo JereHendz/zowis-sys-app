@@ -25,6 +25,7 @@ const Routers = () => {
         const [currentUser, setCurrentUser] = useState(false);
         const [authenticated, setAuthenticated] = useState(false)
         const jwt_token = localStorage.getItem('token');
+        const loginAccess = localStorage.getItem('loginAccess');
         const defaultLayoutObj = classes.find(item => Object.values(item).pop(1) === 'compact-wrapper');
         const layout = localStorage.getItem('layout') || Object.keys(defaultLayoutObj).pop();
 
@@ -48,7 +49,7 @@ const Routers = () => {
                                 <Suspense fallback={<Loader />}>
                                         <Routes>
                                                 <Route path={'/'} element={<PrivateRoute />}>
-                                                        {currentUser !== null || authenticated || jwt_token ?
+                                                        {currentUser !== null || authenticated || jwt_token || loginAccess ?
                                                                 <>
                                                                         <Route exact
                                                                                 path={`${process.env.PUBLIC_URL}`}

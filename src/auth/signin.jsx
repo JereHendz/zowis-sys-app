@@ -34,11 +34,15 @@ const Logins = (props) => {
     localStorage.getItem('Name')
   );
 
+  const [loginAccess, setLogingAccess] = useState(
+    localStorage.getItem('loginAccess')
+  );
+
   useEffect(() => {
     localStorage.setItem('profileURL', value);
     localStorage.setItem('Name', name);
-    localStorage.setItem("loginAccess", false)
-  }, [value, name]);
+    localStorage.setItem("loginAccess", loginAccess);
+  }, [value, name, loginAccess]);
 
   const loginAuth = async (e) => {
     e.preventDefault();
@@ -257,7 +261,7 @@ const Logins = (props) => {
                           </Button>
                         </div>
                       </div> */}
-                      <p className="mt-4 mb-0">{"Don't have account?"}<a className="ms-2" href="#javascript">{CreateAccount}</a></p>
+                      {/* <p className="mt-4 mb-0">{"Don't have account?"}<a className="ms-2" href="#javascript">{CreateAccount}</a></p> */}
                     </Form>
                   </TabPane>
                   {/* <TabPane className="fade show" tabId="auth0">

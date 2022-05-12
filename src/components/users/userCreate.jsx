@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import Breadcrumb from '../../layout/breadcrumb'
 import {Container,Row,Col,Card,CardHeader,CardBody,CardFooter,Form,FormGroup,Label,Input,Button} from 'reactstrap'
-import { UserCreate,EmailAddress,Password,Submit,Cancel } from "../../constant";
+import { UserCreate,EmailAddress,Password,Submit,Cancel, Email } from "../../constant";
 import axios from 'axios';
 import { classes } from '../../data/layouts';
 import { useNavigate } from "react-router-dom";
@@ -66,7 +66,7 @@ const CreateUser = () => {
                     <span className="help is-danger">{error.userName}</span>
                   </FormGroup>
                   <FormGroup>
-                    <Label className="col-form-label pt-0" >{EmailAddress}</Label>
+                    <Label className="col-form-label pt-0" >{Email}</Label>
                     <Input className="form-control" type="email" placeholder="Enter email" required="" onChange={e => setEmail(e.target.value)} defaultValue={""} />
                     {/* <small className="form-text text-muted">{"We'll never share your email with anyone else."}</small> */}
                     <span className="help is-danger">{error.email}</span>

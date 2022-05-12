@@ -6,6 +6,7 @@ import { authHeader, handleResponse } from '../services/fack.backend';
 const PrivateRoute = () => {
     const [currentUser, setCurrentUser] = useState(false);
     const [authenticated, setAuthenticated] = useState(false)
+
     const jwt_token = localStorage.getItem('token');
     const loginAccess = localStorage.getItem('loginAccess');
 
@@ -17,7 +18,6 @@ const PrivateRoute = () => {
         setAuthenticated(JSON.parse(localStorage.getItem('authenticated')))
         localStorage.setItem('authenticated', authenticated);
         localStorage.setItem('currentUser', currentUser);
-        localStorage.setItem('loginAccess', loginAccess);
 
     }, []);
 
