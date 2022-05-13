@@ -325,6 +325,17 @@ export const Edit = "Edit"
 export const Update = "Update"
 export const Delete = "Delete"
 
+// Employee 
+export const EmployeeCreate="Información del empleado"
+export const Dui ="Dui"
+export const PhoneNumberEmployee = "Teléfono"
+export const Cargo ="Cargo"
+export const AddressEmployee = "Dirección"
+export const Municipio = "Municipio"
+export const Departamento = "Departamento"
+export const CountryEmployee = "Seleccione país"
+
+
 // calendar
 export const BasicCalendars = "Basic Calendar"
 export const Dragging_Event = "DRAGGING EVENT"

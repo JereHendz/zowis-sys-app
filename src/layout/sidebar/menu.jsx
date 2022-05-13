@@ -40,6 +40,12 @@ export const MENUITEMS = [
                 ]
             },
             {
+                title: 'Employees', icon: Users, path: `${process.env.PUBLIC_URL}/app/users/userProfile`, type: 'sub', bookmark: true, active: false, children: [
+                    { path: `${process.env.PUBLIC_URL}/app/employees/employeeCreate`, type: 'link', title: 'Crear Empleado' },
+                    { path: `${process.env.PUBLIC_URL}/app/employees/listEmployees`, type: 'link', title: 'Lista de Empleados' },
+                ]
+            },
+            {
                 title: 'Users', icon: Users, path: `${process.env.PUBLIC_URL}/app/users/userProfile`, type: 'sub', bookmark: true, active: false, children: [
                     { path: `${process.env.PUBLIC_URL}/app/users/userProfile`, type: 'link', title: 'Users Profile ' },
                     { path: `${process.env.PUBLIC_URL}/app/users/userCreate`, type: 'link', title: 'Users Create' },
@@ -47,7 +53,7 @@ export const MENUITEMS = [
                     { path: `${process.env.PUBLIC_URL}/app/users/userEdit`, type: 'link', title: 'Users Edit' },
                     { path: `${process.env.PUBLIC_URL}/app/users/userCards`, type: 'link', title: 'Users Cards' },
                 ]
-            },
+            },            
             { path: `${process.env.PUBLIC_URL}/app/calendar/basic-calendar`, icon: Calendar, title: 'Calender', type: 'link' },
             { path: `${process.env.PUBLIC_URL}/app/chat-app`, icon: MessageCircle, title: 'Chat-app', type: 'link' },
             { path: `${process.env.PUBLIC_URL}/app/email-app`, icon: Mail, title: 'Email-app', type: 'link' },
