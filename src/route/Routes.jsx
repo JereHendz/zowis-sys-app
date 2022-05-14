@@ -131,7 +131,7 @@ import UserProfile from "../components/users/userProfile"
 import UserCreate from "../components/users/userCreate"
 import UserEdit from "../components/users/userEdit"
 import UserCards from "../components/users/userCards"
-import ListUsers from '../components/users/listUsers'
+import UserList from '../components/users/userList'
 
 // Maps
 import GoogleMap from "../components/map/googleMap"
@@ -319,7 +319,7 @@ export const routes = [
 
         { path: `${process.env.PUBLIC_URL}/app/users/userProfile/:layout`, Component: <UserProfile /> },
         { path: `${process.env.PUBLIC_URL}/app/users/userCreate/:layout`, Component: <UserCreate /> },
-        { path: `${process.env.PUBLIC_URL}/app/users/listUsers/:layout`, Component: <ListUsers /> },
+        { path: `${process.env.PUBLIC_URL}/app/users/userList/:layout`, Component: <UserList /> },
 
         { path: `${process.env.PUBLIC_URL}/app/users/userEdit/:layout`, Component: <UserEdit /> },
         { path: `${process.env.PUBLIC_URL}/app/users/userCards/:layout`, Component: <UserCards /> },
