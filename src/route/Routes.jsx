@@ -203,6 +203,10 @@ import Todo from "../components/application/todo-app"
 import TodoFirebase from "../components/application/todo-firebase-app"
 import LeafletMapContain from '../components/map/LeafletMap'
 
+// Routes to Employee
+import EmployeeCreate from "../components/employees/employeeCreate"
+import ListEmployees from '../components/employees/listEmployees'
+
 
 
 export const routes = [
@@ -309,6 +313,9 @@ export const routes = [
 
         { path: `${process.env.PUBLIC_URL}/app/learning/learning-list/:layout`, Component: <Learninglist /> },
         { path: `${process.env.PUBLIC_URL}/app/learning/learning-detail/:layout`, Component: <LearningDeatil /> },
+
+        { path: `${process.env.PUBLIC_URL}/app/employees/employeeCreate/:layout`, Component: <EmployeeCreate /> },
+        { path: `${process.env.PUBLIC_URL}/app/employees/listEmployees/:layout`, Component: <ListEmployees /> },
 
         { path: `${process.env.PUBLIC_URL}/app/users/userProfile/:layout`, Component: <UserProfile /> },
         { path: `${process.env.PUBLIC_URL}/app/users/userCreate/:layout`, Component: <UserCreate /> },
