@@ -96,8 +96,7 @@ const CreateFormEmployee = () => {
                   options={roles}
                   placeholder="Elija un cargo"
               />
-            {/* <input className="form-control" name="idRol" type="text" placeholder="Seleccione un cargo" {...register('idRol', { required: true })} /> */}
-            <span>{errors.lastName && 'El cargo es requerido'}</span>
+            <span>{errors.idEmployee && 'Debe seleccionar un empleado'}</span>
             <div className="valid-feedback">{"Looks good!"}</div>
           </Col>
         </Row>

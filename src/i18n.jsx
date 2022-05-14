@@ -8,8 +8,50 @@ i18n
     .init({
         // we init with resources
         resources: {
+            es: {
+                translations: {
+                    //Textos generales
+                    General: "General",
+                    Dashboards: "Cuadros de mando",
+                    Widgets: " widgets",
+                    Dashboard: "Tablero",
+                    Default: "Defecto",
+                    Ecommerce: "Comercio electrónico",
+                    Chart: "Gráfico",
+                    Applications: "Aplicaciones",
+                    ReadytouseApps: "Aplicación lista para usar",
+                    email: "Correo",
+                    placeholderEmail: "Ingrese el correo",
+                    errorEmail: "Debe ingrear un email",
+                    cancel: "Cancelar",
+                    create: "Crear",
+                    update: "Actualizar",
+                    delete: "Eliminar",
+                    processing: "Procesando...",
+                    show: "Mostrar",
+                    //employeesComponent
+                    employee: "Empleado",
+                    employees: "Empleados",
+                    placeholderEmployees: "Seleccione un empleado",
+                    //UsersCreateComponent
+                    user: "Usuairo",
+                    users: "Usuarios",
+                    userName: "Nombre de usuario",
+                    titleUserCreate: "Agregar usuario",
+                    subtitleUserCreate: "Ingrese la información del usuario",
+                    placeholderUserName: "Ingresa el nombre de usuario",
+                    password: "Contraseña",
+                    placeholderPassword: "Ingresa la contraseña",
+                    errorPassword: "Debe ingresar una contraseña",
+                    confirmPassword: "Confirmar ontraseña",
+                    placeholderConfirmPassword: "Confirme la contraseña",
+                    errorConfirmPassword: "Debe confirmar la contraseña",
+                    errorUserName: "Debe ingresar un nombre de usuario",
+                }
+            },
             en: {
                 translations: {
+                    // General labels
                     General: "General",
                     Dashboards: "Dashboards",
                     Widgets: "Widgets",
@@ -18,7 +60,34 @@ i18n
                     Ecommerce: "Ecommerce",
                     Chart: "Chart",
                     Applications: "Applications",
-                    ReadytouseApps: "Ready to use Apps"
+                    ReadytouseApps: "Ready to use Apps",
+                    email: "Email",
+                    placeholderEmail: "Enter the email",
+                    errorEmail: "You must enter an email",
+                    cancel: "Cancel",
+                    create: "Create",
+                    update: "Update",
+                    delete: "Delete",
+                    processing: "Processing...",
+                    show: "Show",
+                    //employeesComponent
+                    employee: "Employee",
+                    employees: "Employees",
+                    placeholderEmployees: "Select an employee",
+                    //UsersCreateComponent
+                    user: "User",
+                    users: "Users",
+                    userName: "User name",
+                    titleUserCreate: "Add user",
+                    subtitleUserCreate: "Here you can add new users",
+                    placeholderUserName: "Enter the username",
+                    password: "Password",
+                    placeholderPassword: "Enter the password",
+                    errorPassword: "You must enter a password",
+                    confirmPassword: "Confirm password",
+                    placeholderConfirmPassword: "Enter password confirmation",
+                    errorConfirmPassword: "Confirm your password",
+                    errorUserName: "You must enter a username",
                 }
             },
             cn: {
@@ -58,19 +127,6 @@ i18n
                     Chart: "Grafiek",
                     Applications: "Toepassingen",
                     ReadytouseApps: "Klaar om apps te gebruiken"
-                }
-            },
-            es: {
-                translations: {
-                    General: "General",
-                    Dashboards: "Cuadros de mando",
-                    Widgets: " widgets",
-                    Dashboard: "Tablero",
-                    Default: "Defecto",
-                    Ecommerce: "Comercio electrónico",
-                    Chart: "Gráfico",
-                    Applications: "Aplicaciones",
-                    ReadytouseApps: "Gereed om programme te gebruik"
                 }
             },
             fr: {

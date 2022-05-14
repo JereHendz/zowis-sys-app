@@ -1,12 +1,14 @@
 import React, { Fragment, useState, useEffect } from "react";
 import Breadcrumb from "../../layout/breadcrumb";
 import { Container, Row, Col, Card, CardHeader, Table } from "reactstrap";
-
 import axios from "axios";
 import { classes } from "../../data/layouts";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
-const ListUsers = () => {
+const UserList = () => {
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     axios
@@ -15,10 +17,11 @@ const ListUsers = () => {
         console.log(payload);
         // setNotes(payload.data);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log(err);
       });
   }, []);
+  
   const [listUser, setListUser] = useState([]);
   const navigate = useNavigate();
 
@@ -91,4 +94,4 @@ const ListUsers = () => {
   );
 };
 
-export default ListUsers;
+export default UserList;
