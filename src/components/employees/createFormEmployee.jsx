@@ -41,6 +41,27 @@ const CreateFormEmployee = () => {
       });
   }, []);
 
+  const handleSelectedChange=(event)=>{
+    if(event.length>0){
+      console.log("Jeremías existe array");
+
+    console.log(event[0]);
+
+    }else{
+      console.log("No Data found");
+    }
+    // axios
+    // .get(`${process.env.REACT_APP_DOMAIN_SERVER}api/roles`)
+    // .then((response) => {
+    //   console.log(response);
+    //   setRoles(response.data.roles);
+    //   setCountry(response.data.countries);
+    //   // setNotes(payload.data);
+    // })
+    // .catch((error) => {
+    //   console.log(error);
+    // });
+  }
 
   return (
     <Fragment>
@@ -67,6 +88,7 @@ const CreateFormEmployee = () => {
               <div className="invalid-feedback">{"Please choose a username."}</div>
             </InputGroup>
           </Col> */}
+
         </Row>
 
         <Row>
@@ -109,6 +131,7 @@ const CreateFormEmployee = () => {
                   labelKey="name"
                   multiple={multiple}
                   options={country}
+                  onChange={ handleSelectedChange}
                   placeholder="Elija un cargo"
               />
           </Col>
