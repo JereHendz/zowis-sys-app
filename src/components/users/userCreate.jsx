@@ -100,6 +100,7 @@ const UserCreateForm = () => {
                   <Row>
                     <FormGroup>
                       <Label className="col-form-label pt-0" >{t("userName")}</Label>
+                      <Label className="col-form-label pt-0" >{t("userName")}</Label>
                       <input className="form-control btn-pill" type="text" placeholder={t("placeholderUserName")} name="userName" {...register('userName', { required: true })} onBlur={(e) => { setUserName(e.target.value)}} defaultValue={""} />
                       <span>{errors.userName && t("errorUserName")}</span>
                     </FormGroup>
