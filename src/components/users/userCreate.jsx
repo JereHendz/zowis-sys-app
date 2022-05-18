@@ -39,7 +39,11 @@ const UserCreateForm = () => {
   // Define error array
   const [error, setError] = useState(
     {
-      'idEmployee':''
+      'userName': '',
+      'email': '',
+      'idEmployee':'',
+      'password': '',
+      'passConfirm': ''
     }
   );
 
@@ -50,12 +54,9 @@ const UserCreateForm = () => {
     axios.get(`${process.env.REACT_APP_DOMAIN_SERVER}api/employees`)
     .then((res)=>{
       setEmployees(res.data);
-      toast.success(res.data.message);
     })
     .catch((errors)=>{
       console.log(errors);
-      setLoading(false);
-      setError(errors.response.data.messages);
     });
   }, []); 
 
@@ -72,6 +73,17 @@ const UserCreateForm = () => {
       setError(err.response.data.messages);
     });
   };
+
+  function handleChange(e){
+    if(e.length > 0){
+      var aux = e[0].id;
+      setIdEmployee(aux);
+
+    }else{
+      setIdEmployee("");
+    }
+    
+  }
 
   return (
     <Fragment>
@@ -100,39 +112,40 @@ const UserCreateForm = () => {
                       <Label className="col-form-label pt-0" >{t("employees")}</Label>
                       <Typeahead
                         inputProps={{
-                          className: 'btn-pill',
+                          className: 'btn-pill'
                         }}
-                        name="idEmployee"
                         id="id"
                         labelKey={employees => `${employees.firstName} ${employees.lastName}`}
                         multiple={multiple}
                         options={employees}
                         placeholder={t("placeholderEmployees")}
-                        onChange={(e) => { setIdEmployee(e[0].id)}}
-                        />
-                    </FormGroup>
-                    <FormGroup>
-                    <div className="position-relative">
-                      <Label htmlFor="exampleInputPassword1">{t("password")}</Label>
-                      <input className="form-control btn-pill" type={togglePassword ? "text" : "password"} placeholder={t("placeholderPassword")} name="password" {...register('password', { required: true })} onBlur={(e) => { setPassword(e.target.value)}} />
-                      <div className="show-hide" onClick={() => setTogglePassword(!togglePassword)}>
-                        <span className={togglePassword ? "" : "ss"}></span>
-                      </div>
-                      <span>{errors.email && t("errorPassword")}</span>
-                    </div>
+                        onChange={handleChange}
+                      />
+                      <input type="hidden"/>
+                      <span>{(idEmployee == '' && validateClass) && t("errorEmployee")}</span>
                     </FormGroup>
                     <FormGroup>
                       <div className="position-relative">
-                        <Label htmlFor="exampleInputPassword1">{t("confirmPassword")}</Label>
-                        <input className="form-control btn-pill" type={togglePassword ? "text" : "password"} placeholder={t("placeholderConfirmPassword")} name="confirmarPassword"  {...register('confirmarPassword', { required: true })} onBlur={(e) => { setPassConfirm(e.target.value)}} />
+                        <Label className="col-form-label pt-0">{t("password")}</Label>
+                        <input className="form-control btn-pill" type={togglePassword ? "text" : "password"} placeholder={t("placeholderPassword")} name="password" {...register('password', { required: true })} onBlur={(e) => { setPassword(e.target.value)}} />
+                        <div className="show-hide" onClick={() => setTogglePassword(!togglePassword)}>
+                          <span className={togglePassword ? "" : "show"}></span>
+                        </div>
+                        <span>{errors.password && t("errorPassword")}</span>
+                      </div>
+                    </FormGroup>
+                    <FormGroup>
+                      <div className="position-relative">
+                        <Label className="col-form-label pt-0">{t("passConfirm")}</Label>
+                        <input className="form-control btn-pill" type={togglePassword ? "text" : "password"} placeholder={t("placeholderPassConfirm")} name="passConfirm"  {...register('passConfirm', { required: true })} onBlur={(e) => { setPassConfirm(e.target.value)}} />
                         <div className="show-hide" onClick={() => setTogglePassword(!togglePassword)}><span className={togglePassword ? "" : "show"}></span></div>
-                        <span>{errors.confirmarPassword && t("errorConfirmPassword")}</span>
+                        <span>{errors.passConfirm && t("errorPassConfirm")}</span>
                       </div>
                     </FormGroup>
                   </Row>
                 </CardBody>
                 <CardFooter>
-                  <Button className="me-1" disabled={loading ? loading : loading} color="primary" type="submit" onClick={() => setValidateClass(!validateClass)}>{loading ? t("processing") : t("create")}</Button>
+                  <Button className="me-1" disabled={loading ? loading : loading} color="primary" type="submit" onClick={() => setValidateClass(true)}>{loading ? t("processing") : t("create")}</Button>
                   <Button color="secondary">{t("cancel")}</Button>
                 </CardFooter>
               </Form>

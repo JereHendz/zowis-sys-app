@@ -33,6 +33,7 @@ i18n
                     employee: "Empleado",
                     employees: "Empleados",
                     placeholderEmployees: "Seleccione un empleado",
+                    errorEmployee: "Debe seleccionar un empleado",
                     //UsersCreateComponent
                     user: "Usuairo",
                     users: "Usuarios",
@@ -43,9 +44,9 @@ i18n
                     password: "Contraseña",
                     placeholderPassword: "Ingresa la contraseña",
                     errorPassword: "Debe ingresar una contraseña",
-                    confirmPassword: "Confirmar ontraseña",
-                    placeholderConfirmPassword: "Confirme la contraseña",
-                    errorConfirmPassword: "Debe confirmar la contraseña",
+                    passConfirm: "Confirmar ontraseña",
+                    placeholderPassConfirm: "Confirme la contraseña",
+                    errorPassConfirm: "Debe confirmar la contraseña",
                     errorUserName: "Debe ingresar un nombre de usuario",
                 }
             },
@@ -74,6 +75,7 @@ i18n
                     employee: "Employee",
                     employees: "Employees",
                     placeholderEmployees: "Select an employee",
+                    errorEmployee: "You must select an employee",
                     //UsersCreateComponent
                     user: "User",
                     users: "Users",
@@ -84,9 +86,9 @@ i18n
                     password: "Password",
                     placeholderPassword: "Enter the password",
                     errorPassword: "You must enter a password",
-                    confirmPassword: "Confirm password",
-                    placeholderConfirmPassword: "Enter password confirmation",
-                    errorConfirmPassword: "Confirm your password",
+                    passConfirm: "Confirm password",
+                    placeholderPassConfirm: "Enter password confirmation",
+                    errorPassConfirm: "Confirm your password",
                     errorUserName: "You must enter a username",
                 }
             },
