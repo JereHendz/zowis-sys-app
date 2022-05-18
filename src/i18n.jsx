@@ -47,6 +47,7 @@ i18n
                     titleEmployeeCreate: "Agregar empleado",
                     subtitleEmployeeCreate: "Ingrese la información del empleado",
                     placeholderEmployees: "Seleccione un empleado",
+                    errorEmployee: "Debe seleccionar un empleado",
                     positionCompany:"Cargo en la empresa",
                     selectCountry:"Seleccione país",
                     selectDepartment:"Seleccione departamento",
@@ -60,7 +61,6 @@ i18n
                     errorDui:"Debe ingresar el dui",
                     errorPositionCompany:"Debe selecionar un cargo",
                     errorCountry:"Debe selececionar un país",
-                    
                     //UsersCreateComponent
                     user: "Usuario",
                     users: "Usuarios",
@@ -71,9 +71,9 @@ i18n
                     password: "Contraseña",
                     placeholderPassword: "Ingresa la contraseña",
                     errorPassword: "Debe ingresar una contraseña",
-                    confirmPassword: "Confirmar ontraseña",
-                    placeholderConfirmPassword: "Confirme la contraseña",
-                    errorConfirmPassword: "Debe confirmar la contraseña",
+                    passConfirm: "Confirmar ontraseña",
+                    placeholderPassConfirm: "Confirme la contraseña",
+                    errorPassConfirm: "Debe confirmar la contraseña",
                     errorUserName: "Debe ingresar un nombre de usuario",
 
                     //lista de usuarios
@@ -118,6 +118,7 @@ i18n
                     employee: "Employee",
                     employees: "Employees",
                     placeholderEmployees: "Select an employee",
+                    errorEmployee: "You must select an employee",
                     titleEmployeeCreate: "Add Employee",
                     subtitleEmployeeCreate: "Enter employee information",
                     positionCompany:"Position in the company",
@@ -143,9 +144,9 @@ i18n
                     password: "Password",
                     placeholderPassword: "Enter the password",
                     errorPassword: "You must enter a password",
-                    confirmPassword: "Confirm password",
-                    placeholderConfirmPassword: "Enter password confirmation",
-                    errorConfirmPassword: "Confirm your password",
+                    passConfirm: "Confirm password",
+                    placeholderPassConfirm: "Enter password confirmation",
+                    errorPassConfirm: "Confirm your password",
                     errorUserName: "You must enter a username",
 
                     //Users list
