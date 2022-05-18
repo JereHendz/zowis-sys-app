@@ -61,6 +61,12 @@ i18n
                     errorDui:"Debe ingresar el dui",
                     errorPositionCompany:"Debe selecionar un cargo",
                     errorCountry:"Debe selececionar un país",
+                    // List employee
+                    titleListEmployee:"Lista de empleados",
+                    subtitleListEmployee:"Información de los empleados",
+
+                    
+
                     //UsersCreateComponent
                     user: "Usuario",
                     users: "Usuarios",
@@ -134,6 +140,9 @@ i18n
                     errorDui:"You must enter a dui",
                     errorPositionCompany:"You must select a position in the company",
                     errorCountry:"You must select a country",
+                    // List employee
+                    titleListEmployee:"List of Employees",
+                    subtitleListEmployee:"Employee information",
                     //UsersCreateComponent
                     user: "User",
                     users: "Users",
