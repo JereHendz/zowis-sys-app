@@ -81,7 +81,7 @@ const CreateUser = () => {
           <Col sm="12">
             <Card>
               <CardHeader>
-                <h5>{"Información del empleado jere"}</h5>
+                <h5>{"Información del empl"}</h5>
               </CardHeader>
               <CardBody>
                 <CreateFormEmployee />
