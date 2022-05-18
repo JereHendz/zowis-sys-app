@@ -26,6 +26,8 @@ import axios from "axios";
 import { classes } from "../../data/layouts";
 import { useNavigate } from "react-router-dom";
 import CreateFormEmployee from "./createFormEmployee";
+import { useTranslation } from 'react-i18next';
+
 
 const CreateUser = () => {
   const navigate = useNavigate();
@@ -34,6 +36,8 @@ const CreateUser = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passConfirm, setPassConfirm] = useState("");
+  const { t } = useTranslation();
+
 
   // Define const that allow see and hide the password
   const [togglePassword, setTogglePassword] = useState(false);
@@ -75,13 +79,13 @@ const CreateUser = () => {
 
   return (
     <Fragment>
-      <Breadcrumb parent="Form" title="Validation" />
+      <Breadcrumb parent="Form" title={t("titleEmployeeCreate")} />
       <Container fluid={true}>
         <Row>
           <Col sm="12">
             <Card>
               <CardHeader>
-                <h5>{"Información del empl"}</h5>
+                <h5>{t("subtitleEmployeeCreate")} </h5>
               </CardHeader>
               <CardBody>
                 <CreateFormEmployee />
