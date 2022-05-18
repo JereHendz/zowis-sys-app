@@ -89,7 +89,6 @@ const CreateUser = () => {
               </CardHeader>
               <CardBody>
                 <CreateFormEmployee />
-                <Input type="text" placeholder="Hola" />
               </CardBody>
             </Card>
           </Col>
