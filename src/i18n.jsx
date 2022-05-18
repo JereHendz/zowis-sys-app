@@ -75,6 +75,12 @@ i18n
                     placeholderPassConfirm: "Confirme la contraseña",
                     errorPassConfirm: "Debe confirmar la contraseña",
                     errorUserName: "Debe ingresar un nombre de usuario",
+
+                    //lista de usuarios
+                    listUsers: "Lista de usuarios",
+                    nameFirst: "Nombre",
+                    nameLast: "Apellido",
+                    usrName: "Usuario"
                 }
             },
             en: {
@@ -142,6 +148,12 @@ i18n
                     placeholderPassConfirm: "Enter password confirmation",
                     errorPassConfirm: "Confirm your password",
                     errorUserName: "You must enter a username",
+
+                    //Users list
+                    listUsers: "Users list",
+                    nameFirst: "First name",
+                    nameLast: "Last name",
+                    usrName: "User name"
                 }
             },
             cn: {
