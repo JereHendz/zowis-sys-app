@@ -89,10 +89,6 @@ const CreateUser = () => {
               </CardHeader>
               <CardBody>
                 <CreateFormEmployee />
-                <label htmlFor="">{"this is a test "}</label>
-                <label htmlFor="">{"this is a test1 "}</label>
-                <label htmlFor="">{"this is a test2 "}</label>
-
               </CardBody>
             </Card>
           </Col>
