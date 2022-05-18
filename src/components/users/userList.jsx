@@ -48,7 +48,7 @@ const UserList = () => {
           <Col sm="12">
             <Card>
               <CardHeader>
-                <h5>{"Lista de usuarios"}</h5>
+                <h5>{t("listUsers")}</h5>
               </CardHeader>
               <Row className="card-block">
                 <Col sm="12" lg="12" xl="12">
@@ -56,31 +56,14 @@ const UserList = () => {
                     <Table>
                       <thead className="table-primary">
                         <tr>
-                          <th scope="col">{"#"}</th>
-                          <th scope="col">{"First Name"}</th>
-                          <th scope="col">{"Last Name"}</th>
-                          <th scope="col">{"Username"}</th>
+                          <th scope="col">{"Id"}</th>
+                          <th scope="col">{t("nameFirst")}</th>
+                          <th scope="col">{t("nameLast")}</th>
+                          <th scope="col">{t("usrName")}</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <th scope="row">{"1"}</th>
-                          <td>{"Mark"}</td>
-                          <td>{"Otto"}</td>
-                          <td>{"@mdo"}</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">{"2"}</th>
-                          <td>{"Jacob"}</td>
-                          <td>{"Thornton"}</td>
-                          <td>{"@fat"}</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">{"3"}</th>
-                          <td>{"Larry"}</td>
-                          <td>{"the Bird"}</td>
-                          <td>{"@twitter"}</td>
-                        </tr>
+                      
                       </tbody>
                     </Table>
                   </div>
