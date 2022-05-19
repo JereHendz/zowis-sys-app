@@ -6,6 +6,8 @@ import { Typeahead } from 'react-bootstrap-typeahead';
 import { useTranslation } from 'react-i18next';
 import { classes } from '../../data/layouts';
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+
 
 const CreateFormEmployee = () => {
 
@@ -13,8 +15,8 @@ const CreateFormEmployee = () => {
   const layout = localStorage.getItem('layout') || Object.keys(defaultLayoutObj).pop();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-
-
+  // Get the inofrmation of the logged user
+  const infoUserLogin = JSON.parse(localStorage.getItem('infoUserLogin'));
 
   const { register, handleSubmit, formState: { errors }, control } = useForm();
   const [validateClass, setValidateClass] = useState(false);
@@ -72,7 +74,6 @@ const CreateFormEmployee = () => {
 
   // UseEfecct is launched just opening the page
   useEffect(() => {
-
     // Get the list of roles and countries
     axios
       .get(`${process.env.REACT_APP_DOMAIN_SERVER}api/roles`)
@@ -138,7 +139,7 @@ const CreateFormEmployee = () => {
     if (event.length > 0) {
       // Set the id
       setIdDepartment(event[0].id);
-      // Get the departments by id country
+      // Get the municipios by id depto
       axios
         .get(`${process.env.REACT_APP_DOMAIN_SERVER}/api/municipios/${event[0].id}`)
         .then((payload) => {
@@ -178,18 +179,37 @@ const CreateFormEmployee = () => {
 
   // Function that allow save the record
   const createEmployee = (data) => {
-    if (idRol != "" && idCountry != "") {
-      setLoading(true);
-      const info = { firstName: data.firstName, lastName: data.lastName, dui, phoneNumber: data.phoneNumber, email: data.email, idRol, idCountry, idDepartment, idMunicipio, address: data.address };
 
-      axios.post(`${process.env.REACT_APP_DOMAIN_SERVER}api/employees`, info)
-        .then((res) => {
-          // navigate(`${process.env.PUBLIC_URL}/app/employees/userList/${layout}`);
-        })
-        .catch((err) => {
-          setLoading(false);
-          setError(err.response.data.messages);
-        });
+    if (infoUserLogin.id !== null && infoUserLogin.id !== '') {
+      if (idRol !== "" && idCountry !== "") {
+        setLoading(true);
+        const info = {
+          firstName: data.firstName,
+          lastName: data.lastName,
+          address: data.address,
+          phoneNumber: data.phoneNumber,
+          email: data.email,
+          dui, idRol, idCountry, 
+          idDepartment, idMunicipio,
+          whoCreated:infoUserLogin.id
+        };
+
+        axios.post(`${process.env.REACT_APP_DOMAIN_SERVER}api/employees`, info)
+          .then((res) => {
+            toast.info(t('successCreated'));
+            setTimeout(() => {
+            navigate(`${process.env.PUBLIC_URL}/app/employees/listEmployees/${layout}`);
+            }, 400);
+          })
+          .catch((err) => {
+            setLoading(false);
+            setError(err.response.data.messages);
+          });
+      }
+    } else {
+      setTimeout(() => {
+        toast.error(t('errorLogin'));
+      }, 200);
     }
 
   };
@@ -232,7 +252,7 @@ const CreateFormEmployee = () => {
               required: true,
               pattern: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
             })} />
-            <span>{errors.email && t("errorEmail") ||error.email }</span>
+            <span>{errors.email && t("errorEmail") || error.email}</span>
 
           </Col>
           <Col md="6 mb-2">
