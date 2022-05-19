@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import Breadcrumb from "../../layout/breadcrumb";
-import { Container, Row, Col, Card, CardHeader, Table, CardBody } from "reactstrap";
+import { Container, Row, Col, Card, CardHeader, Table, CardBody, Button } from "reactstrap";
 
 import axios from "axios";
 import { classes } from "../../data/layouts";
@@ -22,22 +22,38 @@ import DataGrid, {
   SearchPanel,
   Scrolling,
   Pager,
-  Button,
-  Toolbar,
+  // Button,
   Export
 } from 'devextreme-react/data-grid';
 import 'devextreme-react/text-area';
+import notify from 'devextreme/ui/notify';
 import { Item } from 'devextreme-react/form';
+import Toolbar from 'devextreme-react/toolbar';
 import { useTranslation } from 'react-i18next';
 
 
 const notesEditorOptions = { height: 100 };
 
 const ListEmployees = () => {
-
+  const allowedPageSizes = [5, 10, 15];
   const [dataEmployee, setDataEmployee] = useState([]);
-
   const { t } = useTranslation();
+  const [listUser, setListUser] = useState([]);
+  const navigate = useNavigate();
+  // Spaces
+  const tab = '\u00A0';
+  // Define error array
+  const [error, setError] = useState({
+    userName: "",
+    email: "",
+    password: "",
+    passConfirm: "",
+  });
+  const defaultLayoutObj = classes.find(
+    (item) => Object.values(item).pop(1) === "compact-wrapper"
+  );
+  const layout =
+    localStorage.getItem("layout") || Object.keys(defaultLayoutObj).pop();
 
   useEffect(() => {
     axios
@@ -50,27 +66,11 @@ const ListEmployees = () => {
         console.log(error);
       });
   }, []);
-  const [listUser, setListUser] = useState([]);
-  const navigate = useNavigate();
 
-  // Define error array
-  const [error, setError] = useState({
-    userName: "",
-    email: "",
-    password: "",
-    passConfirm: "",
-  });
+  const createEmployee = (e)=> {
+    navigate(`${process.env.PUBLIC_URL}/app/employees/EmployeeCreate/${layout}`);
+  };
 
-  const defaultLayoutObj = classes.find(
-    (item) => Object.values(item).pop(1) === "compact-wrapper"
-  );
-  const layout =
-    localStorage.getItem("layout") || Object.keys(defaultLayoutObj).pop();
-  const allowedPageSizes = [5, 10, 15];
-
-  const onAddButtonClick= (e)=>{
-    console.log("jere");
-  }
   return (
     <Fragment>
       <Breadcrumb parent="Users" title={t("titleListEmployee")} />
@@ -86,17 +86,24 @@ const ListEmployees = () => {
                 <Row >
                   <Col sm="12" lg="12" xl="12">
                     <div className="table-responsive">
+
                       <div id="data-grid-demo" className="table-primary">
+                        <Toolbar className="marginBtnCreateEmployee">
+                          <Item location="before">
+                            <div className="btn-showcase">
+                              <Button className="btn-pill" color="primary" onClick={createEmployee}><i className="icofont icofont-ui-add"></i>{tab + tab}{t('create')}</Button>
+                              {/* <Button className="btn-pill" color="success">{SuccessButton}</Button> */}
+                            </div>
+                          </Item>
+                        </Toolbar>
                         <DataGrid
                           dataSource={dataEmployee}
                           keyExpr="id"
                           showBorders={true}
                           rowAlternationEnabled={true}
-                          onRowInserting={onAddButtonClick}
                         >
                           <Export enabled={true} />
-                          <SearchPanel visible={true} highlightCaseSensitive={true} />
-                          {/* <AllowColumnResizing /> */}
+                          <SearchPanel visible={true} highlightCaseSensitive={true} width={450} />
                           <Scrolling
                             useNative={false}
                             scrollByContent={true}
@@ -110,8 +117,8 @@ const ListEmployees = () => {
                           <Editing
                             mode="popup"
                             allowUpdating={true}
-                            allowAdding={true}
-                            allowDeleting={true}>
+                            allowAdding={false}
+                            allowDeleting={false}>
                             <Popup title="Employee Info" showTitle={true} width={700} height={525} />
                             <Form>
                               <Item itemType="group" colCount={2} colSpan={2}>
@@ -156,14 +163,10 @@ const ListEmployees = () => {
                         </Column> */}
                           <Column dataField="Address" caption={t("address")} />
                           <Column dataField="Notes" visible={false} />
-                          <Toolbar>
-                          <Item name='addRowButton'  onClick={onAddButtonClick}   />
-                          <Item name='addRowButtonJe'   />
-
-                            <Item name='exportButton'  />
+                          {/* <Toolbar>
+                            <Item name='exportButton' />
                             <Item name='searchPanel' showText='always' />
-
-                          </Toolbar>
+                          </Toolbar> */}
                         </DataGrid>
                       </div>
                     </div>
