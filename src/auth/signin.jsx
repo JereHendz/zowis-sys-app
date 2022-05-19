@@ -38,6 +38,10 @@ const Logins = (props) => {
     localStorage.getItem('loginAccess')
   );
 
+  const [infoUserLogin, setInfoUserLogin] = useState(
+    localStorage.getItem('infoUserLogin')
+  );
+
   useEffect(() => {
     localStorage.setItem('profileURL', value);
     localStorage.setItem('Name', name);
@@ -144,12 +148,12 @@ const Logins = (props) => {
       axios.post(`${process.env.REACT_APP_DOMAIN_SERVER}/api/login`, credentialAuth)
     .then((payload)=>{
 
+      // Get the info of user
+      const infoUser=payload.data.response;
         setValue(man);
-        setName("Emay Walter");
+        setName(infoUser[0].userName);
         localStorage.setItem('loginAccess', true);
-        // localStorage.setItem('token', Jwt_token);
-        // window.location.href = `${process.env.PUBLIC_URL}/dashboard/default/${layout}`;
-        // return payload;
+        localStorage.setItem('infoUserLogin', JSON.stringify(infoUser[0]));
         setTimeout(() => {
           history(`${process.env.PUBLIC_URL}/dashboard/default/${layout}`);
         }, 200);

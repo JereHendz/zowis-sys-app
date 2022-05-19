@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 // import 'devextreme/dist/css/dx.material.orange.light.css';
 import 'devextreme/dist/css/dx.material.teal.light.css';
 // import 'devextreme/dist/css/dx.softblue.css';
-// import 'devextreme/dist/css/dx.material.lime.light.compact.css';
 
 import DataGrid, {
   Column,
@@ -23,7 +22,9 @@ import DataGrid, {
   Scrolling,
   Pager,
   // Button,
-  Export
+  Export,
+  HeaderFilter,
+  RequiredRule
 } from 'devextreme-react/data-grid';
 import 'devextreme-react/text-area';
 import notify from 'devextreme/ui/notify';
@@ -38,7 +39,11 @@ const ListEmployees = () => {
   const allowedPageSizes = [5, 10, 15];
   const [dataEmployee, setDataEmployee] = useState([]);
   const { t } = useTranslation();
-  const [listUser, setListUser] = useState([]);
+  const [listRoles, setListRoles] = useState([]);
+  const [listCountries, setListCountries] = useState([]);
+  const [listDeparments, setListDeparments] = useState([]);
+  const [listMunicipios, setListMunicipios] = useState([]);
+
   const navigate = useNavigate();
   // Spaces
   const tab = '\u00A0';
@@ -58,50 +63,64 @@ const ListEmployees = () => {
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_DOMAIN_SERVER}/api/employees`)
-      .then((payload) => {
-        console.log(payload);
-        setDataEmployee(payload.data);
+      .then((response) => {
+        console.log(response.data);
+        setDataEmployee(response.data.employees);
+        setListRoles(response.data.roles);
+        setListCountries(response.data.countries);
+        setListDeparments(response.data.department);
+        setListMunicipios(response.data.municipios);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
 
-  const createEmployee = (e)=> {
+  const createEmployee = (e) => {
     navigate(`${process.env.PUBLIC_URL}/app/employees/EmployeeCreate/${layout}`);
   };
 
+  const onCountryChange = (e) => {
+    console.log("jere");
+    console.log(e);
+  }
+
+  const onDeptoChange = (e) => {
+    if (e.value !== '') {
+      // Get municipios by id depto
+     
+
+    }
+  }
   return (
     <Fragment>
-      <Breadcrumb parent="Users" title={t("titleListEmployee")} />
+      <Breadcrumb parent="Employee" title={t("titleListEmployee")} />
       <Container fluid={true}>
         <Row >
           <Col sm="12">
             <Card>
-              <CardHeader>
+              {/* <CardHeader>
                 <h5>{t("subtitleListEmployee")}</h5>
-              </CardHeader>
+              </CardHeader> */}
               <CardBody>
 
                 <Row >
                   <Col sm="12" lg="12" xl="12">
                     <div className="table-responsive">
-
                       <div id="data-grid-demo" className="table-primary">
-                        <Toolbar className="marginBtnCreateEmployee">
-                          <Item location="before">
-                            <div className="btn-showcase">
-                              <Button className="btn-pill" color="primary" onClick={createEmployee}><i className="icofont icofont-ui-add"></i>{tab + tab}{t('create')}</Button>
-                              {/* <Button className="btn-pill" color="success">{SuccessButton}</Button> */}
-                            </div>
-                          </Item>
-                        </Toolbar>
+
+                        <div className="btn-showcase ">
+                          <Button className="btn-pill" color="primary" onClick={createEmployee}><i className="icofont icofont-ui-add"></i>{tab + tab}{t('create')}</Button>
+                        </div>
+
                         <DataGrid
                           dataSource={dataEmployee}
                           keyExpr="id"
                           showBorders={true}
                           rowAlternationEnabled={true}
+                          columnAutoWidth={true}
                         >
+                          <HeaderFilter visible={true} allowSearch={true} />
                           <Export enabled={true} />
                           <SearchPanel visible={true} highlightCaseSensitive={true} width={450} />
                           <Scrolling
@@ -119,54 +138,69 @@ const ListEmployees = () => {
                             allowUpdating={true}
                             allowAdding={false}
                             allowDeleting={false}>
-                            <Popup title="Employee Info" showTitle={true} width={700} height={525} />
+                            <Popup title={t("editInfo")} showTitle={true} width={700} height={525} />
                             <Form>
                               <Item itemType="group" colCount={2} colSpan={2}>
-                                <Item dataField="FirstName" />
-                                <Item dataField="LastName" />
-                                <Item dataField="Prefix" />
-                                <Item dataField="BirthDate" />
-                                <Item dataField="Position" />
-                                <Item dataField="HireDate" />
-                                <Item
-                                  dataField="Notes"
-                                  editorType="dxTextArea"
-                                  colSpan={2}
-                                  editorOptions={[notesEditorOptions]} />
+                                <Item dataField="firstName" />
+                                <Item dataField="lastName" />
+                                <Item dataField="dui" />
+                                <Item dataField="phoneNumber" />
+                                <Item dataField="email" />
+                                <Item dataField="idRol"
+                                />
                               </Item>
 
-                              <Item itemType="group" caption="Home Address" colCount={2} colSpan={2}>
-                                <Item dataField="StateID" />
-                                <Item dataField="Address" />
+                              <Item itemType="group" caption="Address" colCount={2} colSpan={2}>
+                                <Item dataField="createDate"
+                                  editorOptions={{ readOnly: true }}
+                                />
+                                <Item dataField="idCountry"
+                                  onValueChanged={onCountryChange}
+                                />
+                                <Item dataField="idDepto"
+                                  editorOptions={
+                                    { onValueChanged: onDeptoChange }
+                                  }
+                                />
+                                <Item dataField="idMunicipio" />
+                                <Item dataField="address"
+                                  editorType="dxTextArea"
+                                  colSpan={2}
+                                  editorOptions={notesEditorOptions}
+                                />
                               </Item>
                             </Form>
                           </Editing>
-                          {/* <Column dataField="Prefix" caption="Title" width={70} /> */}
-                          <Column type='buttons'>
-                            {/* <Button icon='add'
-                              onClick={onAddButtonClick}
-                              visible={isAddButtonVisible}
-                            /> */}
+
+                          <Column type='buttons' caption={t('actions')}>
                             <Button name='edit' />
                             <Button name='save' />
                           </Column>
-                          <Column dataField="firstName" caption={t('firstName')} />
-                          <Column dataField="lastName" caption={t('lastName')} />
+
+                          <Column dataField="firstName" caption={t('firstName')} >
+                          <RequiredRule />
+                          </Column>
+                          <Column dataField="lastName" caption={t('lastName')} >
+                          <RequiredRule />
+                          </Column>
                           <Column dataField="dui" caption={t('dui')} width={125} />
-                          {/* <Column dataField="HireDate" dataType="date" /> */}
+                          <Column dataField="createDate" caption={t('createdDate')} dataType="date" format={"dd-MM-yyyy"} />
                           <Column dataField="phoneNumber" caption={t('phoneNumber')} width={125} />
                           <Column dataField="email" caption={t('email')} width={200} />
-
-
-                          {/* <Column dataField="phoneNumber" caption={t('phoneNumber')} width={125}>
-                          <Lookup dataSource={[]} valueExpr="ID" displayExpr="Name" />
-                        </Column> */}
-                          <Column dataField="Address" caption={t("address")} />
-                          <Column dataField="Notes" visible={false} />
-                          {/* <Toolbar>
-                            <Item name='exportButton' />
-                            <Item name='searchPanel' showText='always' />
-                          </Toolbar> */}
+                          <Column dataField="address" caption={t("address")} />
+                          <Column dataField="idRol" caption={t('positionCompany')} >
+                            <Lookup dataSource={listRoles} valueExpr="id" displayExpr="rol" />
+                            <RequiredRule />
+                          </Column>
+                          <Column dataField="idCountry" caption={t('country')} >
+                            <Lookup dataSource={listCountries} valueExpr="id" displayExpr="name" />
+                          </Column>
+                          <Column dataField="idDepto" caption={t('department')} >
+                            <Lookup dataSource={listDeparments} valueExpr="id" displayExpr="name" />
+                          </Column>
+                          <Column dataField="idMunicipio" caption={"Municipio"} >
+                            <Lookup dataSource={listMunicipios} valueExpr="id" displayExpr="name" />
+                          </Column>
                         </DataGrid>
                       </div>
                     </div>
