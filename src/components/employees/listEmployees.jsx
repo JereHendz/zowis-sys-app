@@ -80,18 +80,7 @@ const ListEmployees = () => {
     navigate(`${process.env.PUBLIC_URL}/app/employees/EmployeeCreate/${layout}`);
   };
 
-  const onCountryChange = (e) => {
-    console.log("jere");
-    console.log(e);
-  }
 
-  const onDeptoChange = (e) => {
-    if (e.value !== '') {
-      // Get municipios by id depto
-     
-
-    }
-  }
   return (
     <Fragment>
       <Breadcrumb parent="Employee" title={t("titleListEmployee")} />
@@ -135,46 +124,16 @@ const ListEmployees = () => {
 
                           <Editing
                             mode="popup"
-                            allowUpdating={true}
+                            allowUpdating={false}
                             allowAdding={false}
                             allowDeleting={false}>
-                            <Popup title={t("editInfo")} showTitle={true} width={700} height={525} />
-                            <Form>
-                              <Item itemType="group" colCount={2} colSpan={2}>
-                                <Item dataField="firstName" />
-                                <Item dataField="lastName" />
-                                <Item dataField="dui" />
-                                <Item dataField="phoneNumber" />
-                                <Item dataField="email" />
-                                <Item dataField="idRol"
-                                />
-                              </Item>
-
-                              <Item itemType="group" caption="Address" colCount={2} colSpan={2}>
-                                <Item dataField="createDate"
-                                  editorOptions={{ readOnly: true }}
-                                />
-                                <Item dataField="idCountry"
-                                  onValueChanged={onCountryChange}
-                                />
-                                <Item dataField="idDepto"
-                                  editorOptions={
-                                    { onValueChanged: onDeptoChange }
-                                  }
-                                />
-                                <Item dataField="idMunicipio" />
-                                <Item dataField="address"
-                                  editorType="dxTextArea"
-                                  colSpan={2}
-                                  editorOptions={notesEditorOptions}
-                                />
-                              </Item>
-                            </Form>
                           </Editing>
 
                           <Column type='buttons' caption={t('actions')}>
                             <Button name='edit' />
                             <Button name='save' />
+                            <Button name='btnTest' />
+
                           </Column>
 
                           <Column dataField="firstName" caption={t('firstName')} >
