@@ -83,7 +83,8 @@ i18n
                     errorUserName: "Debe ingresar un nombre de usuario",
 
                     //lista de usuarios
-                    listUsers: "Lista de usuarios",
+                    titleListUsers: "Lista de usuarios",
+                    subtitleListUsers: "Visualiza la información de los usuarios",
                     nameFirst: "Nombre",
                     nameLast: "Apellido",
                     usrName: "Usuario"

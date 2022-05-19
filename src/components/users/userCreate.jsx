@@ -61,6 +61,9 @@ const UserCreateForm = () => {
   }, []); 
 
   const createUser = () => {
+    if(idEmployee == ''){
+      return 0;
+    }
     setLoading(true);
     const data = { userName: userName, email: email, password:password, passConfirm:passConfirm, idEmployee:idEmployee };
     axios.post(`${process.env.REACT_APP_DOMAIN_SERVER}api/users`, data)
