@@ -15,7 +15,7 @@ const CreateFormEmployee = () => {
   const layout = localStorage.getItem('layout') || Object.keys(defaultLayoutObj).pop();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  // Get the inofrmation of the logged user
+  // Get the information of the logged user
   const infoUserLogin = JSON.parse(localStorage.getItem('infoUserLogin'));
 
   const { register, handleSubmit, formState: { errors }, control } = useForm();

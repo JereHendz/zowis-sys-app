@@ -1,15 +1,13 @@
 import React, { Fragment, useState, useEffect } from "react";
 import Breadcrumb from "../../layout/breadcrumb";
-import { Container, Row, Col, Card, CardHeader, Table, CardBody, Button } from "reactstrap";
+import { Container, Row, Col, Card, CardHeader, Table, CardBody, Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 import axios from "axios";
 import { classes } from "../../data/layouts";
 import { useNavigate } from "react-router-dom";
-// import 'devextreme/dist/css/dx.light.css';
-// import 'devextreme/dist/css/dx.material.blue.light.compact.css';
-// import 'devextreme/dist/css/dx.material.orange.light.css';
 import 'devextreme/dist/css/dx.material.teal.light.css';
-// import 'devextreme/dist/css/dx.softblue.css';
+import PopupEditEmployee from "./editEmployee";
+
 
 import DataGrid, {
   Column,
@@ -43,7 +41,9 @@ const ListEmployees = () => {
   const [listCountries, setListCountries] = useState([]);
   const [listDeparments, setListDeparments] = useState([]);
   const [listMunicipios, setListMunicipios] = useState([]);
+  const [dataEmployeePopup, setDataEmployeePopup] = useState([]);
 
+  
   const navigate = useNavigate();
   // Spaces
   const tab = '\u00A0';
@@ -80,6 +80,20 @@ const ListEmployees = () => {
     navigate(`${process.env.PUBLIC_URL}/app/employees/EmployeeCreate/${layout}`);
   };
 
+  const cellRenderAction = (data) => {
+    return <div align="center"><i className="icofont icofont-ui-edit" onClick={() => editEmployee(data)} /></div>;
+  }
+
+  const changeStatusModalEmployee = () => setControlModalEditEmployee(!controlModalEditEmployee);
+  const [controlModalEditEmployee, setControlModalEditEmployee] = useState(false);
+
+  const editEmployee = (e) => {
+    console.log(e.data);
+    setDataEmployeePopup(e.data);
+    setControlModalEditEmployee(!controlModalEditEmployee);
+    
+  }
+
 
   return (
     <Fragment>
@@ -92,11 +106,17 @@ const ListEmployees = () => {
                 <h5>{t("subtitleListEmployee")}</h5>
               </CardHeader> */}
               <CardBody>
-
                 <Row >
                   <Col sm="12" lg="12" xl="12">
                     <div className="table-responsive">
                       <div id="data-grid-demo" className="table-primary">
+
+                        {/* Popup */}
+                        <PopupEditEmployee
+                         controlModalEditEmployee={controlModalEditEmployee}
+                         changeStatusModalEmployee={changeStatusModalEmployee}
+                         dataEmployeePopup={dataEmployeePopup}
+                         />
 
                         <div className="btn-showcase ">
                           <Button className="btn-pill" color="primary" onClick={createEmployee}><i className="icofont icofont-ui-add"></i>{tab + tab}{t('create')}</Button>
@@ -108,6 +128,7 @@ const ListEmployees = () => {
                           showBorders={true}
                           rowAlternationEnabled={true}
                           columnAutoWidth={true}
+                          t={t}
                         >
                           <HeaderFilter visible={true} allowSearch={true} />
                           <Export enabled={true} />
@@ -129,18 +150,13 @@ const ListEmployees = () => {
                             allowDeleting={false}>
                           </Editing>
 
-                          <Column type='buttons' caption={t('actions')}>
-                            <Button name='edit' />
-                            <Button name='save' />
-                            <Button name='btnTest' />
-
-                          </Column>
+                          <Column caption={t('actions')} cellRender={cellRenderAction} width={100} />
 
                           <Column dataField="firstName" caption={t('firstName')} >
-                          <RequiredRule />
+                            <RequiredRule />
                           </Column>
                           <Column dataField="lastName" caption={t('lastName')} >
-                          <RequiredRule />
+                            <RequiredRule />
                           </Column>
                           <Column dataField="dui" caption={t('dui')} width={125} />
                           <Column dataField="createDate" caption={t('createdDate')} dataType="date" format={"dd-MM-yyyy"} />
@@ -173,6 +189,10 @@ const ListEmployees = () => {
       </Container>
     </Fragment>
   );
+
 };
+
+
+
 
 export default ListEmployees;
