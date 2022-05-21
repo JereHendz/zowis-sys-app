@@ -12,7 +12,8 @@ import authImg from '../assets/images/auth0.svg'
 import { Password, SignIn, EmailAddress, RememberPassword, ForgotPassword, CreateAccount, FIREBASE, AUTH0, JWT, LoginWithJWT, LoginNormal } from '../constant';
 import { useNavigate } from 'react-router';
 import { classes } from '../data/layouts';
-import axios from "axios";  
+import axios from "axios"; 
+import { useTranslation } from 'react-i18next'; 
 
 
 const Logins = (props) => {
@@ -26,6 +27,7 @@ const Logins = (props) => {
   const history = useNavigate();
   const defaultLayoutObj = classes.find(item => Object.values(item).pop(1) === 'compact-wrapper');
   const layout = localStorage.getItem('layout') || Object.keys(defaultLayoutObj).pop();
+  const { t } = useTranslation();
 
   const [value, setValue] = useState(
     localStorage.getItem('profileURL' || man)
@@ -51,7 +53,6 @@ const Logins = (props) => {
   const loginAuth = async (e) => {
     e.preventDefault();
     setLoading(true)
-
     try {
       await firebase_app.auth().signInWithEmailAndPassword(email, password).then(function () {
         setValue(man);
@@ -147,22 +148,22 @@ const Logins = (props) => {
 
       axios.post(`${process.env.REACT_APP_DOMAIN_SERVER}/api/login`, credentialAuth)
     .then((payload)=>{
-
       // Get the info of user
       const infoUser=payload.data.response;
-        setValue(man);
-        setName(infoUser[0].userName);
-        localStorage.setItem('loginAccess', true);
-        localStorage.setItem('infoUserLogin', JSON.stringify(infoUser[0]));
-        setTimeout(() => {
-          history(`${process.env.PUBLIC_URL}/dashboard/default/${layout}`);
-        }, 200);
+      console.log(infoUser);
+      setValue(man);
+      setName(infoUser[0].userName);
+      localStorage.setItem('loginAccess', true);
+      localStorage.setItem('infoUserLogin', JSON.stringify(infoUser[0]));
+      setTimeout(() => {
+        history(`${process.env.PUBLIC_URL}/dashboard/default/${layout}`);
+      }, 200);
 
     })
     .catch((errors)=>{
       console.log(errors);
       setTimeout(() => {
-        toast.error("Oppss.. El usuario o la contraseña son incorrectass.");
+        toast.error(t("errorSingIn"));
       }, 200);
     });
 

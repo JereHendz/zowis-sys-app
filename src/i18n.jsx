@@ -41,7 +41,8 @@ i18n
                     errorPhoneNumber:"Debe ingresar el número de teléfono", 
                     errorEmail:"Debe ingresar un correo válido",      
                     errorAddress:"Debe ingresar la dirección",     
-                    errorLogin:"Usted no tiene usuario logeado",
+    SingIn:"Usted no tiene usuario logeado",
+                    errorCreate: "Error al crear el registro",
                     successCreated:"Registro creado correctamente",
                     country:"País",
                     department:"Departmento",
@@ -73,8 +74,6 @@ i18n
                     titleListEmployee:"Lista de empleados",
                     subtitleListEmployee:"Información de los empleados",
 
-                    
-
                     //UsersCreateComponent
                     user: "Usuario",
                     users: "Usuarios",
@@ -88,13 +87,14 @@ i18n
                     errorPassword: 'Contraseña no válida',
                     passConfirm: "Confirmar ontraseña",
                     headPopPass: "La contraseña debe contener",
-                    bodyPopPass1: "1- Mayor de 6 caracteres.",
-                    bodyPopPass2: "2- Debe incluir una mayúscula.",
+                    bodyPopPass1: "1- Al menos 6 caracteres.",
+                    bodyPopPass2: "2- Incluir al menos una mayúscula.",
                     bodyPopPass3: "3- Al menos un número.",
-                    bodyPopPass4: "4- Un de los símbolos(.*@~#-+:;=^%/)",
+                    bodyPopPass4: "4- Al menos uno de los símbolos(.*@~#-+:;=^%/)",
                     placeholderPassConfirm: "Confirme la contraseña",
                     errorPassConfirm: "Debe confirmar la contraseña",
                     errorMatchPassword: "Las contraseñas no coinciden",
+                    errorSingIn: "Oppss.. El usuario o la contraseña son incorrectass.",
 
                     //lista de usuarios
                     titleListUsers: "Lista de usuarios",
@@ -135,7 +135,7 @@ i18n
                     errorPhoneNumber:"You must enter the phone number", 
                     errorEmail:"You must enter a valid email",      
                     errorAddress:"You must enter an address",     
-                    errorLogin:"You do not have a registered user ",
+    SingIn:"You do not have a registered user ",
                     successCreated:"Record created successfully",
                     country:"Country",
                     department:"Department",
