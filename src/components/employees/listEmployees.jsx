@@ -6,7 +6,7 @@ import axios from "axios";
 import { classes } from "../../data/layouts";
 import { useNavigate } from "react-router-dom";
 import 'devextreme/dist/css/dx.material.teal.light.css';
-import PopupEditEmployee from "./editEmployee";
+import PopupEditEmployee from "./popupEditEmployee";
 
 
 import DataGrid, {
@@ -31,8 +31,6 @@ import Toolbar from 'devextreme-react/toolbar';
 import { useTranslation } from 'react-i18next';
 
 
-const notesEditorOptions = { height: 100 };
-
 const ListEmployees = () => {
   const allowedPageSizes = [5, 10, 15];
   const [dataEmployee, setDataEmployee] = useState([]);
@@ -43,7 +41,7 @@ const ListEmployees = () => {
   const [listMunicipios, setListMunicipios] = useState([]);
   const [dataEmployeePopup, setDataEmployeePopup] = useState([]);
 
-  
+
   const navigate = useNavigate();
   // Spaces
   const tab = '\u00A0';
@@ -59,6 +57,22 @@ const ListEmployees = () => {
   );
   const layout =
     localStorage.getItem("layout") || Object.keys(defaultLayoutObj).pop();
+
+      // Autocomplete
+  const [valueRol, setValueRol] = useState('');
+  const [idCountry, setIdCountry] = useState('');
+  const [idDepartment, setIdDepartment] = useState('');
+  const [listDeptoSelected, setListDeptoSelected] = useState([]);
+  const [listDeptoSelectedDefault, setListDeptoSelectedDefault] = useState([]);
+  const [idMunicipio, setIdMunicipio] = useState('');
+
+  const [listMunicipioSelected, setListMunicipioSelected] = useState([]);
+  const [listMunicipioSelectedDefault, setListMunicipioSelectedDefault] = useState([]);
+
+
+
+
+  
 
   useEffect(() => {
     axios
@@ -81,17 +95,32 @@ const ListEmployees = () => {
   };
 
   const cellRenderAction = (data) => {
-    return <div align="center"><i className="icofont icofont-ui-edit" onClick={() => editEmployee(data)} /></div>;
+    return <div align="center"><i style={{ cursor: 'pointer' }} className="icofont icofont-ui-edit" onClick={() => editEmployee(data)} /></div>;
   }
 
   const changeStatusModalEmployee = () => setControlModalEditEmployee(!controlModalEditEmployee);
   const [controlModalEditEmployee, setControlModalEditEmployee] = useState(false);
 
   const editEmployee = (e) => {
-    console.log(e.data);
     setDataEmployeePopup(e.data);
+    setValueRol(e.data.idRol!==null && e.data.idRol!==0  ? e.data.idRol : '');
+    setIdCountry(e.data.idCountry!==null && e.data.idCountry!==0  ? e.data.idCountry : '');
+    setIdDepartment(e.data.idDepto!==null && e.data.idDepto!==0  ? e.data.idDepto : '');
+    setListDeptoSelected(listDeparments.filter(v=>{
+      return v.idCountry===e.data.idCountry;
+    }))
+    setListDeptoSelectedDefault(listDeparments.filter(v=>{
+      return v.idCountry===e.data.idCountry;
+    }));
+
+    setListMunicipioSelected(listMunicipios.filter(v=>{
+      return v.idDepto===e.data.idDepto;
+    }))
+    setListMunicipioSelectedDefault(listMunicipios.filter(v=>{
+      return v.idDepto===e.data.idDepto;
+    }));
     setControlModalEditEmployee(!controlModalEditEmployee);
-    
+
   }
 
 
@@ -112,11 +141,32 @@ const ListEmployees = () => {
                       <div id="data-grid-demo" className="table-primary">
 
                         {/* Popup */}
+
+
                         <PopupEditEmployee
-                         controlModalEditEmployee={controlModalEditEmployee}
-                         changeStatusModalEmployee={changeStatusModalEmployee}
-                         dataEmployeePopup={dataEmployeePopup}
-                         />
+                          controlModalEditEmployee={controlModalEditEmployee}
+                          changeStatusModalEmployee={changeStatusModalEmployee}
+                          dataEmployeePopup={dataEmployeePopup}
+                          listRoles={listRoles}
+                          listCountries={listCountries} 
+                          valueRol={valueRol}
+                          setValueRol={setValueRol}   
+                          idCountry={idCountry}
+                          setIdCountry={setIdCountry} 
+                          listDeptoSelected={listDeptoSelected}
+                          listDeptoSelectedDefault={listDeptoSelectedDefault}
+                          setListDeptoSelected={setListDeptoSelected}
+                          idDepartment={idDepartment} 
+                          setIdDepartment={setIdDepartment}     
+                          listMunicipioSelected={listMunicipioSelected}
+                          setListMunicipioSelected={setListMunicipioSelected}
+                          listMunicipioSelectedDefault={listMunicipioSelectedDefault}
+                          setIdMunicipio={setIdMunicipio}     
+                          idMunicipio={idMunicipio}     
+
+
+                        />
+
 
                         <div className="btn-showcase ">
                           <Button className="btn-pill" color="primary" onClick={createEmployee}><i className="icofont icofont-ui-add"></i>{tab + tab}{t('create')}</Button>
