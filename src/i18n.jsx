@@ -41,7 +41,7 @@ i18n
                     errorPhoneNumber:"Debe ingresar el número de teléfono", 
                     errorEmail:"Debe ingresar un correo válido",      
                     errorAddress:"Debe ingresar la dirección",     
-    SingIn:"Usted no tiene usuario logeado",
+                    SingIn:"Usted no tiene usuario logeado",
                     errorCreate: "Error al crear el registro",
                     successCreated:"Registro creado correctamente",
                     country:"País",

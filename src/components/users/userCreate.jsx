@@ -8,11 +8,15 @@ import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import { useTranslation } from 'react-i18next';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from "@material-ui/core/styles";
+
 
 const UserCreateForm = () => {
 
   //declaracion de constantes de hooks
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const [validateClass, setValidateClass] = useState(false);
   const infoUserLogin = JSON.parse(localStorage.getItem('infoUserLogin'));
   const navigate = useNavigate();
@@ -106,7 +110,7 @@ const UserCreateForm = () => {
       setIdEmployee("");
     }
   }
-
+  
   return (
     <Fragment>
       <Breadcrumb parent={t("users")} title={t("titleUserCreate")}/>
@@ -132,16 +136,22 @@ const UserCreateForm = () => {
                     </FormGroup>
                     <FormGroup>
                       <Label className="col-form-label pt-0" >{t("employees")}</Label>
-                      <Typeahead
-                        inputProps={{
-                          className: 'btn-pill'
+                      <Autocomplete
+                        getOptionLabel={(option) => option.firstName + ' ' + option.lastName}
+                        classes={{ inputRoot: "form-control btn-pill" }}
+                        onInputChange={(event, newVal) => {
+                            setIdEmployee(newVal);
                         }}
-                        id="id"
-                        labelKey={employees => `${employees.firstName} ${employees.lastName}`}
-                        multiple={multiple}
+                        id="select-employees"
                         options={employees}
-                        placeholder={t("placeholderEmployees")}
-                        onChange={handleChange}
+                        renderInput={
+                          params => <TextField id="emplyeesUser"
+                            {...params} placeholder={t("placeholderEmployees")} 
+                            InputProps={{...params.InputProps, disableUnderline: true}}
+                        />}
+                        onChange={(event, newValue) => {
+                          setIdEmployee(newValue !== null ? newValue.id : '');
+                        }}
                       />
                       <input type="hidden"/>
                       <span>{(idEmployee == '' && validateClass) && t("errorEmployee")}</span>
@@ -192,7 +202,21 @@ const UserCreateForm = () => {
                 </CardBody>
                 <CardFooter>
                   <Button className="me-1" color="primary" type="submit" onClick={() => setValidateClass(true)}>{loading ? t("processing") : t("create")}</Button>
-                  <Button color="secondary">{t("cancel")}</Button>
+                  <Button type="button" color="secondary" onClick={() => {
+                                                                          reset({
+                                                                            userName: "",
+                                                                            email: "",
+                                                                            password: "",
+                                                                            passConfirm: ""
+                                                                          }, {
+                                                                            keepErrors: true, 
+                                                                            keepDirty: true,
+                                                                            keepIsSubmitted: false,
+                                                                            keepTouched: false,
+                                                                            keepIsValid: false,
+                                                                            keepSubmitCount: false,
+                                                                          });
+                                                                        }} >{t("cancel")}</Button>
                 </CardFooter>
               </Form>
             </Card>
