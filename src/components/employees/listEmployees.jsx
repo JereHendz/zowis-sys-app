@@ -65,6 +65,8 @@ const ListEmployees = () => {
   const [listDeptoSelected, setListDeptoSelected] = useState([]);
   const [listDeptoSelectedDefault, setListDeptoSelectedDefault] = useState([]);
   const [idMunicipio, setIdMunicipio] = useState('');
+  const [objMunicipio, setObjMunicipio] = useState([]);
+
 
   const [listMunicipioSelected, setListMunicipioSelected] = useState([]);
   const [listMunicipioSelectedDefault, setListMunicipioSelectedDefault] = useState([]);
@@ -106,6 +108,8 @@ const ListEmployees = () => {
     setValueRol(e.data.idRol!==null && e.data.idRol!==0  ? e.data.idRol : '');
     setIdCountry(e.data.idCountry!==null && e.data.idCountry!==0  ? e.data.idCountry : '');
     setIdDepartment(e.data.idDepto!==null && e.data.idDepto!==0  ? e.data.idDepto : '');
+    setIdMunicipio(e.data.idMunicipio!==null && e.data.idMunicipio!==0  ? e.data.idMunicipio : '');
+
     setListDeptoSelected(listDeparments.filter(v=>{
       return v.idCountry===e.data.idCountry;
     }))
@@ -118,6 +122,9 @@ const ListEmployees = () => {
     }))
     setListMunicipioSelectedDefault(listMunicipios.filter(v=>{
       return v.idDepto===e.data.idDepto;
+    }));
+    setObjMunicipio(listMunicipios.find(v=>{
+      return v.id===e.data.idMunicipio;
     }));
     setControlModalEditEmployee(!controlModalEditEmployee);
 
@@ -163,6 +170,10 @@ const ListEmployees = () => {
                           listMunicipioSelectedDefault={listMunicipioSelectedDefault}
                           setIdMunicipio={setIdMunicipio}     
                           idMunicipio={idMunicipio}     
+                          objMunicipio={objMunicipio}   
+                          setObjMunicipio={setObjMunicipio}     
+
+
 
 
                         />

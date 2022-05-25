@@ -30,7 +30,9 @@ export default function PopupEditEmployee(
         setListMunicipioSelected,
         listMunicipioSelectedDefault,
         setIdMunicipio,
-        idMunicipio
+        idMunicipio,
+        objMunicipio,
+        setObjMunicipio
     }
 ) {
 
@@ -179,10 +181,29 @@ export default function PopupEditEmployee(
             // Set the id
             setIdMunicipio(newvalue.id);
 
+
         } else {
             // Clear the information of municipio
             setIdMunicipio('');
             setInputValueMunicipio('');
+        }
+    }
+
+
+    const handleChangeMunicipioT = (event, newvalue) => {
+        if (newvalue !== null) {
+            // Set the id
+            // setIdMunicipio(newvalue.id);
+            setObjMunicipio(newvalue);
+
+
+
+        } else {
+            // Clear the information of municipio
+            setIdMunicipio('');
+            setInputValueMunicipio('');
+            setObjMunicipio([]);
+
         }
     }
 
@@ -250,7 +271,17 @@ export default function PopupEditEmployee(
     }
 
     const defaultValueMunicipio = (data) => {
-        return listMunicipioSelectedDefault.find(v => v.id === dataEmployeePopup.idMunicipio ? dataEmployeePopup.idMunicipio : '')
+
+        let obj= listMunicipioSelected.find(v => v.id === idMunicipio ? idMunicipio : 0)
+        console.log(obj); 
+       return  obj!==undefined ? obj : 0;
+
+        // return listMunicipioSelected.find(v => v.id === dataEmployeePopup.idMunicipio ? dataEmployeePopup.idMunicipio : '')
+
+    }
+
+    const valueM=(data)=>{
+       return  listMunicipioSelected.find(v => v.id === idMunicipio ? idMunicipio : '')
     }
 
     return (
@@ -356,7 +387,7 @@ export default function PopupEditEmployee(
                             <Col md="6 mb-2">
                                 <Label>{t("selectDepartment")}</Label>
                                 <Autocomplete
-                                    defaultValue={listDeptoSelectedDefault.find(v => v.id === dataEmployeePopup.idDepto ? dataEmployeePopup.idDepto : '')}
+                                    defaultValue={listDeptoSelected.find(v => v.id === dataEmployeePopup.idDepto ? dataEmployeePopup.idDepto : '')}
                                     getOptionLabel={(option) => option.name}
                                     inputValue={inputValueDepto}
                                     onInputChange={(event, newInputValue) => {
@@ -376,11 +407,26 @@ export default function PopupEditEmployee(
                         <Row>
                             <Col md="6 mb-2">
                                 <Label>{t("selectMunicipio")}</Label>
+                                <div>{`value: ${idMunicipio !== null ? `'${idMunicipio}'` : 'null'}`}</div>
+                                <div>{`inputValue: '${inputValueMunicipio}'`}</div>
                                 <Autocomplete
-                                    defaultValue={defaultValueMunicipio}
-                                    // value={dataEmployeePopup.idMunicipio}
+                                    defaultValue={objMunicipio}
                                     options={listMunicipioSelected}
+                                    // onChange={(_, newValue) => setObjMunicipio(newValue)}
+                                    // value={objMunicipio}
                                     getOptionLabel={(option) => option.name}
+                                    // getOptionSelected={(option, value) => option.name === value.name}
+                                    // defaultValue={defaultValueMunicipio}
+                                    // value= {valueM}
+
+                                    // getOptionSelected={(option, value) => {
+                                    //     console.log("jere");
+                                    //     console.log(value);
+                                    //     return option.id === value.id
+                                    // }}
+                                    // getOptionSelected={(listMunicipioSelected, idMunicipio) => listMunicipioSelected.id === idMunicipio}
+                                    onChange={handleChangeMunicipioT}
+
                                     // getOptionSelected={(option, value) => option.idMunicipio === value.idMunicipio}
 
                                     // getOptionLabel={(option, value) => option.id === value.id}
@@ -389,7 +435,6 @@ export default function PopupEditEmployee(
                                     onInputChange={(event, newInputValue) => {
                                         setInputValueMunicipio(newInputValue !== null ? newInputValue : '');
                                     }}
-                                    onChange={handleChangeMunicipio}
                                     classes={{ inputRoot: "form-control" }}
                                     id="select-municipio"
                                     renderInput={(params) => <TextField
