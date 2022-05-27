@@ -7,3 +7,23 @@
     content: ""
 }
 
+// Background of the dx-texteditor into a select-box
+.dx-texteditor.dx-editor-filled .dx-placeholder::before, .dx-texteditor.dx-editor-filled .dx-texteditor-input, .dx-texteditor.dx-editor-outlined .dx-placeholder::before, .dx-texteditor.dx-editor-outlined .dx-texteditor-input {
+    padding: 15px 16px 9px !important;
+    background-color: #FFFFFF;
+    height: 38px;
+    line-height: 0.45;
+
+}
+
+// Remove underline to dx-select-box
+.dx-texteditor.dx-editor-filled::after {
+    border-bottom: 1px solid rgba(0,0,0,0.15) !important;
+}
+
+
+// Background de la pestaña de seleccionar
+.dx-texteditor-buttons-container {
+    background-color: #FFFFFF;       
+    line-height: 0.45;
+}
