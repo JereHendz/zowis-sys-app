@@ -63,13 +63,15 @@ const ListEmployees = () => {
   const [idCountry, setIdCountry] = useState('');
   const [idDepartment, setIdDepartment] = useState('');
   const [listDeptoSelected, setListDeptoSelected] = useState([]);
-  const [listDeptoSelectedDefault, setListDeptoSelectedDefault] = useState([]);
+  const [objCountry, setObjCountry] = useState([]);
+  const [objDepartment, setObjDepartment] = useState([]);
   const [idMunicipio, setIdMunicipio] = useState('');
   const [objMunicipio, setObjMunicipio] = useState([]);
+  const [objRol, setObjRol] = useState([]);
+
 
 
   const [listMunicipioSelected, setListMunicipioSelected] = useState([]);
-  const [listMunicipioSelectedDefault, setListMunicipioSelectedDefault] = useState([]);
 
 
 
@@ -110,19 +112,28 @@ const ListEmployees = () => {
     setIdDepartment(e.data.idDepto!==null && e.data.idDepto!==0  ? e.data.idDepto : '');
     setIdMunicipio(e.data.idMunicipio!==null && e.data.idMunicipio!==0  ? e.data.idMunicipio : '');
 
+    setObjRol(listRoles.find(v=>{
+      return v.id===e.data.idRol;
+    }));
+
+
+    setObjCountry(listCountries.find(v=>{
+      return v.id===e.data.idCountry;
+    }));
+
+
     setListDeptoSelected(listDeparments.filter(v=>{
       return v.idCountry===e.data.idCountry;
     }))
-    setListDeptoSelectedDefault(listDeparments.filter(v=>{
-      return v.idCountry===e.data.idCountry;
+
+    setObjDepartment(listDeparments.find(v=>{
+      return v.id===e.data.idDepto;
     }));
 
     setListMunicipioSelected(listMunicipios.filter(v=>{
       return v.idDepto===e.data.idDepto;
     }))
-    setListMunicipioSelectedDefault(listMunicipios.filter(v=>{
-      return v.idDepto===e.data.idDepto;
-    }));
+   
     setObjMunicipio(listMunicipios.find(v=>{
       return v.id===e.data.idMunicipio;
     }));
@@ -161,20 +172,21 @@ const ListEmployees = () => {
                           idCountry={idCountry}
                           setIdCountry={setIdCountry} 
                           listDeptoSelected={listDeptoSelected}
-                          listDeptoSelectedDefault={listDeptoSelectedDefault}
+                          objDepartment={objDepartment}
+                          setObjDepartment={setObjDepartment}
                           setListDeptoSelected={setListDeptoSelected}
                           idDepartment={idDepartment} 
                           setIdDepartment={setIdDepartment}     
                           listMunicipioSelected={listMunicipioSelected}
                           setListMunicipioSelected={setListMunicipioSelected}
-                          listMunicipioSelectedDefault={listMunicipioSelectedDefault}
+                          objCountry={objCountry}
+                          setObjCountry={setObjCountry}
                           setIdMunicipio={setIdMunicipio}     
                           idMunicipio={idMunicipio}     
                           objMunicipio={objMunicipio}   
                           setObjMunicipio={setObjMunicipio}     
-
-
-
+                          setObjRol={setObjRol} 
+                          objRol={objRol}     
 
                         />
 

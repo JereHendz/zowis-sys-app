@@ -8,8 +8,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { classes } from '../../data/layouts';
 import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import { map } from 'leaflet';
+import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
+import { SelectBox } from 'devextreme-react/select-box';
+// import 'devextreme/dist/css/dx.light.css';
 
 
 
@@ -22,17 +23,21 @@ export default function PopupEditEmployee(
         idCountry,
         setIdCountry,
         listDeptoSelected,
-        listDeptoSelectedDefault,
+        objDepartment,
+        setObjDepartment,
         setListDeptoSelected,
         idDepartment,
         setIdDepartment,
         listMunicipioSelected,
         setListMunicipioSelected,
-        listMunicipioSelectedDefault,
+        objCountry,
+        setObjCountry,
         setIdMunicipio,
         idMunicipio,
         objMunicipio,
-        setObjMunicipio
+        setObjMunicipio,
+        setObjRol,
+        objRol,
     }
 ) {
 
@@ -46,36 +51,18 @@ export default function PopupEditEmployee(
 
     const { register, handleSubmit, formState: { errors }, control } = useForm();
     const [validateClass, setValidateClass] = useState(false);
-    const [roles, setRoles] = useState([]);
 
-
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [dui, setDui] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [email, setEmail] = useState('');
-    const [idRol, setIdRol] = useState('');
-    const [address, setAddress] = useState('');
-
-    // References to control Typeahead
-    const refCountry = React.useRef();
-    const refDepto = React.useRef();
-    const refMunicipio = React.useRef();
-    const refRol = React.useRef();
-    const refRolInput = React.useRef();
-
-    const multiple = false
+    // const [firstName, setFirstName] = useState('');
+    // const [lastName, setLastName] = useState('');
+    // const [dui, setDui] = useState('');
+    // const [phoneNumber, setPhoneNumber] = useState('');
+    // const [email, setEmail] = useState('');
+    // const [idRol, setIdRol] = useState('');
+    // const [address, setAddress] = useState('');
 
     const { t } = useTranslation();
 
     // Autocomplete
-    const [inputValueRol, setInputValueRol] = useState('');
-    const [inputValueCountry, setInputValueCountry] = useState('');
-    const [inputValueDepto, setInputValueDepto] = useState('');
-    const [inputValueMunicipio, setInputValueMunicipio] = useState('');
-
-
-
 
     // Define error array
     const [error, setError] = useState(
@@ -96,153 +83,125 @@ export default function PopupEditEmployee(
 
     const onSubmit: SubmitHandler<FormValues> = data => {
         // If all validations are met we'll call register method
-        // createEmployee(data);
-        console.log(data);
-        console.log(valueRol);
+        updateEmployee(data);
 
     }
 
-    // Function that executed when the deparment change value
+    const handleChangeRol = (newvalue) => {
+        if (newvalue.value !== null) {
+            // Set the id
+            setValueRol(newvalue.value.id);
+            setObjRol(newvalue.value);
+
+        } else {
+            // Clear the information of Job Position
+            setValueRol('');
+
+            setObjRol([]);
+
+        }
+    }
 
 
-    const handleChangeCountry = (event, newValue) => {
-        if (newValue !== null) {
+    const handleChangeCountry = (newValue) => {
+        if (newValue.value !== null) {
             // Set the id of country
 
-            setIdCountry(newValue.id);
-            // Get the departments by id country
-            axios
-                .get(`${process.env.REACT_APP_DOMAIN_SERVER}/api/departments/${newValue.id}`)
-                .then((payload) => {
-                    // If everything is good, load the array of departments in the Typeahead or select
-                    setIdDepartment('');
-                    setInputValueDepto('');
-                    setListDeptoSelected(payload.data);
-                    console.log(payload.data);
-                })
-                .catch((error) => {
-                    setListDeptoSelected([]);
-                    setIdCountry(newValue.id);
+            if (newValue.value.length === undefined) {
+                setIdCountry(newValue.value.id);
+                setObjCountry(newValue.value);
+                // Set the id department
+                setIdDepartment('');
+                setObjDepartment([]);
+                setIdMunicipio('');
+                setObjMunicipio([]);
+                // Get the departments by id country
+                axios
+                    .get(`${process.env.REACT_APP_DOMAIN_SERVER}/api/departments/${newValue.value.id}`)
+                    .then((payload) => {
+                        // If everything is good, load the array of departments in the Typeahead or select
+                        setListDeptoSelected(payload.data);
+                    })
+                    .catch((error) => {
+                        setListDeptoSelected([]);
 
-                });
+                    });
+            }
+
+
 
         } else {
             // Clear the information of country
             setIdCountry('');
-            setInputValueCountry('');
+            setObjCountry([]);
+
 
             // Reset department's values
             setIdDepartment('');
-            setInputValueDepto('');
+            setObjDepartment([]);
             setListDeptoSelected([]);
 
             // Set up the array of municipio to empty
+
             setIdMunicipio('');
-            setInputValueMunicipio('');
+            setObjMunicipio([]);
             setListMunicipioSelected([]);
+
         }
     }
 
-    const handleChangeDeparment = (event, newvalue) => {
-        if (newvalue !== null) {
-            // Set the id department
-            setIdDepartment(newvalue.id);
+    const handleChangeDeparment = (newvalue) => {
 
-            // Get the municipios by id depto
-            axios
-                .get(`${process.env.REACT_APP_DOMAIN_SERVER}/api/municipios/${newvalue.id}`)
-                .then((payload) => {
-                    // dataEmployeePopup.idMunicipio='';
-                    setIdMunicipio('');
-                    setInputValueMunicipio('');
-                    setListMunicipioSelected(payload.data);
-                })
-                .catch((error) => {
-                    setListMunicipioSelected([]);
-                });
+        if (newvalue.value !== null) {
+            if (newvalue.value.length === undefined) {
+                // Set the id department
+                setIdDepartment(newvalue.value.id);
+                setObjDepartment(newvalue.value);
+                setIdMunicipio('');
+                setObjMunicipio([]);
+
+                // Get the municipios by id depto
+                axios
+                    .get(`${process.env.REACT_APP_DOMAIN_SERVER}/api/municipios/${newvalue.value.id}`)
+                    .then((payload) => {
+                        setListMunicipioSelected(payload.data);
+                    })
+                    .catch((error) => {
+
+                        // If something was wrong we clear the information of municipios
+                        setListMunicipioSelected([]);
+                    });
+            }
 
         } else {
 
             // Reset department's values
             setIdDepartment('');
-            setInputValueDepto('');
-            // setListDeptoSelected([]);
 
             // Set up the array of municipio to empty
             setIdMunicipio('');
-            setInputValueMunicipio('');
             setListMunicipioSelected([]);
+            setObjMunicipio([]);
+            setObjDepartment([]);
+
         }
     }
 
 
-    const handleChangeMunicipio = (event, newvalue) => {
-        if (newvalue !== null) {
+    const handleChangeMunicipioT = (newvalue) => {
+        if (newvalue.value !== null) {
             // Set the id
-            setIdMunicipio(newvalue.id);
-
+            setIdMunicipio(newvalue.value.id);
+            setObjMunicipio(newvalue.value);
 
         } else {
             // Clear the information of municipio
             setIdMunicipio('');
-            setInputValueMunicipio('');
-        }
-    }
 
-
-    const handleChangeMunicipioT = (event, newvalue) => {
-        if (newvalue !== null) {
-            // Set the id
-            // setIdMunicipio(newvalue.id);
-            setObjMunicipio(newvalue);
-
-
-
-        } else {
-            // Clear the information of municipio
-            setIdMunicipio('');
-            setInputValueMunicipio('');
             setObjMunicipio([]);
 
         }
     }
-
-    // Function that allow save the record
-    const createEmployee = (data) => {
-
-        if (infoUserLogin.id !== null && infoUserLogin.id !== '') {
-            if (idRol !== "" && idCountry !== "") {
-                setLoading(true);
-                const info = {
-                    firstName: data.firstName,
-                    lastName: data.lastName,
-                    address: data.address,
-                    phoneNumber: data.phoneNumber,
-                    email: data.email,
-                    dui, idRol, idCountry,
-                    idDepartment, idMunicipio,
-                    whoCreated: infoUserLogin.id
-                };
-
-                axios.post(`${process.env.REACT_APP_DOMAIN_SERVER}api/employees`, info)
-                    .then((res) => {
-                        toast.info(t('successCreated'));
-                        setTimeout(() => {
-                            navigate(`${process.env.PUBLIC_URL}/app/employees/listEmployees/${layout}`);
-                        }, 400);
-                    })
-                    .catch((err) => {
-                        setLoading(false);
-                        setError(err.response.data.messages);
-                    });
-            }
-        } else {
-            setTimeout(() => {
-                toast.error(t('errorLogin'));
-            }, 200);
-        }
-
-    };
 
 
 
@@ -267,22 +226,72 @@ export default function PopupEditEmployee(
         // Sincroniza el estado de nuevo
         setArrayEmployee(newArrayEmployee);
 
-        console.log(newArrayEmployee);
     }
 
-    const defaultValueMunicipio = (data) => {
-
-        let obj= listMunicipioSelected.find(v => v.id === idMunicipio ? idMunicipio : 0)
-        console.log(obj); 
-       return  obj!==undefined ? obj : 0;
-
-        // return listMunicipioSelected.find(v => v.id === dataEmployeePopup.idMunicipio ? dataEmployeePopup.idMunicipio : '')
-
+    const selectBoxAttributes = {
+        id: 'selectMuni',
+        class: 'form-control'
     }
 
-    const valueM=(data)=>{
-       return  listMunicipioSelected.find(v => v.id === idMunicipio ? idMunicipio : '')
-    }
+    // Update information
+    // Function that allow save the record
+    const updateEmployee = (data) => {
+
+       
+
+        if (infoUserLogin.id !== null && infoUserLogin.id !== '' && dataEmployeePopup.id!==undefined) {
+            if (valueRol !== "" && valueRol !== undefined && idCountry !== "" && idCountry !== undefined) {
+                setLoading(true);
+                idMunicipio = idMunicipio !== null && idMunicipio !== undefined ? idMunicipio : 0;
+
+                const infoUpdate = {
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    address: data.address,
+                    phoneNumber: data.phoneNumber,
+                    email: data.email,
+                    idRol: valueRol,
+                    dui: data.dui,
+                    idCountry,
+                    idMunicipio,
+                    whoCreated: infoUserLogin.id
+                };
+
+
+                let updateE=  axios.put(`${process.env.REACT_APP_DOMAIN_SERVER}api/employees/${dataEmployeePopup.id}`, infoUpdate)
+                    .then((response) => {
+                        let { id } = response.data.data;
+                        console.log(id);
+                        // setNotes(
+                        //     notes.map((note) => (note.id === id ? response.data.data : note))
+                        // );
+                    })
+                    .catch((errors) => {
+                        // setError(errors.response.data.messages)
+                        console.log(errors);
+                    });
+
+                // axios.put(`${process.env.REACT_APP_DOMAIN_SERVER}api/employees`, infoUpdate)
+                //     .then((res) => {
+                //         toast.info(t('successCreated'));
+                //         setTimeout(() => {
+                //             navigate(`${process.env.PUBLIC_URL}/app/employees/listEmployees/${layout}`);
+                //         }, 400);
+                //     })
+                //     .catch((err) => {
+                //         setLoading(false);
+                //         setError(err.response.data.messages);
+                //     });
+            }
+        } else {
+            setTimeout(() => {
+                toast.error(t('errorLogin'));
+            }, 200);
+        }
+
+    };
+
+
 
     return (
         <Fragment>
@@ -312,7 +321,7 @@ export default function PopupEditEmployee(
                         <Row>
                             <Col md="6 mb-2">
                                 <Label>{"Dui"}</Label>
-                                <input className="form-control" name="dui" type="text" placeholder="Dui" defaultValue={dataEmployeePopup.dui} onChange={handleChange} />
+                                <input className="form-control" name="dui" type="text" placeholder="Dui" defaultValue={dataEmployeePopup.dui} onChange={handleChange} {...register('dui')} />
                             </Col>
                             <Col md="6 mb-2">
                                 <Label>{t("phoneNumber")}</Label>
@@ -334,71 +343,55 @@ export default function PopupEditEmployee(
                             </Col>
                             <Col md="6 mb-2">
                                 <Label>{t("positionCompany")}</Label>
-
-                                {/* <div>{`value: ${valueRol !== null ? `'${valueRol}'` : 'null'}`}</div>
-                                <div>{`inputValue: '${inputValueRol}'`}</div> */}
-                                <Autocomplete
-                                    getOptionLabel={(option) => option.rol}
-                                    defaultValue={listRoles.find(v => v.id === dataEmployeePopup.idRol)}
-
-                                    classes={{ inputRoot: "form-control" }}
-                                    inputValue={inputValueRol}
-                                    onInputChange={(event, newInputValue) => {
-                                        setInputValueRol(newInputValue);
-                                    }}
-                                    id="select-roles"
-                                    options={listRoles}
-                                    renderInput={(params) => <TextField
-                                        {...params} />}
-                                    onChange={(event, newValue) => {
-                                        setValueRol(newValue !== null ? newValue.id : '');
-                                    }}
+                                <SelectBox
+                                    dataSource={listRoles}
+                                    displayExpr="rol"
+                                    value={objRol}
+                                    searchEnabled={true}
+                                    elementAttr={selectBoxAttributes}
+                                    placeholder={t('placeHolderPositionCompany')}
+                                    showClearButton={true}
+                                    name="selectRol"
+                                    onValueChanged={handleChangeRol}
                                 />
 
                                 <input type="hidden" />
-                                <span>{(valueRol === '' && validateClass) && t("errorPositionCompany")}</span>
+                                <span>{((valueRol === '' || valueRol === undefined) && validateClass) && t("errorPositionCompany")}</span>
                                 <div className="valid-feedback">{"Looks good!"}</div>
                             </Col>
                         </Row>
                         <Row>
                             <Col md="6 mb-2">
                                 <Label>{t("selectCountry")}</Label>
-                                <Autocomplete
-                                    defaultValue={listCountries.find(country => country.id === dataEmployeePopup.idCountry ? dataEmployeePopup.idCountry : '')}
-                                    getOptionLabel={(option) => option.name}
-                                    // onChange={(event, newValue) => {
-                                    //     setIdCountry(newValue !== null ? newValue.id : '');
-                                    // }}
-                                    onChange={handleChangeCountry}
-                                    inputValue={inputValueCountry}
-                                    onInputChange={(event, newInputValue) => {
-                                        setInputValueCountry(newInputValue !== null ? newInputValue : '');
-                                    }}
-                                    classes={{ inputRoot: "form-control" }}
-                                    id="select-country"
-                                    options={listCountries}
-                                    renderInput={(params) => <TextField
-                                        {...params} />}
+                                <SelectBox
+                                    dataSource={listCountries}
+                                    displayExpr="name"
+                                    value={objCountry}
+                                    searchEnabled={true}
+                                    elementAttr={selectBoxAttributes}
+                                    placeholder={t('placeHolderCountry')}
+                                    showClearButton={true}
+                                    name="selectCountry"
+                                    onValueChanged={handleChangeCountry}
                                 />
                                 <input type="hidden" />
-                                <span>{(idCountry === '' && validateClass) && t("errorCountry")}</span>
+                                <span>{((idCountry === '' || idCountry === undefined) && validateClass) && t("errorCountry")}</span>
 
                             </Col>
                             <Col md="6 mb-2">
                                 <Label>{t("selectDepartment")}</Label>
-                                <Autocomplete
-                                    defaultValue={listDeptoSelected.find(v => v.id === dataEmployeePopup.idDepto ? dataEmployeePopup.idDepto : '')}
-                                    getOptionLabel={(option) => option.name}
-                                    inputValue={inputValueDepto}
-                                    onInputChange={(event, newInputValue) => {
-                                        setInputValueDepto(newInputValue !== null ? newInputValue : '');
-                                    }}
-                                    onChange={handleChangeDeparment}
-                                    classes={{ inputRoot: "form-control" }}
-                                    id="select-department"
-                                    options={listDeptoSelected}
-                                    renderInput={(params) => <TextField
-                                        {...params} placeholder={t("placeHolderDepartment")} />}
+                                <SelectBox
+                                    dataSource={listDeptoSelected}
+                                    displayExpr="name"
+                                    // valueExpr="id"
+                                    value={objDepartment}
+                                    searchEnabled={true}
+                                    elementAttr={selectBoxAttributes}
+                                    placeholder={t('placeHolderDepartment')}
+                                    showClearButton={true}
+                                    name="selectDepartment"
+                                    onValueChanged={handleChangeDeparment}
+
                                 />
                             </Col>
 
@@ -407,38 +400,16 @@ export default function PopupEditEmployee(
                         <Row>
                             <Col md="6 mb-2">
                                 <Label>{t("selectMunicipio")}</Label>
-                                <div>{`value: ${idMunicipio !== null ? `'${idMunicipio}'` : 'null'}`}</div>
-                                <div>{`inputValue: '${inputValueMunicipio}'`}</div>
-                                <Autocomplete
-                                    defaultValue={objMunicipio}
-                                    options={listMunicipioSelected}
-                                    // onChange={(_, newValue) => setObjMunicipio(newValue)}
-                                    // value={objMunicipio}
-                                    getOptionLabel={(option) => option.name}
-                                    // getOptionSelected={(option, value) => option.name === value.name}
-                                    // defaultValue={defaultValueMunicipio}
-                                    // value= {valueM}
-
-                                    // getOptionSelected={(option, value) => {
-                                    //     console.log("jere");
-                                    //     console.log(value);
-                                    //     return option.id === value.id
-                                    // }}
-                                    // getOptionSelected={(listMunicipioSelected, idMunicipio) => listMunicipioSelected.id === idMunicipio}
-                                    onChange={handleChangeMunicipioT}
-
-                                    // getOptionSelected={(option, value) => option.idMunicipio === value.idMunicipio}
-
-                                    // getOptionLabel={(option, value) => option.id === value.id}
-                                    // isOptionEqualToValue={(listMunicipioSelected, value) => listMunicipioSelected.id === value.id}
-                                    inputValue={inputValueMunicipio}
-                                    onInputChange={(event, newInputValue) => {
-                                        setInputValueMunicipio(newInputValue !== null ? newInputValue : '');
-                                    }}
-                                    classes={{ inputRoot: "form-control" }}
-                                    id="select-municipio"
-                                    renderInput={(params) => <TextField
-                                        {...params} placeholder={t("placeHolderMunicipio")} />}
+                                <SelectBox
+                                    dataSource={listMunicipioSelected}
+                                    displayExpr="name"
+                                    value={objMunicipio}
+                                    searchEnabled={true}
+                                    elementAttr={selectBoxAttributes}
+                                    placeholder={t('placeHolderMunicipio')}
+                                    showClearButton={true}
+                                    name="selectMunicipio"
+                                    onValueChanged={handleChangeMunicipioT}
                                 />
                             </Col>
                             <Col md="6 mb-2">
