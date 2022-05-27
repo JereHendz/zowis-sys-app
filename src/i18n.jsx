@@ -49,6 +49,8 @@ i18n
                     createdDate:'Fecha de creación',
                     actions:"Acciones",
                     editInfo:"Editar información",
+                    estatus: "Estado",
+                    placeHolderSelect: "Seleccione una opción",
 
                     //employeesComponent
                     employee: "Empleado",

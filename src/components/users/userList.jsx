@@ -9,18 +9,27 @@ import 'devextreme/dist/css/dx.material.teal.light.css';
 import DataGrid, {
   Column,  Editing, Paging,  Lookup,  SearchPanel,  Scrolling,  Pager,   Export, HeaderFilter,  RequiredRule} from 'devextreme-react/data-grid';
 import 'devextreme-react/text-area';
+import PopupEditUser from "./popupEditUser";
 
 const UserList = () => {
-
+  //variables estandar
   const { t } = useTranslation();
-  const [usersList, setUsersList] = useState([]);
-  const [employeesList, setEmployeesList] = useState([]);
   const navigate = useNavigate();
   const defaultLayoutObj = classes.find(
     (item) => Object.values(item).pop(1) === "compact-wrapper"
   );
   const layout = localStorage.getItem("layout") || Object.keys(defaultLayoutObj).pop();
+
+  //variables para la lista de usuarios
+  const [usersList, setUsersList] = useState([]);
+  const [employeesList, setEmployeesList] = useState([]);
   const tab = '\u00A0';
+
+  //variables para la modal
+  const [openPopup, setOpenPopup] = useState(false);
+  const [dataUser, setDataUser] = useState([]);
+  const [idUser, setIdUser] = useState('');
+
 
   useEffect(() => {
     axios
@@ -34,18 +43,25 @@ const UserList = () => {
       });
   }, []);
 
+  //redirección al formulario de creación
   const createEmployee = (e) => {
     navigate(`${process.env.PUBLIC_URL}/app/users/userCreate/${layout}`);
   };
 
+  //funcion que renderiza el botón de edición en la tabla
   const cellRenderAction = (data) => {
-    return <div align="center"><i style={{ cursor: 'pointer' }} className="icofont icofont-ui-edit" onClick={() => editEmployee(data)} /></div>;
+    return <div align="center"><i style={{ cursor: 'pointer' }} className="icofont icofont-ui-edit" onClick={() => editUser(data)} /></div>;
   }
 
-  const editEmployee = (e) => {
-    console.log('test');
+  //funcion para levantar la modal de edición de un usuario
+  const editUser = (e) => {
+    console.log(e.data);
+    setDataUser(e.data);
+    setOpenPopup(true);
+    setIdUser(e.id);
   }
 
+  //funcion que devuelve el empleado concatenado para el lookup
   const getEmployeeComplete = (emp) => {
     return emp ? emp.firstName + ' ' + emp.lastName : '';
   }
@@ -62,6 +78,12 @@ const UserList = () => {
                   <Col sm="12" lg="12" xl="12">
                     <div className="table-responsive">
                       <div id="data-grid-demo" className="table-primary">
+                      <PopupEditUser
+                        openPopup={openPopup} setOpenPopup={setOpenPopup}
+                        dataUser={dataUser} setDataUser={setDataUser}
+                        employeesList={employeesList} setEmployeesList={setEmployeesList}
+                        idUser={idUser} setIdUser={setIdUser}
+                      />
                         <div className="btn-showcase ">
                           <Button className="btn-pill" color="primary" onClick={createEmployee}><i className="icofont icofont-ui-add"></i>{tab + tab}{t('create')}</Button>
                         </div>
