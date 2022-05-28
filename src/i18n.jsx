@@ -50,6 +50,7 @@ i18n
                     actions:"Acciones",
                     editInfo:"Editar información",
                     selectStatus:"Estado",
+                    errorStatus:"Debe seleccionar un estado",
 
                     //employeesComponent
                     employee: "Empleado",
@@ -145,6 +146,7 @@ i18n
                     phoneNumber:"Phone number",
                     editInfo:"Edit information",
                     selectStatus:"Status",
+                    errorStatus:"You must select a status",
 
 
                     //employeesComponent
