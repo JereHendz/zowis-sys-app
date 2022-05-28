@@ -272,7 +272,7 @@ export default function PopupEditEmployee(
                         setValidateClass(false);
                         setLoading(false);
 
-                        toast.info(t('successCreated'));
+                        toast.info(t('successUpdated'));
                         loadEmployee();
 
                     })
