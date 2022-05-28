@@ -68,8 +68,7 @@ const ListEmployees = () => {
   const [idMunicipio, setIdMunicipio] = useState('');
   const [objMunicipio, setObjMunicipio] = useState([]);
   const [objRol, setObjRol] = useState([]);
-
-
+  const [statusEmployee, setStatusEmployee] = useState([]);
 
   const [listMunicipioSelected, setListMunicipioSelected] = useState([]);
 
@@ -111,6 +110,7 @@ const ListEmployees = () => {
     setIdCountry(e.data.idCountry!==null && e.data.idCountry!==0  ? e.data.idCountry : '');
     setIdDepartment(e.data.idDepto!==null && e.data.idDepto!==0  ? e.data.idDepto : '');
     setIdMunicipio(e.data.idMunicipio!==null && e.data.idMunicipio!==0  ? e.data.idMunicipio : '');
+    setStatusEmployee(e.data.idMunicipio!==1 ? e.data.idMunicipio : 0);
 
     setObjRol(listRoles.find(v=>{
       return v.id===e.data.idRol;
