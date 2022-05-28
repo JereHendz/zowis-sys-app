@@ -13,7 +13,6 @@
     background-color: #FFFFFF;
     height: 38px;
     line-height: 0.45;
-
 }
 
 // Remove underline to dx-select-box
@@ -26,4 +25,13 @@
 .dx-texteditor-buttons-container {
     background-color: #FFFFFF;       
     line-height: 0.45;
+}
+
+.backgroundModalReactContent{
+    border: 0;
+    background-color: '';
+}
+
+.backgroundModalReactOverlay{
+    background-color: '';
 }

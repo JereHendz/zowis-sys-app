@@ -27,8 +27,9 @@ const UserList = () => {
 
   //variables para la modal
   const [openPopup, setOpenPopup] = useState(false);
-  const [dataUser, setDataUser] = useState([]);
   const [idUser, setIdUser] = useState('');
+  const [userName, setUserName] = useState('elmer');
+
 
 
   useEffect(() => {
@@ -55,10 +56,8 @@ const UserList = () => {
 
   //funcion para levantar la modal de edición de un usuario
   const editUser = (e) => {
-    console.log(e.data);
-    setDataUser(e.data);
     setOpenPopup(true);
-    setIdUser(e.id);
+    setIdUser(e.data.id);
   }
 
   //funcion que devuelve el empleado concatenado para el lookup
@@ -80,9 +79,9 @@ const UserList = () => {
                       <div id="data-grid-demo" className="table-primary">
                       <PopupEditUser
                         openPopup={openPopup} setOpenPopup={setOpenPopup}
-                        dataUser={dataUser} setDataUser={setDataUser}
                         employeesList={employeesList} setEmployeesList={setEmployeesList}
                         idUser={idUser} setIdUser={setIdUser}
+                        userName={userName} setUserName={setUserName}
                       />
                         <div className="btn-showcase ">
                           <Button className="btn-pill" color="primary" onClick={createEmployee}><i className="icofont icofont-ui-add"></i>{tab + tab}{t('create')}</Button>
