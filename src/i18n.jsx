@@ -51,6 +51,7 @@ i18n
                     editInfo:"Editar información",
                     estatus: "Estado",
                     placeHolderSelect: "Seleccione una opción",
+                    selectStatus:"Estado",
 
                     //employeesComponent
                     employee: "Empleado",
@@ -145,6 +146,8 @@ i18n
                     actions:"Actions",
                     phoneNumber:"Phone number",
                     editInfo:"Edit information",
+                    selectStatus:"Status",
+
 
                     //employeesComponent
                     employee: "Employee",

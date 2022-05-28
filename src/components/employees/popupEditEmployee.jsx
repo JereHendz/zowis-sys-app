@@ -11,7 +11,7 @@ import { SelectBox } from 'devextreme-react/select-box';
 
 
 export default function PopupEditEmployee(
-    { controlModalEditEmployee, changeStatusModalEmployee,
+    { controlModalEditEmployee, changeStatusModalEmployee, setControlModalEditEmployee,
         dataEmployeePopup, listRoles,
         listCountries,
         valueRol,
@@ -34,6 +34,11 @@ export default function PopupEditEmployee(
         setObjMunicipio,
         setObjRol,
         objRol,
+        statusEmployee,
+        listStatus,
+        setStatusEmployee,
+        dataEmployee,
+        setDataEmployee
     }
 ) {
 
@@ -217,62 +222,61 @@ export default function PopupEditEmployee(
 
     }
 
-    const selectBoxAttributes = {
-        id: 'selectMuni',
-        class: 'form-control'
+    const handleStatusEmployee = (newvalue) => {
+        if (newvalue.value !== null) {
+            // Set the id
+            setStatusEmployee(newvalue.value.id);
+
+        } else {
+            // Clear the information of Status employee
+            setStatusEmployee('');
+
+        }
     }
 
-    // Update information
     // Function that allow save the record
     const updateEmployee = (data) => {
 
-       
 
-        if (infoUserLogin.id !== null && infoUserLogin.id !== '' && dataEmployeePopup.id!==undefined) {
+
+        if (infoUserLogin.id !== null && infoUserLogin.id !== '' && dataEmployeePopup.id !== undefined) {
             if (valueRol !== "" && valueRol !== undefined && idCountry !== "" && idCountry !== undefined) {
                 setLoading(true);
                 idMunicipio = idMunicipio !== null && idMunicipio !== undefined ? idMunicipio : 0;
+
 
                 const infoUpdate = {
                     firstName: data.firstName,
                     lastName: data.lastName,
                     address: data.address,
                     phoneNumber: data.phoneNumber,
-                    email: data.email,
+                    // email: data.email,
                     idRol: valueRol,
                     dui: data.dui,
+                    status: statusEmployee,
                     idCountry,
                     idMunicipio,
                     whoCreated: infoUserLogin.id
                 };
-                console.log(infoUpdate);
-                return 0;
+                if (data.email !== dataEmployeePopup.email) {
+                    infoUpdate.email = data.email;
+                }
 
 
-                let updateE=  axios.put(`${process.env.REACT_APP_DOMAIN_SERVER}api/employees/${dataEmployeePopup.id}`, infoUpdate)
+                let updateEmp = axios.put(`${process.env.REACT_APP_DOMAIN_SERVER}api/employees/${dataEmployeePopup.id}`, infoUpdate)
                     .then((response) => {
-                        let { id } = response.data.data;
-                        console.log(id);
+                        // let { id } = response.data.data;
+                        toast.info(t('successCreated'));
+
+                        loadEmployee();
                         // setNotes(
                         //     notes.map((note) => (note.id === id ? response.data.data : note))
                         // );
                     })
                     .catch((errors) => {
-                        // setError(errors.response.data.messages)
+                        setError(errors.response.data.messages)
                         console.log(errors);
                     });
-
-                // axios.put(`${process.env.REACT_APP_DOMAIN_SERVER}api/employees`, infoUpdate)
-                //     .then((res) => {
-                //         toast.info(t('successCreated'));
-                //         setTimeout(() => {
-                //             navigate(`${process.env.PUBLIC_URL}/app/employees/listEmployees/${layout}`);
-                //         }, 400);
-                //     })
-                //     .catch((err) => {
-                //         setLoading(false);
-                //         setError(err.response.data.messages);
-                //     });
             }
         } else {
             setTimeout(() => {
@@ -282,12 +286,25 @@ export default function PopupEditEmployee(
 
     };
 
+    function loadEmployee() {
+        axios
+            .get(`${process.env.REACT_APP_DOMAIN_SERVER}/api/loadEmp`)
+            .then((response) => {
+                setDataEmployee(response.data.employees);
+                setControlModalEditEmployee(!controlModalEditEmployee);
+                document.getElementById("formEditEmployee").reset();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
 
 
     return (
         <Fragment>
             <Modal size="lg" isOpen={controlModalEditEmployee} toggle={changeStatusModalEmployee} centered>
-                <Form className={`needs-validation tooltip-validation ${validateClass ? 'validateClass' : ''}`} noValidate="" onSubmit={handleSubmit(onSubmit)}>
+                <Form id='formEditEmployee' className={`needs-validation tooltip-validation ${validateClass ? 'validateClass' : ''}`} noValidate="" onSubmit={handleSubmit(onSubmit)}>
 
                     <ModalHeader toggle={changeStatusModalEmployee}>
                         {t("editInfo")}
@@ -359,7 +376,7 @@ export default function PopupEditEmployee(
                                     displayExpr="name"
                                     value={objCountry}
                                     searchEnabled={true}
-                                    className={'form-control dxSelectBorder'}                                   
+                                    className={'form-control dxSelectBorder'}
                                     placeholder={t('placeHolderCountry')}
                                     showClearButton={true}
                                     name="selectCountry"
@@ -403,8 +420,25 @@ export default function PopupEditEmployee(
                                 />
                             </Col>
                             <Col md="6 mb-2">
+                                <Label>{t("selectStatus")}</Label>
+                                <SelectBox
+                                    dataSource={listStatus}
+                                    displayExpr="name"
+                                    value={listStatus.find(v => v.id === statusEmployee)}
+                                    searchEnabled={true}
+                                    className={'form-control dxSelectBorder'}
+                                    placeholder={t('placeHolderMunicipio')}
+                                    showClearButton={true}
+                                    name="selectStatus"
+                                    onValueChanged={handleStatusEmployee}
+                                />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md="12 mb-2">
                                 <Label>{t("address")}</Label>
-                                <input className="form-control btn-pill" name="city" type="text" placeholder={t("address")} defaultValue={dataEmployeePopup.address} onChange={handleChange}  {...register('address', { required: true })} />
+                                {/* <Input type="textarea" className="form-control btn-pill"  rows="2" name="address" placeholder={t("address")} defaultValue={dataEmployeePopup.address} onChange={handleChange}  {...register('address', { required: true })} /> */}
+                                <input type="text" className="form-control btn-pill" name="city" rows="3" placeholder={t("address")} defaultValue={dataEmployeePopup.address} onChange={handleChange}  {...register('address', { required: true })} />
                                 <span>{errors.address && t("address")}</span>
                                 <div className="invalid-feedback">{"Ingrese una dirección por favor."}</div>
                             </Col>
