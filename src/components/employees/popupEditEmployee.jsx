@@ -225,7 +225,10 @@ export default function PopupEditEmployee(
     const handleStatusEmployee = (newvalue) => {
         if (newvalue.value !== null) {
             // Set the id
-            setStatusEmployee(newvalue.value.id);
+            if (newvalue.value !== undefined) {
+                setStatusEmployee(newvalue.value.id);
+
+            }
 
         } else {
             // Clear the information of Status employee
@@ -240,7 +243,7 @@ export default function PopupEditEmployee(
 
 
         if (infoUserLogin.id !== null && infoUserLogin.id !== '' && dataEmployeePopup.id !== undefined) {
-            if (valueRol !== "" && valueRol !== undefined && idCountry !== "" && idCountry !== undefined) {
+            if (valueRol !== "" && valueRol !== undefined && idCountry !== "" && idCountry !== undefined && statusEmployee !== '' && statusEmployee !== undefined) {
                 setLoading(true);
                 idMunicipio = idMunicipio !== null && idMunicipio !== undefined ? idMunicipio : 0;
 
@@ -263,15 +266,15 @@ export default function PopupEditEmployee(
                 }
 
 
-                let updateEmp = axios.put(`${process.env.REACT_APP_DOMAIN_SERVER}api/employees/${dataEmployeePopup.id}`, infoUpdate)
+                axios.put(`${process.env.REACT_APP_DOMAIN_SERVER}api/employees/${dataEmployeePopup.id}`, infoUpdate)
                     .then((response) => {
                         // let { id } = response.data.data;
-                        toast.info(t('successCreated'));
+                        setValidateClass(false);
+                        setLoading(false);
 
+                        toast.info(t('successUpdated'));
                         loadEmployee();
-                        // setNotes(
-                        //     notes.map((note) => (note.id === id ? response.data.data : note))
-                        // );
+
                     })
                     .catch((errors) => {
                         setError(errors.response.data.messages)
@@ -292,7 +295,6 @@ export default function PopupEditEmployee(
             .then((response) => {
                 setDataEmployee(response.data.employees);
                 setControlModalEditEmployee(!controlModalEditEmployee);
-                document.getElementById("formEditEmployee").reset();
             })
             .catch((error) => {
                 console.log(error);
@@ -432,6 +434,9 @@ export default function PopupEditEmployee(
                                     name="selectStatus"
                                     onValueChanged={handleStatusEmployee}
                                 />
+                                <input type="hidden" />
+                                <span>{((statusEmployee === '' || statusEmployee === undefined) && validateClass) && t("errorStatus")}</span>
+                                <div className="valid-feedback">{"Looks good!"}</div>
                             </Col>
                         </Row>
                         <Row>

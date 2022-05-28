@@ -53,6 +53,7 @@ i18n
                     estatus: "Estado",
                     placeHolderSelect: "Seleccione una opción",
                     selectStatus:"Estado",
+                    errorStatus:"Debe seleccionar un estado",
 
                     //employeesComponent
                     employee: "Empleado",
@@ -149,6 +150,7 @@ i18n
                     phoneNumber:"Phone number",
                     editInfo:"Edit information",
                     selectStatus:"Status",
+                    errorStatus:"You must select a status",
 
 
                     //employeesComponent
