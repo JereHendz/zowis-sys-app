@@ -2,15 +2,11 @@ import React, { useState, Fragment, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form'
 import { Container, Row, Col, Form, Label, Input, Card, FormGroup, InputGroup, InputGroupText, CardHeader, Table, CardBody, Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { useTranslation } from 'react-i18next';
-import { Typeahead } from 'react-bootstrap-typeahead';
 import { toast } from 'react-toastify';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { classes } from '../../data/layouts';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import { SelectBox } from 'devextreme-react/select-box';
-// import 'devextreme/dist/css/dx.light.css';
 
 
 
@@ -52,13 +48,6 @@ export default function PopupEditEmployee(
     const { register, handleSubmit, formState: { errors }, control } = useForm();
     const [validateClass, setValidateClass] = useState(false);
 
-    // const [firstName, setFirstName] = useState('');
-    // const [lastName, setLastName] = useState('');
-    // const [dui, setDui] = useState('');
-    // const [phoneNumber, setPhoneNumber] = useState('');
-    // const [email, setEmail] = useState('');
-    // const [idRol, setIdRol] = useState('');
-    // const [address, setAddress] = useState('');
 
     const { t } = useTranslation();
 
@@ -256,6 +245,8 @@ export default function PopupEditEmployee(
                     idMunicipio,
                     whoCreated: infoUserLogin.id
                 };
+                console.log(infoUpdate);
+                return 0;
 
 
                 let updateE=  axios.put(`${process.env.REACT_APP_DOMAIN_SERVER}api/employees/${dataEmployeePopup.id}`, infoUpdate)
@@ -306,13 +297,13 @@ export default function PopupEditEmployee(
                         <Row>
                             <Col md="6 mb-2">
                                 <Label>{t("firstName")}</Label>
-                                <input className="form-control" name="firstName" type="text" defaultValue={dataEmployeePopup.firstName} placeholder="Nombres" onChange={handleChange} {...register('firstName', { required: true })} />
+                                <input className="form-control btn-pill " name="firstName" type="text" defaultValue={dataEmployeePopup.firstName} placeholder="Nombres" onChange={handleChange} {...register('firstName', { required: true })} />
                                 <span>{errors.firstName && t("errorFirstName")}</span>
                                 {/* <div className="valid-feedback">{"Looks good!"}</div> */}
                             </Col>
                             <Col md="6 mb-2">
                                 <Label>{t("lastName")}</Label>
-                                <input className="form-control" name="lastName" type="text" placeholder="Apellidos" defaultValue={dataEmployeePopup.lastName} onChange={handleChange} {...register('lastName', { required: true })} />
+                                <input className="form-control btn-pill" name="lastName" type="text" placeholder="Apellidos" defaultValue={dataEmployeePopup.lastName} onChange={handleChange} {...register('lastName', { required: true })} />
                                 <span>{errors.lastName && t("errorLastName")}</span>
                                 <div className="valid-feedback">{"Looks good!"}</div>
                             </Col>
@@ -321,11 +312,11 @@ export default function PopupEditEmployee(
                         <Row>
                             <Col md="6 mb-2">
                                 <Label>{"Dui"}</Label>
-                                <input className="form-control" name="dui" type="text" placeholder="Dui" defaultValue={dataEmployeePopup.dui} onChange={handleChange} {...register('dui')} />
+                                <input className="form-control btn-pill" name="dui" type="text" placeholder="Dui" defaultValue={dataEmployeePopup.dui} onChange={handleChange} {...register('dui')} />
                             </Col>
                             <Col md="6 mb-2">
                                 <Label>{t("phoneNumber")}</Label>
-                                <input className="form-control" name="phoneNumber" type="text" placeholder="Teléfono" defaultValue={dataEmployeePopup.phoneNumber} onChange={handleChange} {...register('phoneNumber', { required: true })} />
+                                <input className="form-control btn-pill" name="phoneNumber" type="text" placeholder="Teléfono" defaultValue={dataEmployeePopup.phoneNumber} onChange={handleChange} {...register('phoneNumber', { required: true })} />
                                 <span>{errors.phoneNumber && t("errorPhoneNumber")}</span>
                                 <div className="valid-feedback">{"Looks good!"}</div>
                             </Col>
@@ -334,7 +325,7 @@ export default function PopupEditEmployee(
                         <Row>
                             <Col md="6 mb-2">
                                 <Label>{t("email")}</Label>
-                                <input className="form-control" name="email" type="text" placeholder={t('email')} defaultValue={dataEmployeePopup.email} onChange={handleChange} {...register('email', {
+                                <input className="form-control btn-pill" name="email" type="text" placeholder={t('email')} defaultValue={dataEmployeePopup.email} onChange={handleChange} {...register('email', {
                                     required: true,
                                     pattern: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
                                 })} />
@@ -346,9 +337,9 @@ export default function PopupEditEmployee(
                                 <SelectBox
                                     dataSource={listRoles}
                                     displayExpr="rol"
+                                    className={'form-control dxSelectBorder'}
                                     value={objRol}
                                     searchEnabled={true}
-                                    elementAttr={selectBoxAttributes}
                                     placeholder={t('placeHolderPositionCompany')}
                                     showClearButton={true}
                                     name="selectRol"
@@ -368,7 +359,7 @@ export default function PopupEditEmployee(
                                     displayExpr="name"
                                     value={objCountry}
                                     searchEnabled={true}
-                                    elementAttr={selectBoxAttributes}
+                                    className={'form-control dxSelectBorder'}                                   
                                     placeholder={t('placeHolderCountry')}
                                     showClearButton={true}
                                     name="selectCountry"
@@ -383,10 +374,9 @@ export default function PopupEditEmployee(
                                 <SelectBox
                                     dataSource={listDeptoSelected}
                                     displayExpr="name"
-                                    // valueExpr="id"
                                     value={objDepartment}
                                     searchEnabled={true}
-                                    elementAttr={selectBoxAttributes}
+                                    className={'form-control dxSelectBorder'}
                                     placeholder={t('placeHolderDepartment')}
                                     showClearButton={true}
                                     name="selectDepartment"
@@ -405,7 +395,7 @@ export default function PopupEditEmployee(
                                     displayExpr="name"
                                     value={objMunicipio}
                                     searchEnabled={true}
-                                    elementAttr={selectBoxAttributes}
+                                    className={'form-control dxSelectBorder'}
                                     placeholder={t('placeHolderMunicipio')}
                                     showClearButton={true}
                                     name="selectMunicipio"
@@ -414,7 +404,7 @@ export default function PopupEditEmployee(
                             </Col>
                             <Col md="6 mb-2">
                                 <Label>{t("address")}</Label>
-                                <input className="form-control" name="city" type="text" placeholder={t("address")} defaultValue={dataEmployeePopup.address} onChange={handleChange}  {...register('address', { required: true })} />
+                                <input className="form-control btn-pill" name="city" type="text" placeholder={t("address")} defaultValue={dataEmployeePopup.address} onChange={handleChange}  {...register('address', { required: true })} />
                                 <span>{errors.address && t("address")}</span>
                                 <div className="invalid-feedback">{"Ingrese una dirección por favor."}</div>
                             </Col>
