@@ -49,6 +49,7 @@ i18n
                     createdDate:'Fecha de creación',
                     actions:"Acciones",
                     editInfo:"Editar información",
+                    selectStatus:"Estado",
 
                     //employeesComponent
                     employee: "Empleado",
@@ -143,6 +144,8 @@ i18n
                     actions:"Actions",
                     phoneNumber:"Phone number",
                     editInfo:"Edit information",
+                    selectStatus:"Status",
+
 
                     //employeesComponent
                     employee: "Employee",

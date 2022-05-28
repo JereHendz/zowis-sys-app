@@ -32,7 +32,6 @@ import { useTranslation } from 'react-i18next';
 
 
 const ListEmployees = () => {
-  const allowedPageSizes = [5, 10, 15];
   const [dataEmployee, setDataEmployee] = useState([]);
   const { t } = useTranslation();
   const [listRoles, setListRoles] = useState([]);
@@ -41,17 +40,9 @@ const ListEmployees = () => {
   const [listMunicipios, setListMunicipios] = useState([]);
   const [dataEmployeePopup, setDataEmployeePopup] = useState([]);
 
-
   const navigate = useNavigate();
   // Spaces
   const tab = '\u00A0';
-  // Define error array
-  const [error, setError] = useState({
-    userName: "",
-    email: "",
-    password: "",
-    passConfirm: "",
-  });
   const defaultLayoutObj = classes.find(
     (item) => Object.values(item).pop(1) === "compact-wrapper"
   );
@@ -68,14 +59,12 @@ const ListEmployees = () => {
   const [idMunicipio, setIdMunicipio] = useState('');
   const [objMunicipio, setObjMunicipio] = useState([]);
   const [objRol, setObjRol] = useState([]);
-  const [statusEmployee, setStatusEmployee] = useState([]);
+  const [statusEmployee, setStatusEmployee] = useState('');
+  const [listStatus, setListStatus] = useState([]);
+
 
   const [listMunicipioSelected, setListMunicipioSelected] = useState([]);
 
-
-
-
-  
 
   useEffect(() => {
     axios
@@ -87,6 +76,22 @@ const ListEmployees = () => {
         setListCountries(response.data.countries);
         setListDeparments(response.data.department);
         setListMunicipios(response.data.municipios);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  // Get the list of status 
+
+  useEffect(() => {
+
+    // We pass like parameter 1 because 1 has the general status
+    axios
+      .get(`${process.env.REACT_APP_DOMAIN_SERVER}/api/processstate/${1}`)
+      .then((response) => {
+        console.log(response.data);
+        setListStatus(response.data.listStatus);
       })
       .catch((error) => {
         console.log(error);
@@ -110,7 +115,7 @@ const ListEmployees = () => {
     setIdCountry(e.data.idCountry!==null && e.data.idCountry!==0  ? e.data.idCountry : '');
     setIdDepartment(e.data.idDepto!==null && e.data.idDepto!==0  ? e.data.idDepto : '');
     setIdMunicipio(e.data.idMunicipio!==null && e.data.idMunicipio!==0  ? e.data.idMunicipio : '');
-    setStatusEmployee(e.data.idMunicipio!==1 ? e.data.idMunicipio : 0);
+    setStatusEmployee(e.data.status!==1 ? e.data.status : 0);
 
     setObjRol(listRoles.find(v=>{
       return v.id===e.data.idRol;
@@ -163,6 +168,7 @@ const ListEmployees = () => {
 
                         <PopupEditEmployee
                           controlModalEditEmployee={controlModalEditEmployee}
+                          setControlModalEditEmployee={setControlModalEditEmployee}
                           changeStatusModalEmployee={changeStatusModalEmployee}
                           dataEmployeePopup={dataEmployeePopup}
                           listRoles={listRoles}
@@ -187,6 +193,11 @@ const ListEmployees = () => {
                           setObjMunicipio={setObjMunicipio}     
                           setObjRol={setObjRol} 
                           objRol={objRol}     
+                          setStatusEmployee={setStatusEmployee}
+                          statusEmployee={statusEmployee}
+                          listStatus={listStatus}
+                          dataEmployee={dataEmployee}
+                          setDataEmployee={setDataEmployee}
 
                         />
 
@@ -248,6 +259,9 @@ const ListEmployees = () => {
                           </Column>
                           <Column dataField="idMunicipio" caption={"Municipio"} >
                             <Lookup dataSource={listMunicipios} valueExpr="id" displayExpr="name" />
+                          </Column>
+                          <Column dataField="status" caption={"Estado del empleado"} >
+                            <Lookup dataSource={listStatus} valueExpr="id" displayExpr="name" />
                           </Column>
                         </DataGrid>
                       </div>
