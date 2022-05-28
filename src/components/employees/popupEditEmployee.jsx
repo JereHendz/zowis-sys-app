@@ -266,12 +266,10 @@ export default function PopupEditEmployee(
                 let updateEmp = axios.put(`${process.env.REACT_APP_DOMAIN_SERVER}api/employees/${dataEmployeePopup.id}`, infoUpdate)
                     .then((response) => {
                         // let { id } = response.data.data;
+                        setValidateClass(false);
                         toast.info(t('successCreated'));
-
                         loadEmployee();
-                        // setNotes(
-                        //     notes.map((note) => (note.id === id ? response.data.data : note))
-                        // );
+                        
                     })
                     .catch((errors) => {
                         setError(errors.response.data.messages)
@@ -292,7 +290,6 @@ export default function PopupEditEmployee(
             .then((response) => {
                 setDataEmployee(response.data.employees);
                 setControlModalEditEmployee(!controlModalEditEmployee);
-                document.getElementById("formEditEmployee").reset();
             })
             .catch((error) => {
                 console.log(error);
