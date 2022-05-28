@@ -34,6 +34,7 @@ const UserCreateForm = () => {
   const [password, setPassword] = useState("");
   const [passConfirm, setPassConfirm] = useState("");
   const [employees, setEmployees] = useState([]);
+  const [keySelectEmployees, setKeySelectEmployees] = useState('');
   const multiple = false;
   const [togglePassword, setTogglePassword]=useState(false);
   //array que recibe los errores del modelo de base de datos
@@ -110,6 +111,24 @@ const UserCreateForm = () => {
       setIdEmployee("");
     }
   }
+
+  function clearData(e){
+    reset({
+      userName: "",
+      email: "",
+      password: "",
+      passConfirm: ""
+    }, {
+      keepErrors: true, 
+      keepDirty: true,
+      keepIsSubmitted: false,
+      keepTouched: false,
+      keepIsValid: false,
+      keepSubmitCount: false,
+    });
+    setKeySelectEmployees(Math.random());
+    setIdEmployee('');
+  }
   
   return (
     <Fragment>
@@ -123,20 +142,21 @@ const UserCreateForm = () => {
                   <Row>
                     <FormGroup>
                       <Label className="col-form-label pt-0" >{t("userName")}</Label>
-                      <input className="form-control btn-pill" type="text" placeholder={t("placeholderUserName")} name="userName" {...register('userName', { required: true })} onChange={(e) => { setUserName(e.target.value)}} defaultValue={""} />
+                      <input className="form-control btn-pill" type="text" placeholder={t("placeholderUserName")} name="userName" onChange={(e) => { setUserName(e.target.value)}} {...register('userName', { required: true })} />
                       <span>{errors.userName && t("errorUserName")}</span>
                     </FormGroup>
                     <FormGroup>
                       <Label className="col-form-label pt-0" >{t("email")}</Label>
-                      <input className="form-control btn-pill" name="email" type="text" placeholder={t("placeholderEmail")} {...register('email', {
+                      <input className="form-control btn-pill" name="email" type="text" placeholder={t("placeholderEmail")} onChange={(e) => { setEmail(e.target.value)}} {...register('email', {
                         required: true,
                         pattern: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/
-                      })} onChange={(e) => { setEmail(e.target.value)}} />
+                      })} />
                       <span>{errors.email && t("errorEmail") || error.email}</span>
                     </FormGroup>
                     <FormGroup>
                       <Label className="col-form-label pt-0" >{t("employees")}</Label>
                       <Autocomplete
+                        key={keySelectEmployees}
                         getOptionLabel={(option) => option.firstName + ' ' + option.lastName}
                         classes={{ inputRoot: "form-control btn-pill" }}
                         onInputChange={(event, newVal) => {
@@ -162,7 +182,7 @@ const UserCreateForm = () => {
                         <input id={"spamError"} className="form-control btn-pill" type={togglePassword ? "text" : "password"} placeholder={t("placeholderPassword")} name="password" {...register('password', { 
                           required: true,
                           pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[ -/:-@\[-`{-~]).{6,64}$/
-                         })} onChange={(e) => { setPassword(e.target.value)}} />
+                         })} onBlur={(e) => { setPassword(e.target.value)}} />
                         <div className="show-hide" onClick={() => setTogglePassword(!togglePassword)}>
                           <span style={{ width: "100px" }} className={togglePassword ? "" : "show"}></span>
                         </div>
@@ -193,7 +213,7 @@ const UserCreateForm = () => {
                     <FormGroup>
                       <div className="position-relative">
                         <Label className="col-form-label pt-0">{t("passConfirm")}</Label>
-                        <input className="form-control btn-pill" type={togglePassword ? "text" : "password"} placeholder={t("placeholderPassConfirm")} name="passConfirm"  {...register('passConfirm', { required: true })} onChange={(e) => { setPassConfirm(e.target.value)}} />
+                        <input className="form-control btn-pill" type={togglePassword ? "text" : "password"} placeholder={t("placeholderPassConfirm")} name="passConfirm"  {...register('passConfirm', { required: true })} onBlur={(e) => { setPassConfirm(e.target.value)}}/>
                         <div className="show-hide" onClick={() => setTogglePassword(!togglePassword)}><span className={togglePassword ? "" : "show"}></span></div>
                         <span>{(password != passConfirm && validateClass) && t("errorMatchPassword")}</span>
                       </div>
@@ -201,22 +221,8 @@ const UserCreateForm = () => {
                   </Row>
                 </CardBody>
                 <CardFooter>
-                  <Button className="me-1" color="primary" type="submit" onClick={() => setValidateClass(true)}>{loading ? t("processing") : t("create")}</Button>
-                  <Button type="button" color="secondary" onClick={() => {
-                                                                          reset({
-                                                                            userName: "",
-                                                                            email: "",
-                                                                            password: "",
-                                                                            passConfirm: ""
-                                                                          }, {
-                                                                            keepErrors: true, 
-                                                                            keepDirty: true,
-                                                                            keepIsSubmitted: false,
-                                                                            keepTouched: false,
-                                                                            keepIsValid: false,
-                                                                            keepSubmitCount: false,
-                                                                          });
-                                                                        }} >{t("cancel")}</Button>
+                  <Button className="me-1" color="primary" type="submit" disabled={loading ? loading : loading} onClick={() => setValidateClass(true)}>{loading ? t("processing") : t("create")}</Button>
+                  <Button type="button" color="secondary" onClick={clearData} >{t("cancel")}</Button>
                 </CardFooter>
               </Form>
             </Card>
@@ -226,6 +232,5 @@ const UserCreateForm = () => {
     </Fragment>
   );
 };
-// disabled={loading ? loading : loading}
 
 export default UserCreateForm;

@@ -23,13 +23,23 @@ const UserList = () => {
   //variables para la lista de usuarios
   const [usersList, setUsersList] = useState([]);
   const [employeesList, setEmployeesList] = useState([]);
+  const [statusList, setStatusList] = useState([]);
   const tab = '\u00A0';
 
   //variables para la modal
   const [openPopup, setOpenPopup] = useState(false);
+  const [dataUser, setDataUser] = useState([]);
   const [idUser, setIdUser] = useState('');
-  const [userName, setUserName] = useState('elmer');
-
+  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
+  const [statusUser, setStatusUser] = useState('');
+  const [idEmployee, setIdEmployee] = useState('');
+  const [error, setError] = useState({
+    'userName': '',
+    'email': '',
+    'idEmployee':''
+  });
+  const [keyUserName, setKeyUserName] = useState('')
 
 
   useEffect(() => {
@@ -38,6 +48,7 @@ const UserList = () => {
       .then((res) => {
         setUsersList(res.data.users);
         setEmployeesList(res.data.employees);
+        setStatusList(res.data.status);
       })
       .catch((err) => {
         console.log(err);
@@ -56,8 +67,15 @@ const UserList = () => {
 
   //funcion para levantar la modal de edición de un usuario
   const editUser = (e) => {
-    setOpenPopup(true);
+    console.log(e.data);
+    setDataUser(e.data);
     setIdUser(e.data.id);
+    setUserName(e.data.userName);
+    setEmail(e.data.email);
+    setIdEmployee(e.data.idEmployee);
+    setStatusUser(e.data.status);
+    setOpenPopup(true);
+    setKeyUserName(Math.random());
   }
 
   //funcion que devuelve el empleado concatenado para el lookup
@@ -82,6 +100,14 @@ const UserList = () => {
                         employeesList={employeesList} setEmployeesList={setEmployeesList}
                         idUser={idUser} setIdUser={setIdUser}
                         userName={userName} setUserName={setUserName}
+                        email={email} setEmail={setEmail}
+                        idEmployee={idEmployee} setIdEmployee={setIdEmployee}
+                        statusList={statusList} setStatusList={setStatusList}
+                        statusUser={statusUser} setStatusUser={setStatusUser}
+                        dataUser={dataUser} setDataUser={setDataUser}
+                        setUsersList={setUsersList}
+                        error={error} setError={setError}
+                        keyUserName={keyUserName} setKeyUserName={setKeyUserName}
                       />
                         <div className="btn-showcase ">
                           <Button className="btn-pill" color="primary" onClick={createEmployee}><i className="icofont icofont-ui-add"></i>{tab + tab}{t('create')}</Button>
