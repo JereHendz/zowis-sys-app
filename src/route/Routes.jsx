@@ -121,17 +121,8 @@ import JobApply from "../components/jobSearch/job-apply"
 import Learninglist from "../components/learning/learning-list"
 import LearningDeatil from "../components/learning/learning-deatil"
 
-
-
 // Calendar
 import BasicCalender from "../components/calendar/basicCalendar"
-
-// Users
-import UserProfile from "../components/users/userProfile"
-import UserCreate from "../components/users/userCreate"
-import UserEdit from "../components/users/userEdit"
-import UserCards from "../components/users/userCards"
-import UserList from '../components/users/userList'
 
 // Maps
 import GoogleMap from "../components/map/googleMap"
@@ -203,10 +194,25 @@ import Todo from "../components/application/todo-app"
 import TodoFirebase from "../components/application/todo-firebase-app"
 import LeafletMapContain from '../components/map/LeafletMap'
 
+// Routes to Users
+import UserProfile from "../components/users/userProfile"
+import UserCreate from "../components/users/userCreate"
+import UserEdit from "../components/users/userEdit"
+import UserCards from "../components/users/userCards"
+import UserList from '../components/users/userList'
+
 // Routes to Employee
 import EmployeeCreate from "../components/employees/employeeCreate"
 import ListEmployees from '../components/employees/listEmployees'
 
+//Routes to Categories
+import CategoriesList from '../components/categories/categoriesList';
+
+//Routes to SubCategories
+import SubCategoriesList from '../components/subCategories/subCategoriesList';
+
+//Routes to Providers
+import ProvidersList from '../components/providers/providersList';
 
 
 export const routes = [
@@ -314,15 +320,27 @@ export const routes = [
         { path: `${process.env.PUBLIC_URL}/app/learning/learning-list/:layout`, Component: <Learninglist /> },
         { path: `${process.env.PUBLIC_URL}/app/learning/learning-detail/:layout`, Component: <LearningDeatil /> },
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //Categories
+        { path: `${process.env.PUBLIC_URL}/app/categories/categoriesList/:layout`, Component: <CategoriesList /> },
+
+        //SubCategories
+        { path: `${process.env.PUBLIC_URL}/app/subCategories/subCategoriesList/:layout`, Component: <SubCategoriesList /> },
+
+        //Providers
+        { path: `${process.env.PUBLIC_URL}/app/providers/providersList/:layout`, Component: <ProvidersList /> },
+
+        //Employees
         { path: `${process.env.PUBLIC_URL}/app/employees/employeeCreate/:layout`, Component: <EmployeeCreate /> },
         { path: `${process.env.PUBLIC_URL}/app/employees/listEmployees/:layout`, Component: <ListEmployees /> },
 
+        //Users
         { path: `${process.env.PUBLIC_URL}/app/users/userProfile/:layout`, Component: <UserProfile /> },
         { path: `${process.env.PUBLIC_URL}/app/users/userCreate/:layout`, Component: <UserCreate /> },
         { path: `${process.env.PUBLIC_URL}/app/users/userList/:layout`, Component: <UserList /> },
-
         { path: `${process.env.PUBLIC_URL}/app/users/userEdit/:layout`, Component: <UserEdit /> },
         { path: `${process.env.PUBLIC_URL}/app/users/userCards/:layout`, Component: <UserCards /> },
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         { path: `${process.env.PUBLIC_URL}/app/calendar/basic-calendar/:layout`, Component: <BasicCalender /> },
 

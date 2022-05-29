@@ -4,6 +4,7 @@ import { Home } from 'react-feather';
 import { Link } from 'react-router-dom'
 
 const Breadcrumbs = (props) => {
+  //const layout = localStorage.getItem('layout') || Object.keys(defaultLayoutObj).pop();
   return (
     <Fragment>
       <Container fluid={true}>
