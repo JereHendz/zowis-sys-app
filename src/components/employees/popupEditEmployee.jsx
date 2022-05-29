@@ -4,14 +4,14 @@ import { Container, Row, Col, Form, Label, Input, Card, FormGroup, InputGroup, I
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { classes } from '../../data/layouts';
 import { SelectBox } from 'devextreme-react/select-box';
 
 
 
 export default function PopupEditEmployee(
-    { controlModalEditEmployee, changeStatusModalEmployee, setControlModalEditEmployee,
+    {
+        controlModalEditEmployee,
+        setControlModalEditEmployee,
         dataEmployeePopup, listRoles,
         listCountries,
         valueRol,
@@ -43,20 +43,15 @@ export default function PopupEditEmployee(
 ) {
 
     const [arrayEmployee, setArrayEmployee] = useState(dataEmployeePopup);
-    const defaultLayoutObj = classes.find(item => Object.values(item).pop(1) === 'compact-wrapper');
-    const layout = localStorage.getItem('layout') || Object.keys(defaultLayoutObj).pop();
-    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     // Get the information of the logged user
     const infoUserLogin = JSON.parse(localStorage.getItem('infoUserLogin'));
 
-    const { register, handleSubmit, formState: { errors }, control } = useForm();
+    const { register, reset, handleSubmit, formState: { errors }, control } = useForm();
     const [validateClass, setValidateClass] = useState(false);
 
-
+    // User translation
     const { t } = useTranslation();
-
-    // Autocomplete
 
     // Define error array
     const [error, setError] = useState(
@@ -81,6 +76,40 @@ export default function PopupEditEmployee(
 
     }
 
+
+    useEffect(() => {
+        setValidateClass(false)
+        reset({
+            firstName:dataEmployeePopup.firstName,
+            lastName:dataEmployeePopup.lastName,
+            email:dataEmployeePopup.email
+        });
+      }, [controlModalEditEmployee])
+    
+
+    function handleChange(evt) {
+
+        /*
+          evt.target es el elemento que ejecuto el evento
+          name identifica el input y value describe el valor actual
+        */
+        const { target } = evt;
+        const { name, value } = target;
+        /*
+          Este snippet:
+          1. Clona el estado actual
+          2. Reemplaza solo el valor del
+             input que ejecutó el evento
+        */
+        const newArrayEmployee = {
+            ...arrayEmployee,
+            [name]: value,
+        };
+        // Sincroniza el estado de nuevo
+        setArrayEmployee(newArrayEmployee);
+
+    }
+
     const handleChangeRol = (newvalue) => {
         if (newvalue.value !== null) {
             // Set the id
@@ -95,7 +124,6 @@ export default function PopupEditEmployee(
 
         }
     }
-
 
     const handleChangeCountry = (newValue) => {
         if (newValue.value !== null) {
@@ -195,32 +223,7 @@ export default function PopupEditEmployee(
             setObjMunicipio([]);
 
         }
-    }
-
-
-
-    function handleChange(evt) {
-
-        /*
-          evt.target es el elemento que ejecuto el evento
-          name identifica el input y value describe el valor actual
-        */
-        const { target } = evt;
-        const { name, value } = target;
-        /*
-          Este snippet:
-          1. Clona el estado actual
-          2. Reemplaza solo el valor del
-             input que ejecutó el evento
-        */
-        const newArrayEmployee = {
-            ...arrayEmployee,
-            [name]: value,
-        };
-        // Sincroniza el estado de nuevo
-        setArrayEmployee(newArrayEmployee);
-
-    }
+    }    
 
     const handleStatusEmployee = (newvalue) => {
         if (newvalue.value !== null) {
@@ -301,11 +304,19 @@ export default function PopupEditEmployee(
             });
     }
 
+    const changeStatusModalEmployeeReset = () => {
+        setControlModalEditEmployee(false);
+    }
+
+    const changeStatusModalEmployee = () => {
+        setControlModalEditEmployee(!controlModalEditEmployee)
+    };
 
 
     return (
         <Fragment>
-            <Modal size="lg" isOpen={controlModalEditEmployee} toggle={changeStatusModalEmployee} centered>
+            <Modal
+                size="lg" isOpen={controlModalEditEmployee} toggle={changeStatusModalEmployee} centered>
                 <Form id='formEditEmployee' className={`needs-validation tooltip-validation ${validateClass ? 'validateClass' : ''}`} noValidate="" onSubmit={handleSubmit(onSubmit)}>
 
                     <ModalHeader toggle={changeStatusModalEmployee}>
@@ -449,11 +460,9 @@ export default function PopupEditEmployee(
                             </Col>
                         </Row>
 
-                        {/* <Button color="primary" type="submit">{t("create")}</Button> */}
-
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="secondary" onClick={changeStatusModalEmployee} >{t('close')}</Button>
+                        <Button color="secondary" onClick={changeStatusModalEmployeeReset} >{t('close')}</Button>
                         <Button color="primary" type="submit" onClick={() => setValidateClass(true)} >{t('update')}</Button>
                     </ModalFooter>
                 </Form>
@@ -462,5 +471,3 @@ export default function PopupEditEmployee(
         </Fragment>
     );
 }
-
-// export default PopupEditEmployee;

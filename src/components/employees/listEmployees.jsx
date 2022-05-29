@@ -106,7 +106,6 @@ const ListEmployees = () => {
     return <div align="center"><i style={{ cursor: 'pointer' }} className="icofont icofont-ui-edit" onClick={() => editEmployee(data)} /></div>;
   }
 
-  const changeStatusModalEmployee = () => setControlModalEditEmployee(!controlModalEditEmployee);
   const [controlModalEditEmployee, setControlModalEditEmployee] = useState(false);
 
   const editEmployee = (e) => {
@@ -142,6 +141,7 @@ const ListEmployees = () => {
     setObjMunicipio(listMunicipios.find(v=>{
       return v.id===e.data.idMunicipio;
     }));
+
     setControlModalEditEmployee(!controlModalEditEmployee);
 
   }
@@ -169,7 +169,6 @@ const ListEmployees = () => {
                         <PopupEditEmployee
                           controlModalEditEmployee={controlModalEditEmployee}
                           setControlModalEditEmployee={setControlModalEditEmployee}
-                          changeStatusModalEmployee={changeStatusModalEmployee}
                           dataEmployeePopup={dataEmployeePopup}
                           listRoles={listRoles}
                           listCountries={listCountries} 
