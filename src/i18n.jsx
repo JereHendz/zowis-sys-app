@@ -54,6 +54,8 @@ i18n
                     placeHolderSelect: "Seleccione una opción",
                     selectStatus:"Estado",
                     errorStatus:"Debe seleccionar un estado",
+                    createInfo:"Ingresar Información",
+                    placeHolderGeneralName:"Ingrese nombre",
 
                     //employeesComponent
                     employee: "Empleado",
@@ -106,7 +108,16 @@ i18n
                     subtitleListUsers: "Visualiza la información de los usuarios",
                     nameFirst: "Nombre",
                     nameLast: "Apellido",
-                    usrName: "Usuario"
+                    usrName: "Usuario",
+
+                    // List brands
+                    titleListBrands:"Lista de marcas",
+                    subttleListBrands:"Visualiza la información de la marca",
+                    nameBrand:"Marca",
+                    descriptionBrand:"Descripción",
+                    errorBrandName:"Debe ingresar el nombre de una marca",
+                    errorDescription:"Debe ingresar la descripción ",
+                    
                 }
             },
             en: {
@@ -149,8 +160,12 @@ i18n
                     actions:"Actions",
                     phoneNumber:"Phone number",
                     editInfo:"Edit information",
+                    createInfo:"Add information",
                     selectStatus:"Status",
                     errorStatus:"You must select a status",
+                    placeHolderGeneralName:"Type a name",
+                    
+
 
 
                     //employeesComponent
