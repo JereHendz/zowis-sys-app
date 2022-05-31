@@ -56,7 +56,7 @@ const UserList = () => {
   }, []);
 
   //redirección al formulario de creación
-  const createEmployee = (e) => {
+  const createUser = (e) => {
     navigate(`${process.env.PUBLIC_URL}/app/users/userCreate/${layout}`);
   };
 
@@ -85,7 +85,7 @@ const UserList = () => {
 
   return (
     <Fragment>
-      <Breadcrumb parent="Employee" title={t("titleListUsers")} />
+      <Breadcrumb parent="Users" title={t("titleListUsers")} />
       <Container fluid={true}>
         <Row >
           <Col sm="12">
@@ -110,7 +110,7 @@ const UserList = () => {
                         keyUserName={keyUserName} setKeyUserName={setKeyUserName}
                       />
                         <div className="btn-showcase ">
-                          <Button className="btn-pill" color="primary" onClick={createEmployee}><i className="icofont icofont-ui-add"></i>{tab + tab}{t('create')}</Button>
+                          <Button className="btn-pill" color="primary" onClick={createUser}><i className="icofont icofont-ui-add"></i>{tab + tab}{t('create')}</Button>
                         </div>
                         <DataGrid
                           dataSource={usersList}

@@ -1,4 +1,4 @@
-import { Home, Airplay, Box, FolderPlus, Command, Cloud, FileText, Server, BarChart, Users,Archive, Layers, ShoppingBag, List, Mail, MessageCircle, GitPullRequest, Monitor, Heart, Clock, Zap, CheckSquare, Calendar, Image, Film, HelpCircle, Radio, Map, Edit, Sunrise, Package, Globe } from 'react-feather'
+import { Home, Airplay, Box, FolderPlus, Command, Cloud, FileText, Server, BarChart, Users,Archive, Layers, ShoppingBag, List, Mail, MessageCircle, GitPullRequest, Monitor, Heart, Clock, Zap, CheckSquare, Calendar, Image, Film, HelpCircle, Radio, Map, Edit, Sunrise, Package, Slack, Globe } from 'react-feather'
 
 export const MENUITEMS = [
 
@@ -19,7 +19,7 @@ export const MENUITEMS = [
         menucontent: "Aministra los productos",
         Items: [
             {
-                title: "Producto", icon: Archive, path: `${process.env.PUBLIC_URL}/app/inventory/product/productCreate`, type: 'sub', bookmark: true, active: false, children: [
+                title: "Producto", icon: ShoppingBag, path: `${process.env.PUBLIC_URL}/app/inventory/product/productCreate`, type: 'sub', bookmark: true, active: false, children: [
                     { path: `${process.env.PUBLIC_URL}/app/inventory/product/productCreate`, type: 'link', title: 'Crear producto' },
                 ]
             },
@@ -36,18 +36,18 @@ export const MENUITEMS = [
         menucontent: "Administra el personal",
         Items: [
             {
-                title: 'Employees', icon: Users, path: `${process.env.PUBLIC_URL}/app/users/userProfile`, type: 'sub', bookmark: true, active: false, children: [
+                title: 'Employees', icon: Users, type: 'sub', bookmark: true, active: false, children: [
                     { path: `${process.env.PUBLIC_URL}/app/employees/employeeCreate`, type: 'link', title: 'Crear Empleado' },
                     { path: `${process.env.PUBLIC_URL}/app/employees/listEmployees`, type: 'link', title: 'Lista de Empleados' },
                 ]
             },
             {
-                title: 'Users', icon: Users, path: `${process.env.PUBLIC_URL}/app/users/userProfile`, type: 'sub', bookmark: true, active: false, children: [
-                    { path: `${process.env.PUBLIC_URL}/app/users/userProfile`, type: 'link', title: 'Users Profile ' },
+                title: 'Users', icon: Users, type: 'sub', bookmark: true, active: false, children: [
+                    // { path: `${process.env.PUBLIC_URL}/app/users/userProfile`, type: 'link', title: 'Users Profile ' },
                     { path: `${process.env.PUBLIC_URL}/app/users/userCreate`, type: 'link', title: 'Users Create' },
                     { path: `${process.env.PUBLIC_URL}/app/users/userList`, type: 'link', title: 'Lista de Usuarios' },
-                    { path: `${process.env.PUBLIC_URL}/app/users/userEdit`, type: 'link', title: 'Users Edit' },
-                    { path: `${process.env.PUBLIC_URL}/app/users/userCards`, type: 'link', title: 'Users Cards' },
+                    // { path: `${process.env.PUBLIC_URL}/app/users/userEdit`, type: 'link', title: 'Users Edit' },
+                    // { path: `${process.env.PUBLIC_URL}/app/users/userCards`, type: 'link', title: 'Users Cards' },
                 ]
             },
         ]
@@ -68,6 +68,31 @@ export const MENUITEMS = [
         menutitle: "CATÁLOGOS",
         menucontent: "Administra los catálogos",
         Items: [
+            {
+                title: 'Categorías', icon: List, type: 'sub', active: false, children: [
+                    { path: `${process.env.PUBLIC_URL}/app/categories/categoriesList`, title: 'Lista de categorías', type: 'link' },
+                ]
+            },
+            {
+                title: 'Subcategorías', icon: List, type: 'sub', active: false, children: [
+                    { path: `${process.env.PUBLIC_URL}/app/subCategories/subCategoriesList`, title: 'Lista de subcategorías', type: 'link' },
+                ]
+            },
+            {
+                title: 'Proveedores', icon: List, type: 'sub', active: false, children: [
+                    { path: `${process.env.PUBLIC_URL}/app/providers/providersList`, title: 'Lista de proveedores', type: 'link' },
+                ]
+            },
+            {
+                title: 'Icons', icon: Command, path: `${process.env.PUBLIC_URL}/icons/flagIcons`, type: 'sub', active: false, bookmark: true, children: [
+                    { path: `${process.env.PUBLIC_URL}/icons/flagIcons`, title: 'Flag Icon', type: 'link' },
+                    { path: `${process.env.PUBLIC_URL}/icons/fontAwsomeIcon`, title: 'Fontawesome Icon ', type: 'link' },
+                    { path: `${process.env.PUBLIC_URL}/icons/icoIcons`, title: 'Ico Icon ', type: 'link' },
+                    { path: `${process.env.PUBLIC_URL}/icons/themifyIcons`, title: 'Themify Icon ', type: 'link' },
+                    { path: `${process.env.PUBLIC_URL}/icons/featherIcons`, title: 'Feather Icon ', type: 'link' },
+                    { path: `${process.env.PUBLIC_URL}/icons/weatherIcons`, title: 'Whether Icon ', type: 'link' },
+                ]
+            },
             {
                 title: "Marcas", icon: Globe, path: `${process.env.PUBLIC_URL}/app/brands/listBrands`, type: 'sub', bookmark: true, active: false, children: [
                     { path: `${process.env.PUBLIC_URL}/app/brands/listBrands`, type: 'link', title: 'Lista de Marcas' },

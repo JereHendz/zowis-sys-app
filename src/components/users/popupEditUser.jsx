@@ -96,22 +96,6 @@ export default function PopupEditUser(
 
     function clearData(e){
         setOpenPopup(!openPopup);
-        // reset({
-        //   userName: "",
-        //   email: ""
-        // }, {
-        //   keepErrors: false, 
-        //   keepDirty: true,
-        //   keepIsSubmitted: false,
-        //   keepTouched: false,
-        //   keepIsValid: false,
-        //   keepSubmitCount: false,
-        // });
-        // setError({
-        //     'userName': '',
-        //     'email': '',
-        //     'idEmployee':''
-        // });
         setValidateClass(false);
         reset();
     }
@@ -181,7 +165,7 @@ export default function PopupEditUser(
                                     <span>{(idEmployee == '' && validateClass) && t("errorEmployee")}</span>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label className="col-form-label pt-0" >{t("estatus")}</Label>
+                                    <Label className="col-form-label pt-0" >{t("selectStatus")}</Label>
                                     <Autocomplete
                                         options={statusList}
                                         getOptionLabel={(option) => option.name}

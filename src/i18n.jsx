@@ -10,7 +10,7 @@ i18n
         resources: {
             es: {
                 translations: {
-                    //Textos generales
+                    //General Text
                     General: "General",
                     Dashboards: "Cuadros de mando",
                     Widgets: " widgets",
@@ -35,12 +35,13 @@ i18n
                     lastName:"Apellidos",
                     placeHolderFirstName:"Nombres",
                     placeHolderLastName:"Apellidos",
-                    placeHolderPhoneNumber:"Teléfono",    
+                    placeHolderPhoneNumber:"Teléfono",  
                     errorFirstName:"Debe ingresar el nombre",
                     errorLastName:"Debe ingresar los apellidos",  
                     errorPhoneNumber:"Debe ingresar el número de teléfono", 
                     errorEmail:"Debe ingresar un correo válido",      
-                    errorAddress:"Debe ingresar la dirección",     
+                    errorAddress:"Debe ingresar la dirección",
+                    errorRequired:"Este campo no puede ser vacío",    
                     SingIn:"Usted no tiene usuario logeado",
                     errorCreate: "Error al crear el registro",
                     successCreated:"Registro creado correctamente",
@@ -50,10 +51,12 @@ i18n
                     createdDate:'Fecha de creación',
                     actions:"Acciones",
                     editInfo:"Editar información",
-                    estatus: "Estado",
                     placeHolderSelect: "Seleccione una opción",
                     selectStatus:"Estado",
                     errorStatus:"Debe seleccionar un estado",
+                    description: "Descripción",
+                    placeHolderDescription: "Ingrese la descripción",
+                    newRecord: "Nuevo registro",
                     createInfo:"Ingresar Información",
                     placeHolderGeneralName:"Ingrese nombre",
 
@@ -77,11 +80,10 @@ i18n
                     errorDui:"Debe ingresar el dui",
                     errorPositionCompany:"Debe selecionar un cargo",
                     errorCountry:"Debe selececionar un país",
-                    // List employee
                     titleListEmployee:"Lista de empleados",
                     subtitleListEmployee:"Información de los empleados",
 
-                    //UsersCreateComponent
+                    //UsersComponents
                     user: "Usuario",
                     users: "Usuarios",
                     userName: "Nombre de usuario",
@@ -92,7 +94,7 @@ i18n
                     password: "Contraseña",
                     placeholderPassword: "Ingresa la contraseña",
                     errorPassword: 'Contraseña no válida',
-                    passConfirm: "Confirmar ontraseña",
+                    passConfirm: "Confirmar contraseña",
                     headPopPass: "La contraseña debe contener",
                     bodyPopPass1: "1- Al menos 6 caracteres.",
                     bodyPopPass2: "2- Incluir al menos una mayúscula.",
@@ -102,14 +104,17 @@ i18n
                     errorPassConfirm: "Debe confirmar la contraseña",
                     errorMatchPassword: "Las contraseñas no coinciden",
                     errorSingIn: "Oppss.. El usuario o la contraseña son incorrectass.",
-
-                    //lista de usuarios
                     titleListUsers: "Lista de usuarios",
                     subtitleListUsers: "Visualiza la información de los usuarios",
                     nameFirst: "Nombre",
                     nameLast: "Apellido",
                     usrName: "Usuario",
 
+                    //Category
+                    categories: "Categorías",
+                    category: "Categoría",
+                    placeholderCategory: "Ingrese la categoría",
+                    titleListCategories: "Lista de categorías",
                     // List brands
                     titleListBrands:"Lista de marcas",
                     subttleListBrands:"Visualiza la información de la marca",
@@ -150,8 +155,9 @@ i18n
                     errorLastName:"You must enter the last Name",  
                     errorPhoneNumber:"You must enter the phone number", 
                     errorEmail:"You must enter a valid email",      
-                    errorAddress:"You must enter an address",     
-    SingIn:"You do not have a registered user ",
+                    errorAddress:"You must enter an address",  
+                    errorRequired:"This field cannot be empty",    
+                    SingIn:"You do not have a registered user ",
                     successCreated:"Record created successfully",
                     successUpdated:"Record updated successfully",
                     country:"Country",
@@ -163,6 +169,9 @@ i18n
                     createInfo:"Add information",
                     selectStatus:"Status",
                     errorStatus:"You must select a status",
+                    description: "Description",
+                    placeHolderDescription: "Enter description",
+                    newRecord: "New record",
                     placeHolderGeneralName:"Type a name",
                     
 
@@ -211,7 +220,13 @@ i18n
                     listUsers: "Users list",
                     nameFirst: "First name",
                     nameLast: "Last name",
-                    usrName: "User name"
+                    usrName: "User name",
+
+                    //Category
+                    categories: "Categories",
+                    category: "Category",
+                    placeholderCategory: "Enter category",
+                    titleListCategories: "Categories list",
                 }
             },
             cn: {
