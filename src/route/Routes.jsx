@@ -217,6 +217,10 @@ import ProvidersList from '../components/providers/providersList';
 //Routes to Brands
 import ListBrands from '../components/brands/listBrands';
 
+//Routes to Inventory
+// Routes to products
+import ProductCreate from '../components/inventory/product/productCreate';
+
 
 export const routes = [
         { path: `${process.env.PUBLIC_URL}/dashboard/default/:layout/`, Component: <Default /> },
@@ -346,6 +350,9 @@ export const routes = [
 
           //Brands
           { path: `${process.env.PUBLIC_URL}/app/brands/listBrands/:layout`, Component: <ListBrands /> },
+
+           //Products
+           { path: `${process.env.PUBLIC_URL}/app/inventory/product/ProductCreate/:layout`, Component: <ProductCreate /> },
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         { path: `${process.env.PUBLIC_URL}/app/calendar/basic-calendar/:layout`, Component: <BasicCalender /> },

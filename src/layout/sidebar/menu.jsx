@@ -1,4 +1,4 @@
-import { Home, Airplay, Box, FolderPlus, Command, Cloud, FileText, Server, BarChart, Users, Layers, ShoppingBag, List, Mail, MessageCircle, GitPullRequest, Monitor, Heart, Clock, Zap, CheckSquare, Calendar, Image, Film, HelpCircle, Radio, Map, Edit, Sunrise, Package, Globe } from 'react-feather'
+import { Home, Airplay, Box, FolderPlus, Command, Cloud, FileText, Server, BarChart, Users,Archive, Layers, ShoppingBag, List, Mail, MessageCircle, GitPullRequest, Monitor, Heart, Clock, Zap, CheckSquare, Calendar, Image, Film, HelpCircle, Radio, Map, Edit, Sunrise, Package, Globe } from 'react-feather'
 
 export const MENUITEMS = [
 
@@ -18,6 +18,11 @@ export const MENUITEMS = [
         menutitle: "INVENTARIO",
         menucontent: "Aministra los productos",
         Items: [
+            {
+                title: "Producto", icon: Archive, path: `${process.env.PUBLIC_URL}/app/inventory/product/productCreate`, type: 'sub', bookmark: true, active: false, children: [
+                    { path: `${process.env.PUBLIC_URL}/app/inventory/product/productCreate`, type: 'link', title: 'Crear producto' },
+                ]
+            },
             // {
             //     title: 'Dashboard', icon: Home, type: 'sub', badge: "badge badge-success", badgetxt: "2", active: false, children: [
             //         { path: `${process.env.PUBLIC_URL}/dashboard/default`, title: 'Default', type: 'link' },
@@ -65,7 +70,6 @@ export const MENUITEMS = [
         Items: [
             {
                 title: "Marcas", icon: Globe, path: `${process.env.PUBLIC_URL}/app/brands/listBrands`, type: 'sub', bookmark: true, active: false, children: [
-                    // { path: `${process.env.PUBLIC_URL}/app/employees/employeeCreate`, type: 'link', title: 'Crear Empleado' },
                     { path: `${process.env.PUBLIC_URL}/app/brands/listBrands`, type: 'link', title: 'Lista de Marcas' },
                 ]
             },
