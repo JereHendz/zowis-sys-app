@@ -214,6 +214,9 @@ import SubCategoriesList from '../components/subCategories/subCategoriesList';
 //Routes to Providers
 import ProvidersList from '../components/providers/providersList';
 
+//Routes to Brands
+import ListBrands from '../components/brands/listBrands';
+
 
 export const routes = [
         { path: `${process.env.PUBLIC_URL}/dashboard/default/:layout/`, Component: <Default /> },
@@ -340,6 +343,9 @@ export const routes = [
         { path: `${process.env.PUBLIC_URL}/app/users/userList/:layout`, Component: <UserList /> },
         { path: `${process.env.PUBLIC_URL}/app/users/userEdit/:layout`, Component: <UserEdit /> },
         { path: `${process.env.PUBLIC_URL}/app/users/userCards/:layout`, Component: <UserCards /> },
+
+          //Brands
+          { path: `${process.env.PUBLIC_URL}/app/brands/listBrands/:layout`, Component: <ListBrands /> },
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         { path: `${process.env.PUBLIC_URL}/app/calendar/basic-calendar/:layout`, Component: <BasicCalender /> },

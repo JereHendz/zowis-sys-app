@@ -57,6 +57,8 @@ i18n
                     description: "Descripción",
                     placeHolderDescription: "Ingrese la descripción",
                     newRecord: "Nuevo registro",
+                    createInfo:"Ingresar Información",
+                    placeHolderGeneralName:"Ingrese nombre",
 
                     //employeesComponent
                     employee: "Empleado",
@@ -113,6 +115,14 @@ i18n
                     category: "Categoría",
                     placeholderCategory: "Ingrese la categoría",
                     titleListCategories: "Lista de categorías",
+                    // List brands
+                    titleListBrands:"Lista de marcas",
+                    subttleListBrands:"Visualiza la información de la marca",
+                    nameBrand:"Marca",
+                    descriptionBrand:"Descripción",
+                    errorBrandName:"Debe ingresar el nombre de una marca",
+                    errorDescription:"Debe ingresar la descripción ",
+                    
                 }
             },
             en: {
@@ -156,11 +166,15 @@ i18n
                     actions:"Actions",
                     phoneNumber:"Phone number",
                     editInfo:"Edit information",
+                    createInfo:"Add information",
                     selectStatus:"Status",
                     errorStatus:"You must select a status",
                     description: "Description",
                     placeHolderDescription: "Enter description",
                     newRecord: "New record",
+                    placeHolderGeneralName:"Type a name",
+                    
+
 
 
                     //employeesComponent

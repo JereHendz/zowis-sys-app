@@ -1,5 +1,7 @@
-import { Home, Airplay, Box, FolderPlus, Command, Cloud, FileText, Server, BarChart, Users, Layers, ShoppingBag, List, Mail, MessageCircle, GitPullRequest, Monitor, Heart, Clock, Zap, CheckSquare, Calendar, Image, Film, HelpCircle, Radio, Map, Edit, Sunrise, Package, Slack } from 'react-feather'
+import { Home, Airplay, Box, FolderPlus, Command, Cloud, FileText, Server, BarChart, Users, Layers, ShoppingBag, List, Mail, MessageCircle, GitPullRequest, Monitor, Heart, Clock, Zap, CheckSquare, Calendar, Image, Film, HelpCircle, Radio, Map, Edit, Sunrise, Package, Slack, Globe } from 'react-feather'
+
 export const MENUITEMS = [
+
     {
         menutitle: "VENTAS",
         menucontent: "Administra las ventas",
@@ -86,6 +88,18 @@ export const MENUITEMS = [
                     { path: `${process.env.PUBLIC_URL}/icons/weatherIcons`, title: 'Whether Icon ', type: 'link' },
                 ]
             },
+            {
+                title: "Marcas", icon: Globe, path: `${process.env.PUBLIC_URL}/app/brands/listBrands`, type: 'sub', bookmark: true, active: false, children: [
+                    // { path: `${process.env.PUBLIC_URL}/app/employees/employeeCreate`, type: 'link', title: 'Crear Empleado' },
+                    { path: `${process.env.PUBLIC_URL}/app/brands/listBrands`, type: 'link', title: 'Lista de Marcas' },
+                ]
+            },
+            // {
+            //     title: 'Dashboard', icon: Home, type: 'sub', badge: "badge badge-success", badgetxt: "2", active: false, children: [
+            //         { path: `${process.env.PUBLIC_URL}/dashboard/default`, title: 'Default', type: 'link' },
+            //         { path: `${process.env.PUBLIC_URL}/dashboard/ecommerce`, title: 'Ecommerce', type: 'link' },
+            //     ]
+            // },
         ]
     },
     // {

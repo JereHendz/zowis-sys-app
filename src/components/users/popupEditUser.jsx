@@ -96,22 +96,6 @@ export default function PopupEditUser(
 
     function clearData(e){
         setOpenPopup(!openPopup);
-        // reset({
-        //   userName: "",
-        //   email: ""
-        // }, {
-        //   keepErrors: false, 
-        //   keepDirty: true,
-        //   keepIsSubmitted: false,
-        //   keepTouched: false,
-        //   keepIsValid: false,
-        //   keepSubmitCount: false,
-        // });
-        // setError({
-        //     'userName': '',
-        //     'email': '',
-        //     'idEmployee':''
-        // });
         setValidateClass(false);
         reset();
     }
