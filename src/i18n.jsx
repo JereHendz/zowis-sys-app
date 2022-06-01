@@ -114,7 +114,14 @@ i18n
                     categories: "Categorías",
                     category: "Categoría",
                     placeholderCategory: "Ingrese la categoría",
+                    placeholderSelectCategory: "Seleccione una categoría",
                     titleListCategories: "Lista de categorías",
+
+                    //subcategories
+                    titleListSubcategories: "Lista de subcategorias",
+                    subcategory: "Subcategoría",
+                    errorSubCategoryName:"Debe ingresar el nombre de un modelo",
+
                     // List brands
                     titleListBrands:"Lista de marcas",
                     subttleListBrands:"Visualiza la información de la marca",
@@ -226,7 +233,12 @@ i18n
                     categories: "Categories",
                     category: "Category",
                     placeholderCategory: "Enter category",
+                    placeholderSelectCategory: "You must select a category",
                     titleListCategories: "Categories list",
+
+                    //subcategories
+                    titleListSubcategories: "Subcategories list",
+                    subcategory: "Subcategory",
                 }
             },
             cn: {
