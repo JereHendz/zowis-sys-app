@@ -129,6 +129,27 @@ i18n
                     descriptionBrand:"Descripción",
                     errorBrandName:"Debe ingresar el nombre de una marca",
                     errorDescription:"Debe ingresar la descripción ",
+
+                     // Product
+                     product: "Producto",
+                     titleCreateProduct: "Agregar producto",
+                     prodcutName:"Nombre del producto",
+                     stockLimit:"Límite dde existencias",
+                     percentageProfit:"Porcentaje de ganancia",
+                     barcode:"Código de barra",
+                     amount:"Cantidad",
+                     unitPrice:"Precio unitario",
+                     saleUnitPrice:"Precio de venta",
+                     productPhotos:"Seleccionar fotos",
+                     errorProductName:"Debe ingresar un nombre de producto",
+                     errorCategory:"Debe seleccionar una categoría",
+                     errorSubCategory:"Debe seleccionar una subcategoría",
+                     errorStockLimit:"Debe ingresar un límite de existencias",
+                     errorBarcode:"Debe ingresar un código de barra",
+                     errorSelectBrand:"Debe seleccionar una marca",
+                     errorAmount:"Debe ingresar una cantidad",
+                     errorUnitPrice:"Debe ingresar un precio unitario",
+                     unitSalePrice:"Debe ingresar un precio de venta"
                     
                 }
             },
@@ -239,6 +260,28 @@ i18n
                     //subcategories
                     titleListSubcategories: "Subcategories list",
                     subcategory: "Subcategory",
+                    // Product
+                    product: "Product",
+                    titleCreateProduct: "Add product",
+                    prodcutName:"Product Name",
+                    stockLimit:"Stock",
+                    percentageProfit:"Percentage of profit",
+                    barcode:"Barcode",
+                    amount:"Amount",
+                    unitPrice:"Unit price",
+                    saleUnitPrice:"Unit sale price",
+                    productPhotos:"Choose images",
+                    errorProductName:"You must enter a product name",
+                    errorCategory:"You must choose a category",
+                    errorSubCategory:"You must choose a subcategory",
+                    errorStockLimit:"You must enter a stock limit",
+                    errorBarcode:"You must enter a barcode",
+                    errorSelectBrand:"You must choose a brand",
+                    errorAmount:"You must enter a amount",
+                    errorUnitPrice:"You must enter an unit price",
+                    unitSalePrice:"You must enter an unit price of sale"                    
+
+
                 }
             },
             cn: {

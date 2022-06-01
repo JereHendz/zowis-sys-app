@@ -30,7 +30,7 @@ import Toolbar from 'devextreme-react/toolbar';
 import { useTranslation } from 'react-i18next';
 
 
-const ListBrands = () => {
+const ListProduct = () => {
   // To traslate the words
   const { t } = useTranslation();
 
@@ -91,7 +91,7 @@ const ListBrands = () => {
 
 
 
-  const createBrand = (e) => {
+  const createEmployee = (e) => {
     setDataBrands(
       {
         createDate: "",
@@ -146,7 +146,7 @@ const ListBrands = () => {
 
 
                         <div className="btn-showcase ">
-                          <Button className="btn-pill" color="primary" onClick={createBrand}><i className="icofont icofont-ui-add"></i>{tab + tab}{t('create')}</Button>
+                          <Button className="btn-pill" color="primary" onClick={createEmployee}><i className="icofont icofont-ui-add"></i>{tab + tab}{t('create')}</Button>
                         </div>
 
                         <DataGrid
@@ -204,7 +204,4 @@ const ListBrands = () => {
 
 };
 
-
-
-
-export default ListBrands;
+export default ListProduct;
