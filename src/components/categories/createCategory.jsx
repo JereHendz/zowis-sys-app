@@ -1,6 +1,6 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import { useForm } from 'react-hook-form'
-import { Row, Form, Label, Col, FormGroup, Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Row, Form, Label, Col, FormGroup, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input } from "reactstrap";
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import axios from "axios";
@@ -35,7 +35,7 @@ export default function CreateCategory({
 
             const info = {
                 name: category,
-                description: data.description,
+                description: description,
                 whoCreated: infoUserLogin.id
             };
 
@@ -96,9 +96,8 @@ export default function CreateCategory({
                             </FormGroup>
                             <Col md="12 mb-2">
                                 <Label>{t("description")}</Label>
-                                <input type="text" className="form-control btn-pill" rows="3" placeholder={t("placeHolderDescription")} {...register('description',{
-                                    onChange: (e) => { setDescription(e.target.value) } 
-                                })} />
+                                <Input type="textarea" className="form-control btn-pill" rows="2" placeholder={t("placeHolderDescription")} 
+                                onChange= {(e) => setDescription(e.target.value) } />
                             </Col>
                         </Row> 
                     </ModalBody>

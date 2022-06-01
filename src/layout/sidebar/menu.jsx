@@ -31,13 +31,13 @@ export const MENUITEMS = [
         menucontent: "Administra el personal",
         Items: [
             {
-                title: 'Employees', icon: Users, type: 'sub', bookmark: true, active: false, children: [
+                title: 'Employees', icon: Users, type: 'sub', active: false, children: [
                     { path: `${process.env.PUBLIC_URL}/app/employees/employeeCreate`, type: 'link', title: 'Crear Empleado' },
                     { path: `${process.env.PUBLIC_URL}/app/employees/listEmployees`, type: 'link', title: 'Lista de Empleados' },
                 ]
             },
             {
-                title: 'Users', icon: Users, type: 'sub', bookmark: true, active: false, children: [
+                title: 'Users', icon: Users, type: 'sub', active: false, children: [
                     // { path: `${process.env.PUBLIC_URL}/app/users/userProfile`, type: 'link', title: 'Users Profile ' },
                     { path: `${process.env.PUBLIC_URL}/app/users/userCreate`, type: 'link', title: 'Users Create' },
                     { path: `${process.env.PUBLIC_URL}/app/users/userList`, type: 'link', title: 'Lista de Usuarios' },
@@ -78,18 +78,18 @@ export const MENUITEMS = [
                     { path: `${process.env.PUBLIC_URL}/app/providers/providersList`, title: 'Lista de proveedores', type: 'link' },
                 ]
             },
+            // {
+            //     title: 'Icons', icon: Command, path: `${process.env.PUBLIC_URL}/icons/flagIcons`, type: 'sub', active: false, bookmark: true, children: [
+            //         { path: `${process.env.PUBLIC_URL}/icons/flagIcons`, title: 'Flag Icon', type: 'link' },
+            //         { path: `${process.env.PUBLIC_URL}/icons/fontAwsomeIcon`, title: 'Fontawesome Icon ', type: 'link' },
+            //         { path: `${process.env.PUBLIC_URL}/icons/icoIcons`, title: 'Ico Icon ', type: 'link' },
+            //         { path: `${process.env.PUBLIC_URL}/icons/themifyIcons`, title: 'Themify Icon ', type: 'link' },
+            //         { path: `${process.env.PUBLIC_URL}/icons/featherIcons`, title: 'Feather Icon ', type: 'link' },
+            //         { path: `${process.env.PUBLIC_URL}/icons/weatherIcons`, title: 'Whether Icon ', type: 'link' },
+            //     ]
+            // },
             {
-                title: 'Icons', icon: Command, path: `${process.env.PUBLIC_URL}/icons/flagIcons`, type: 'sub', active: false, bookmark: true, children: [
-                    { path: `${process.env.PUBLIC_URL}/icons/flagIcons`, title: 'Flag Icon', type: 'link' },
-                    { path: `${process.env.PUBLIC_URL}/icons/fontAwsomeIcon`, title: 'Fontawesome Icon ', type: 'link' },
-                    { path: `${process.env.PUBLIC_URL}/icons/icoIcons`, title: 'Ico Icon ', type: 'link' },
-                    { path: `${process.env.PUBLIC_URL}/icons/themifyIcons`, title: 'Themify Icon ', type: 'link' },
-                    { path: `${process.env.PUBLIC_URL}/icons/featherIcons`, title: 'Feather Icon ', type: 'link' },
-                    { path: `${process.env.PUBLIC_URL}/icons/weatherIcons`, title: 'Whether Icon ', type: 'link' },
-                ]
-            },
-            {
-                title: "Marcas", icon: Globe, path: `${process.env.PUBLIC_URL}/app/brands/listBrands`, type: 'sub', bookmark: true, active: false, children: [
+                title: "Marcas", icon: Globe, type: 'sub', active: false, children: [
                     // { path: `${process.env.PUBLIC_URL}/app/employees/employeeCreate`, type: 'link', title: 'Crear Empleado' },
                     { path: `${process.env.PUBLIC_URL}/app/brands/listBrands`, type: 'link', title: 'Lista de Marcas' },
                 ]

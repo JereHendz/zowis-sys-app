@@ -32,9 +32,9 @@ export default function EditCategory(
         setValidateClass(false)
         reset({
             category: dataCategory.name,
-            description: dataCategory.description,
             statusCategory: dataCategory.status
         });
+        setDescription(dataCategory.description);
     }, [editOpen]);
 
     //Evento que sucede al dar clic al botón de crear
@@ -49,7 +49,7 @@ export default function EditCategory(
 
                 const infoUpdate = {
                     name: data.category,
-                    description: data.description,
+                    description: description,
                     status: statusCategory,
                     whodidit: infoUserLogin.id
                 };
@@ -101,22 +101,16 @@ export default function EditCategory(
                     </ModalHeader>
                     <ModalBody>
                         <Row>
-                            <FormGroup>
-                            <Label className="col-form-label pt-0" >{t("category")}</Label>
-                            <input className="form-control btn-pill" type="text" placeholder={t("placeholderCategory")}
-                            {...register('category', { 
-                                required: true,
-                                onChange: (e) => { setCategory(e.target.value) }
-                            })} />
-                            <span>{errors.category && t("errorRequired")}</span>
-                            </FormGroup>
-                            <Col md="12 mb-2">
-                                <Label>{t("description")}</Label>
-                                <input type="text" className="form-control btn-pill" rows="3" placeholder={t("placeHolderDescription")} {...register('description',{
-                                    onChange: (e) => { setDescription(e.target.value) } 
+                            <Col md="6 mb-2">
+                                <Label className="col-form-label pt-0" >{t("category")}</Label>
+                                <input className="form-control btn-pill" type="text" placeholder={t("placeholderCategory")}
+                                {...register('category', { 
+                                    required: true,
+                                    onChange: (e) => { setCategory(e.target.value) }
                                 })} />
+                                <span>{errors.category && t("errorRequired")}</span>
                             </Col>
-                            <FormGroup>
+                            <Col md="6 mb-2">
                                 <Label className="col-form-label pt-0" >{t("selectStatus")}</Label>
                                 <Autocomplete
                                     options={statusListCategories}
@@ -139,7 +133,14 @@ export default function EditCategory(
                                 />
                                 <input type="hidden"/>
                                 <span>{(statusCategory == '' && validateClass) && t("errorStatus")}</span>
-                            </FormGroup>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md="12 mb-2">
+                                <Label>{t("description")}</Label>
+                                <Input type="textarea" className="form-control btn-pill" rows="2" placeholder={t("placeHolderDescription")} 
+                                defaultValue={description} onChange= {(e) => setDescription(e.target.value) } />
+                            </Col>
                         </Row>
                     </ModalBody>
                     <ModalFooter>
