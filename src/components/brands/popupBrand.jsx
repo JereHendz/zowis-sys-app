@@ -55,8 +55,8 @@ export default function PopupBrand(
     const onSubmit: SubmitHandler<FormValues> = data => {
         // If all validations are met we'll call register method
         if (isEditPopup) {
-             updateBrand(data);
-        }else{
+            updateBrand(data);
+        } else {
 
             createBrand(data);
         }
@@ -87,12 +87,12 @@ export default function PopupBrand(
           2. Reemplaza solo el valor del
              input que ejecutó el evento
         */
-        const newArrayEmployee = {
+        const newArrayBrand = {
             ...dataBrands,
             [name]: value,
         };
         // Sincroniza el estado de nuevo
-        setDataBrands(newArrayEmployee);
+        setDataBrands(newArrayBrand);
 
     }
 
@@ -116,30 +116,33 @@ export default function PopupBrand(
 
 
 
-        if (infoUserLogin.id !== null && infoUserLogin.id !== '' && dataBrands.id !== undefined && statusBrand !== undefined && statusBrand !== '') {
-            setLoading(true);
+        if (infoUserLogin.id !== null && infoUserLogin.id !== '') {
+            if (dataBrands.id !== undefined && statusBrand !== undefined && statusBrand !== '') {
+                setLoading(true);
 
 
 
-            const infoUpdate = {
-                name: data.name,
-                description: dataBrands.description,
-                status: statusBrand,
-                whodidit: infoUserLogin.id
-            };
-            axios.put(`${process.env.REACT_APP_DOMAIN_SERVER}api/brands/${dataBrands.id}`, infoUpdate)
-                .then((response) => {
-                    setValidateClass(false);
-                    setLoading(false);
+                const infoUpdate = {
+                    name: data.name,
+                    description: dataBrands.description,
+                    status: statusBrand,
+                    whodidit: infoUserLogin.id
+                };
+                axios.put(`${process.env.REACT_APP_DOMAIN_SERVER}api/brands/${dataBrands.id}`, infoUpdate)
+                    .then((response) => {
+                        setValidateClass(false);
+                        setLoading(false);
 
-                    toast.info(t('successUpdated'));
-                    loadBrands();
+                        toast.info(t('successUpdated'));
+                        loadBrands();
 
-                })
-                .catch((errors) => {
-                    setError(errors.response.data.messages)
-                    console.log(errors);
-                });
+                    })
+                    .catch((errors) => {
+                        setError(errors.response.data.messages)
+                        console.log(errors);
+                    });
+            }
+
         } else {
             setTimeout(() => {
                 toast.error(t('errorLogin'));
@@ -166,12 +169,12 @@ export default function PopupBrand(
     };
 
 
-     // Function that allow save a new record
-     const createBrand = (data) => {
+    // Function that allow save a new record
+    const createBrand = (data) => {
 
 
 
-        if (infoUserLogin.id !== null && infoUserLogin.id !== '' ) {
+        if (infoUserLogin.id !== null && infoUserLogin.id !== '') {
             setLoading(true);
 
             const infoCreate = {
@@ -206,7 +209,7 @@ export default function PopupBrand(
         <Fragment>
             <Modal
                 size="lg" isOpen={controlOpenModal} centered>
-                <Form id='formEditEmployee' className={`needs-validation tooltip-validation ${validateClass ? 'validateClass' : ''}`} noValidate="" onSubmit={handleSubmit(onSubmit)}>
+                <Form id='formEditBrand' className={`needs-validation tooltip-validation ${validateClass ? 'validateClass' : ''}`} noValidate="" onSubmit={handleSubmit(onSubmit)}>
 
                     <ModalHeader toggle={changeStatusModalBrand}>
                         {isEditPopup ? t("editInfo") : t("createInfo")}

@@ -122,6 +122,10 @@ i18n
                     descriptionBrand:"Descripción",
                     errorBrandName:"Debe ingresar el nombre de una marca",
                     errorDescription:"Debe ingresar la descripción ",
+
+                     // Product
+                     product: "Producto",
+                     titleCreateProduct: "Agregar producto",
                     
                 }
             },
@@ -227,6 +231,11 @@ i18n
                     category: "Category",
                     placeholderCategory: "Enter category",
                     titleListCategories: "Categories list",
+
+                    // Product
+                    product: "Product",
+                    titleCreateProduct: "Add product",
+
                 }
             },
             cn: {
