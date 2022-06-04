@@ -31,16 +31,17 @@
 }
 
 
-.dx-dropdowneditor-input-wrapper, .dx-selectbox-container {
+.dx-dropdowneditor-input-wrapper,
+.dx-selectbox-container {
     border-radius: 60px !important;
 }
 
-.backgroundModalReactContent{
+.backgroundModalReactContent {
     border: 0;
     background-color: '';
 }
 
-.backgroundModalReactOverlay{
+.backgroundModalReactOverlay {
     background-color: '';
 }
 
@@ -48,6 +49,20 @@
     border-bottom: 0px !important;
 }
 
-.dxSelectBorder{
+.dxSelectBorder {
     border-radius: 60px !important;
+}
+
+
+.show-element {
+    /*duracion de la animacion, puedes variar el tiempo, entre mas grande mas tarda el efecto*/
+    animation-duration: 2s;
+    animation-fill-mode: both;
+    /*le indicas que animacion quieres aplicarle, animacion hecha por ti en un keyframe*/
+    animation-name: fadeIn;
+    background-color: rgb(225, 225, 255);
+}
+
+.hiddenAddProduct {
+    display: none;
 }

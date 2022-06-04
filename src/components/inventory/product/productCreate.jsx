@@ -1,15 +1,15 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form'
-import { Col, Button, Form, Label, FormGroup, Row, Container, Card, CardBody, CardFooter, Popover, PopoverHeader, PopoverBody } from 'reactstrap'
+import { Col, Button, Form, Label, FormGroup, Row, Container, Card, CardBody, CardFooter, Popover, PopoverHeader, PopoverBody, Progress, Input } from 'reactstrap'
 import Breadcrumb from '../../../layout/breadcrumb'
 import axios from 'axios';
 import { classes } from '../../../data/layouts';
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import TextField from '@material-ui/core/TextField';
-import { makeStyles } from "@material-ui/core/styles";
+import { SelectBox } from 'devextreme-react/select-box';
+import { height } from '@mui/system';
+
 
 
 const ProductCreate = () => {
@@ -27,197 +27,417 @@ const ProductCreate = () => {
 
   //declaracion de constantes locales del archivo
   const [loading, setLoading] = useState(false);
-  const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [idEmployee, setIdEmployee] = useState("");
-  const [password, setPassword] = useState("");
-  const [passConfirm, setPassConfirm] = useState("");
-  const [employees, setEmployees] = useState([]);
-  const [keySelectEmployees, setKeySelectEmployees] = useState('');
-  const multiple = false;
-  const [togglePassword, setTogglePassword]=useState(false);
+  const [dataCategory, setDataCategory] = useState([]);
+  const [idCategory, setIdCategory] = useState("");
+  const [dataSubCategory, setDataSubCategory] = useState([]);
+  const [idSubCategory, setIdSubCategory] = useState("");
+  const [dataBrand, setDataBrand] = useState([]);
+  const [idBrand, setIdBrand] = useState("");
+  const [dataProvider, setDataProvider] = useState([]);
+  const [idProvider, setIdProvider] = useState("");
+  const [showAddStock, setShowAddStock] = useState(false);
+  const [description, setDescription] = useState('');
+
+
+
   //array que recibe los errores del modelo de base de datos
   const [error, setError] = useState(
     {
-      'userName': '',
-      'email': '',
-      'idEmployee':'',
-      'password': '',
-      'passConfirm': ''
+      'productName': '',
+      'description': '',
+      'stockLimit': '',
+      'percentageProfit': '',
+      'idSubCategory': ''
     }
   );
 
-  //llamado de empleados al cargar la página
+  //Load information when opening the page
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_DOMAIN_SERVER}api/employees`)
-    .then((res)=>{
-      setEmployees(res.data.employees);
-    })
-    .catch((errors)=>{
-      console.log(errors);
-    });
-  }, []); 
+    getCategory();
+  }, []);
+
+  function getCategory() {
+    axios.get(`${process.env.REACT_APP_DOMAIN_SERVER}api/infoFormProduct`)
+      .then((res) => {
+        setDataCategory(res.data.categories)
+        // setDataSubCategory(res.data.subCategories)
+        setDataBrand(res.data.brands)
+        setDataProvider(res.data.providers)
+
+      })
+      .catch((errors) => {
+        console.log(errors);
+      });
+  }
+
+
 
   //Evento que sucede al dar clic al botón de crear
   const onSubmit: SubmitHandler<FormValues> = data => {
     // If all validations are met we'll call register method
-    createUser(data);
+    // createUser(data);
+    createProduct(data);
   }
 
-  //funcion para crear empleado
-  const createUser = (data) => {
-    if(idEmployee == '' || password != passConfirm){
-      return 0;
-    }
-    if (infoUserLogin.id !== null && infoUserLogin.id !== '') {
-      //seteamos la variable que hace que el botón cambie el texto
-      setLoading(true);
-      //creacion de objeto que enviaremso a la api para registrar
-      const info = { 
-        userName: data.userName, 
-        email: data.email, 
-        password: data.password, 
-        passConfirm: data.passConfirm, 
-        idEmployee: idEmployee,
-        whoCreated: infoUserLogin.id,
-      };
+  //Function to create product
+  const createProduct = (data) => {
 
-      //llamada de api con envio de parametros del usuario a crear
-      axios.post(`${process.env.REACT_APP_DOMAIN_SERVER}api/users`, info)
-      .then((res)=>{//si la petición es exitosa redirigimos a la lista de usuarios
-        console.log(res.data);
-        toast.info(t('successCreated'));
-        navigate(`${process.env.PUBLIC_URL}/app/users/userList/${layout}`);
-      })
-      .catch((err)=>{//si recibimos un error
-        setLoading(false);
-        setError(err.response.data.messages);
-        toast.error(t('errorCreate'));
-      });
-    } else {
-      setTimeout(() => {
-        toast.error(t('errorLogin'));
-      }, 200);
+    // Make sure that the category is not empty
+    if (idCategory === '' || idSubCategory === "") {
+      return false;
     }
+    const informationProduct = {
+      productName: data.productName,
+      description: description,
+      stockProduct: 0,
+      stockLimit: data.stockLimit,
+      percentageProfit: data.percentageProfit,
+      idSubCategory: idSubCategory
+    };
+    // If showAddStock is false that means the user doesn't want to add stock
+    if (showAddStock === false) {
+       const detailProduct={};
+
+       console.log(detailProduct);
+    } else {
+
+      if (idProvider === '' || idBrand === "") {
+        return false;
+      }
+
+      const detailProduct = {
+        barcode: data.barcode,
+        idProvider: idProvider,
+        idBrand: idBrand,
+        quantity: data.quantity,
+        unitPurchasePrice: data.unitPurchasePrice,
+        unitSalePrice: data.saleUnitPrice
+      };
+      console.log(informationProduct);
+
+
+
+    }
+
+    // if (infoUserLogin.id !== null && infoUserLogin.id !== '') {
+    //   //seteamos la variable que hace que el botón cambie el texto
+    //   setLoading(true);
+    //   //creacion de objeto que enviaremso a la api para registrar
+    //   const info = { 
+    //     userName: data.userName, 
+    //     email: data.email, 
+    //     password: data.password, 
+    //     passConfirm: data.passConfirm, 
+    //     idEmployee: idEmployee,
+    //     whoCreated: infoUserLogin.id,
+    //   };
+
+    //   //llamada de api con envio de parametros del usuario a crear
+    //   axios.post(`${process.env.REACT_APP_DOMAIN_SERVER}api/users`, info)
+    //   .then((res)=>{//si la petición es exitosa redirigimos a la lista de usuarios
+    //     console.log(res.data);
+    //     toast.info(t('successCreated'));
+    //     navigate(`${process.env.PUBLIC_URL}/app/users/userList/${layout}`);
+    //   })
+    //   .catch((err)=>{//si recibimos un error
+    //     setLoading(false);
+    //     setError(err.response.data.messages);
+    //     toast.error(t('errorCreate'));
+    //   });
+    // } else {
+    //   setTimeout(() => {
+    //     toast.error(t('errorLogin'));
+    //   }, 200);
+    // }
   };
 
   //funcion que lee el cambio de un empleado en el select
-  function handleChange(e){
-    if(e.length > 0){
-      var aux = e[0].id;
-      setIdEmployee(aux);
-    }else{
-      setIdEmployee("");
-    }
-  }
+  // function handleChange(e){
+  //   if(e.length > 0){
+  //     var aux = e[0].id;
+  //     setIdEmployee(aux);
+  //   }else{
+  //     setIdEmployee("");
+  //   }
+  // }
 
-  function clearData(e){
+  function clearData(e) {
     reset({
-      userName: "",
-      email: "",
-      password: "",
-      passConfirm: ""
+      productName: "",
+      description: "",
+      stockLimit: "",
+      percentageProfit: ""
     }, {
-      keepErrors: true, 
+      keepErrors: true,
       keepDirty: true,
       keepIsSubmitted: false,
       keepTouched: false,
       keepIsValid: false,
       keepSubmitCount: false,
     });
-    setKeySelectEmployees(Math.random());
-    setIdEmployee('');
+    setIdCategory('');
+    setIdSubCategory('');
+    setIdBrand('');
+
   }
-  
+
+
+  const handleChangeCategory = (newvalue) => {
+    console.log(newvalue);
+    if (newvalue.value !== null) {
+      // Set the id
+      if (newvalue.value !== undefined) {
+        setIdCategory(newvalue.value.id);
+
+        // Clean object in sub-category
+        setIdSubCategory('');
+        setDataSubCategory([]);
+
+        // Get the sub categories by id category
+        axios
+          .get(`${process.env.REACT_APP_DOMAIN_SERVER}/api/subCateByIdCate/${newvalue.value.id}`)
+          .then((payload) => {
+            // If everything is good, load the array of departments in the Typeahead or select
+            setDataSubCategory(payload.data.sub_category);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+      }
+
+    } else {
+      // Clear the information 
+      setIdCategory('');
+
+      // Clean object in sub-category
+      setIdSubCategory('');
+      setDataSubCategory([]);
+
+    }
+  }
+
+
+  const handleChangeSubCategory = (newvalue) => {
+
+    if (newvalue.value !== null) {
+
+      // Set the id
+      if (newvalue.value !== undefined) {
+        setIdSubCategory(newvalue.value.id);
+      }
+
+    } else {
+      // Clear the information 
+      setIdSubCategory('');
+
+    }
+  }
+
+
+  const handleRadioButton = (event) => {
+    // If the value target is 1  the answer was yes
+    if (event.target.value === '1') {
+      setShowAddStock(true);
+
+    } else {
+      setShowAddStock(false);
+    }
+    setValidateClass(false)
+
+  }
+
+  const handleChangeProvider = (newvalue) => {
+
+    if (newvalue.value !== null) {
+
+      // Set the id
+      if (newvalue.value !== undefined) {
+        setIdProvider(newvalue.value.id);
+      }
+
+    } else {
+      // Clear the information 
+      setIdProvider('');
+
+    }
+  }
+
+  const handleChangeBrand = (newvalue) => {
+
+    if (newvalue.value !== null) {
+
+      // Set the id
+      if (newvalue.value !== undefined) {
+        setIdBrand(newvalue.value.id);
+      }
+
+    } else {
+      // Clear the information 
+      setIdBrand('');
+
+    }
+  }
+
   return (
     <Fragment>
-      <Breadcrumb parent={t("users")} title={t("titleUserCreate")}/>
+      <Breadcrumb parent={t("product")} title={t("titleCreateProduct")} />
       <Container fluid={true}>
         <Row className="justify-content-md-center">
-          <Col sm="12" xl="10">
+          <Col sm="12" >
             <Card>
               <Form className={`needs-validation tooltip-validation ${validateClass ? 'validateClass' : ''}`} noValidate="" onSubmit={handleSubmit(onSubmit)}>
                 <CardBody>
-                  <Row>
-                    <FormGroup>
-                      <Label className="col-form-label pt-0" >{t("userName")}</Label>
-                      <input className="form-control btn-pill" type="text" placeholder={t("placeholderUserName")} name="userName" onChange={(e) => { setUserName(e.target.value)}} {...register('userName', { required: true })} />
-                      <span>{errors.userName && t("errorUserName")}</span>
-                    </FormGroup>
-                    <FormGroup>
-                      <Label className="col-form-label pt-0" >{t("email")}</Label>
-                      <input className="form-control btn-pill" name="email" type="text" placeholder={t("placeholderEmail")} onChange={(e) => { setEmail(e.target.value)}} {...register('email', {
-                        required: true,
-                        pattern: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/
-                      })} />
-                      <span>{errors.email && t("errorEmail") || error.email}</span>
-                    </FormGroup>
-                    <FormGroup>
-                      <Label className="col-form-label pt-0" >{t("employees")}</Label>
-                      <Autocomplete
-                        key={keySelectEmployees}
-                        getOptionLabel={(option) => option.firstName + ' ' + option.lastName}
-                        classes={{ inputRoot: "form-control btn-pill" }}
-                        onInputChange={(event, newVal) => {
-                            setIdEmployee(newVal);
-                        }}
-                        id="select-employees"
-                        options={employees}
-                        renderInput={
-                          params => <TextField id="emplyeesUser"
-                            {...params} placeholder={t("placeholderEmployees")} 
-                            InputProps={{...params.InputProps, disableUnderline: true}}
-                        />}
-                        onChange={(event, newValue) => {
-                          setIdEmployee(newValue !== null ? newValue.id : '');
-                        }}
+                  {/* General Information */}
+                  <Col className="col-12">
+                    <h6 className="sub-title ">{t("generalInformation")}</h6>
+
+                  </Col>
+
+                  <Row style={{ marginTop: '15px' }}>
+                    <Col md="4 mb-3">
+                      <Label>{t("productName")}</Label>
+                      <input className="form-control btn-pill" name="productName" type="text" placeholder={t('productName')} {...register('productName', { required: true })} />
+                      <span>{errors.productName && t("errorProductName")}</span>
+                    </Col>
+                    <Col md="4 mb-3">
+                      <Label>{t("category")}</Label>
+                      <SelectBox
+                        dataSource={dataCategory}
+                        displayExpr="name"
+                        searchEnabled={true}
+                        className={'form-control dxSelectBorder'}
+                        placeholder={t('category')}
+                        showClearButton={true}
+                        name="selectCountry"
+                        onValueChanged={handleChangeCategory}
                       />
-                      <input type="hidden"/>
-                      <span>{(idEmployee == '' && validateClass) && t("errorEmployee")}</span>
-                    </FormGroup>
-                    <FormGroup>
-                      <div className="position-relative">
-                        <Label className="col-form-label pt-0">{t("password")}</Label>
-                        <input id={"spamError"} className="form-control btn-pill" type={togglePassword ? "text" : "password"} placeholder={t("placeholderPassword")} name="password" {...register('password', { 
-                          required: true,
-                          pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[ -/:-@\[-`{-~]).{6,64}$/
-                         })} onBlur={(e) => { setPassword(e.target.value)}} />
-                        <div className="show-hide" onClick={() => setTogglePassword(!togglePassword)}>
-                          <span style={{ width: "100px" }} className={togglePassword ? "" : "show"}></span>
-                        </div>
-                        <span>{(errors.password || error.password || (password.length < 6 && validateClass)) && t("errorPassword")}</span>
-                        <Popover
-                          placement={"bottom"}
-                          isOpen={popover}
-                          target={"spamError"}
-                          toggle={Toggle}
-                          trigger={"hover"}
-                          props={{
-                            style: { height: 'auto' },
-                          }}
-                        >
-                          <PopoverHeader style={{ backgroundColor: "#dc3545e6", color: '#fff' }}>{t("headPopPass")}</PopoverHeader>
-                          <PopoverBody style={{ color: "#dc3545e6"}}>
-                            {t("bodyPopPass1")}
-                            <br></br>
-                            {t("bodyPopPass2")}
-                            <br></br>
-                            {t("bodyPopPass3")}
-                            <br></br>
-                            {t("bodyPopPass4")}
-                          </PopoverBody>
-                        </Popover>
-                      </div>
-                    </FormGroup>
-                    <FormGroup>
-                      <div className="position-relative">
-                        <Label className="col-form-label pt-0">{t("passConfirm")}</Label>
-                        <input className="form-control btn-pill" type={togglePassword ? "text" : "password"} placeholder={t("placeholderPassConfirm")} name="passConfirm"  {...register('passConfirm', { required: true })} onBlur={(e) => { setPassConfirm(e.target.value)}}/>
-                        <div className="show-hide" onClick={() => setTogglePassword(!togglePassword)}><span className={togglePassword ? "" : "show"}></span></div>
-                        <span>{(password != passConfirm && validateClass) && t("errorMatchPassword")}</span>
-                      </div>
-                    </FormGroup>
+                      <input type="hidden" />
+                      <span>{((idCategory === '' || idCategory === undefined) && validateClass) && t("errorCategory")}</span>
+                    </Col>
+                    <Col md="4 mb-3">
+                      <Label>{t("category")}</Label>
+                      <SelectBox
+                        dataSource={dataSubCategory}
+                        displayExpr="name"
+                        value={dataSubCategory.length > 0 ? dataSubCategory.find(v => v.id === idSubCategory) : ''}
+                        searchEnabled={true}
+                        className={'form-control dxSelectBorder'}
+                        placeholder={t('category')}
+                        showClearButton={true}
+                        name="selectSubCategory"
+                        onValueChanged={handleChangeSubCategory}
+                      />
+                      <input type="hidden" />
+                      <span>{((idSubCategory === '' || idSubCategory === undefined) && validateClass) && t("errorSubCategory")}</span>
+                    </Col>
                   </Row>
+                  <Row>
+                    <Col md="4 mb-3">
+                      <Label>{t("stockLimit")}</Label>
+                      <input className="form-control btn-pill" name="stockLimit" type="number" placeholder={t('stockLimit')} {...register('stockLimit', { required: true })} />
+                      <span>{errors.stockLimit && t("errorStockLimit")}</span>
+                    </Col>
+                    <Col md="4 mb-3">
+                      <Label>{t("percentageProfit")}</Label>
+                      <input className="form-control btn-pill" name="percentageProfit" type="number" step="0.001" min="0" max="999999999.999" placeholder={t('percentageProfit')} {...register('percentageProfit', { required: true })} />
+                      <span>{errors.percentageProfit && t("errorPercentageProfit")}</span>
+                    </Col>
+                    <Col md="4 mb-3">
+                      <Label>{t("questionRbtAddProduct")}</Label>
+                      <FormGroup className="m-t-15 m-checkbox-inline mb-0 custom-radio-ml" onChange={handleRadioButton}>
+                        <div className="radio radio-primary">
+                          <Input id="radioinline1" type="radio" name="radio1" value="1" />
+                          <Label className="mb-0" for="radioinline1">{t("positiveAnswer")}</Label>
+                        </div>
+                        <div className="radio radio-primary">
+                          <Input id="radioinline2" type="radio" name="radio1" value="2" defaultChecked />
+                          <Label className="mb-0" for="radioinline2">{t('negativeAnswer')}</Label>
+                        </div>
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md="12 mb-2">
+                      <Label>{t("description")}</Label>
+                      <Input type="textarea" className="form-control btn-pill" rows="2" name="description" placeholder={t("description")} onChange={(ev) => { setDescription(ev.target.value) }} />
+                    </Col>
+                  </Row>
+                  {/* End general information */}
+
+
+                  {/* Add stock */}
+
+
+                  <div style={{ display: showAddStock ? 'block' : 'none' }}>
+                    <Row style={{ marginTop: '15px' }} >
+                      <Col className="col-12" style={{ marginBottom: '15px' }}>
+                        <h6 className="sub-title ">{t("enterProduct")}</h6>
+
+                      </Col>
+                      <Col md="4 mb-3">
+                        <Label>{t("barcode")}</Label>
+                        <input className="form-control btn-pill" name="barcode" type="text" placeholder={t('barcode')} {...register('barcode', { required: showAddStock ? true : false })} />
+                        <span>{errors.barcode && t("errorBarcode")}</span>
+                        {/* <div className="valid-feedback">{"Looks good!"}</div> */}
+                      </Col>
+                      <Col md="4 mb-3">
+                        <Label>{t("provider")}</Label>
+                        <SelectBox
+                          dataSource={dataProvider}
+                          displayExpr="comercialName"
+                          searchEnabled={true}
+                          className={'form-control dxSelectBorder'}
+                          placeholder={t('provider')}
+                          showClearButton={true}
+                          name="selectProvider"
+                          onValueChanged={handleChangeProvider}
+                        />
+                        <input type="hidden" />
+                        <span>{((idProvider === '' || idProvider === undefined) && validateClass) && t("errorProvider")}</span>
+                      </Col>
+                      <Col md="4 mb-3">
+                        <Label>{t("nameBrand")}</Label>
+                        <SelectBox
+                          dataSource={dataBrand}
+                          displayExpr="name"
+                          searchEnabled={true}
+                          className={'form-control dxSelectBorder'}
+                          placeholder={t('nameBrand')}
+                          showClearButton={true}
+                          name="selectBrand"
+                          onValueChanged={handleChangeBrand}
+                        />
+                        <input type="hidden" />
+                        <span>{((idBrand === '' || idBrand === undefined) && validateClass) && t("errorSubCategory")}</span>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md="4 mb-3">
+                        <Label>{t("amount")}</Label>
+                        <input className="form-control btn-pill" name="amount" type="number" placeholder={t('amount')} {...register('amount', { required: showAddStock ? true : false })} />
+                        <span>{errors.amount && t("errorAmount")}</span>
+                      </Col>
+                      <Col md="4 mb-3">
+                        <Label>{t("unitPrice")}</Label>
+                        <input className="form-control btn-pill" name="unitPrice" type="number" step="0.001" min="0" max="999999999.999" placeholder={t('unitPrice')} {...register('unitPrice', { required: showAddStock ? true : false })} />
+                        <span>{errors.unitPrice && t("errorunitPrice")}</span>
+                      </Col>
+                      <Col md="4 mb-3">
+                        <Label>{t("saleUnitPrice")}</Label>
+                        <input className="form-control btn-pill" name="saleUnitPrice" type="number" step="0.001" min="0" max="999999999.999" placeholder={t('saleUnitPrice')} {...register('saleUnitPrice', { required: showAddStock ? true : false })} />
+                        <span>{errors.saleUnitPrice && t("errorUnitSalePrice")}</span>
+                      </Col>
+
+                    </Row>
+                    <Row>
+                      <Col md="12 mb-2">
+                        <Label>{t("productPhotos")}</Label>
+                      </Col>
+                    </Row>
+                  </div>
+                  {/* End add stock */}
+
                 </CardBody>
                 <CardFooter>
                   <Button className="me-1" color="primary" type="submit" disabled={loading ? loading : loading} onClick={() => setValidateClass(true)}>{loading ? t("processing") : t("create")}</Button>
@@ -227,8 +447,8 @@ const ProductCreate = () => {
             </Card>
           </Col>
         </Row>
-      </Container>
-    </Fragment>
+      </Container >
+    </Fragment >
   );
 };
 
