@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form'
-import { Col, Button, Form, Label, FormGroup, Row, Container, Card, CardBody, CardFooter, Popover, PopoverHeader, PopoverBody, Progress, Input } from 'reactstrap'
+import { Col, Button, Form, Label, FormGroup, Row, Container, Card, CardHeader, CardBody, CardFooter, Popover, PopoverHeader, PopoverBody, Progress, Input } from 'reactstrap'
 import Breadcrumb from '../../../layout/breadcrumb'
 import axios from 'axios';
 import { classes } from '../../../data/layouts';
@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { SelectBox } from 'devextreme-react/select-box';
 import { height } from '@mui/system';
+import Files from 'react-files'
 
 
 
@@ -37,7 +38,7 @@ const ProductCreate = () => {
   const [idProvider, setIdProvider] = useState("");
   const [showAddStock, setShowAddStock] = useState(false);
   const [description, setDescription] = useState('');
-
+  let arrayFile = [];
 
 
   //array que recibe los errores del modelo de base de datos
@@ -96,9 +97,9 @@ const ProductCreate = () => {
     };
     // If showAddStock is false that means the user doesn't want to add stock
     if (showAddStock === false) {
-       const detailProduct={};
+      const detailProduct = {};
 
-       console.log(detailProduct);
+      console.log(detailProduct);
     } else {
 
       if (idProvider === '' || idBrand === "") {
@@ -279,6 +280,32 @@ const ProductCreate = () => {
     }
   }
 
+
+  const [files, setFiles] = useState([]);
+
+  function deleteFile(e) {
+    setFiles([]);
+    return files
+
+  }
+
+  const onFilesChange = (file) => {
+     arrayFile = [];
+
+    file.map(v=>{
+      arrayFile.push(v)
+    })
+    files.map(v=>{
+      arrayFile.push(v)
+    })
+
+    setFiles(arrayFile);
+
+  }
+  const onFilesError = (error, file) => {
+    setFiles(file)
+  }
+
   return (
     <Fragment>
       <Breadcrumb parent={t("product")} title={t("titleCreateProduct")} />
@@ -433,6 +460,76 @@ const ProductCreate = () => {
                     <Row>
                       <Col md="12 mb-2">
                         <Label>{t("productPhotos")}</Label>
+                        <Row>
+                          <Col sm="12">
+                            <Card>
+                              <CardHeader>
+                                <h5>{"SelectSingleImageUploadddddd"}</h5>
+                              </CardHeader>
+                              <CardBody className="fileUploader">
+
+
+                                <Files
+                                  className='files-dropzone fileContainer'
+                                  onChange={onFilesChange}
+                                  onError={onFilesError}
+                                  accepts={['image/*']}
+                                  multiple={true}
+                                  maxFileSize={100000000}
+                                  minFileSize={0}
+                                  clickable
+                                >
+                                  <div className="d-flex justify-content-center">
+                                    <button className="chooseFileButton me-2">Upload Image</button>
+                                  </div>
+
+                                  <div className="uploadPicturesWrapper" >
+
+                                    <div className='files-gallery divImg' >
+                                      {files.map((file, index) =>
+
+                                        <div className="uploadPictureContainer">
+                                          <div className="deleteImage">X</div>
+                                          <img className='files-gallery-item uploadPicture' src={file.preview.url} key={index} alt='' />
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+
+
+
+                                </Files>
+                                {/* {files.length > 0 ?
+                                  <div className="d-flex justify-content-center">
+                                    <button className="btn btn-success mt-2" type="button" onClick={() => deleteFile(files)}>
+                                      Delete
+                                    </button></div> : ''} */}
+
+                              </CardBody>
+                            </Card>
+                          </Col>
+                        </Row>
+                        {/* <div className="col-sm-12">
+                          <div className="card">
+                            <div className="card-body">
+                              <div className="fileUploader ">
+                                <div className="fileContainer">
+                                  <p className />
+                                  <div className="errorsContainer" />
+                                  <button type="button" className="chooseFileButton ">Upload Images</button>
+                                  <input type="file" name multiple accept="image/*" />
+                                  <div className="uploadPicturesWrapper">
+                                    <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', width: '100%' }} />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div> */}
+
+
+
+
                       </Col>
                     </Row>
                   </div>

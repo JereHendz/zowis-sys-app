@@ -28,7 +28,7 @@ const UploadImage = () => {
                     <Col sm="12">
                         <Card>
                             <CardHeader>
-                                <h5>{SelectSingleImageUpload}</h5>
+                                <h5>{"SelectSingleImageUploadddddd"}</h5>
                             </CardHeader>
                             <CardBody className="fileUploader">
                                 <Files

@@ -66,3 +66,51 @@
 .hiddenAddProduct {
     display: none;
 }
+
+.uploadPicturesWrapper {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    width: 100% !important;
+}
+
+.fileContainer .uploadPictureContainer {
+    width: 25%;
+    margin: 5%;
+    padding: 10px;
+    background:#edf2f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: inherit;
+    // box-shadow: 0 0 8px 2px rgb(0 0 0 / 10%);
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    border: 1px solid #d0dbe4;
+    position: relative;
+}
+
+.fileContainer .deleteImage {
+    position: absolute;
+    top: -9px;
+    right: -9px;
+    color: #fff;
+    background: #ff4081;
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 30px;
+    width: 30px;
+    height: 30px;
+}
+
+.divImg {
+    display: flex; align-items: center; justify-content: center; flex-wrap: wrap; width: 100%;
+}
+
+
+
+.fileContainer .uploadPictureContainer img.uploadPicture {
+    width: 100%;
+}
