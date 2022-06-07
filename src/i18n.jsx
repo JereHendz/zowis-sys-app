@@ -31,6 +31,7 @@ i18n
                     show: "Mostrar",
                     phoneNumber: "Teléfono",
                     address: "Dirección",
+                    placeHolderAddress: "Ingrese la dirección",
                     firstName: "Nombres",
                     lastName: "Apellidos",
                     placeHolderFirstName: "Nombres",
@@ -59,6 +60,9 @@ i18n
                     newRecord: "Nuevo registro",
                     createInfo: "Ingresar Información",
                     placeHolderGeneralName: "Ingrese nombre",
+                    document: "Documento",
+                    placeHolderDocument: "Ingrese el número de documento",
+
 
                     //employeesComponent
                     employee: "Empleado",
@@ -121,6 +125,15 @@ i18n
                     titleListSubcategories: "Lista de subcategorias",
                     subcategory: "Subcategoría",
                     errorSubCategoryName: "Debe ingresar el nombre de un modelo",
+
+                    //Providers
+                    parentProvider: "Proveedores",
+                    titleListProviders: "Listado de proveedores",
+                    provider: "Proveedor",
+                    giro: "Giro",
+                    placeHolderGiro: "Ingrese el rubro",
+                    placeHolderProvider: "Ingrese el nombre del proveedor",
+
 
                     // List brands
                     titleListBrands: "Lista de marcas",
@@ -199,6 +212,8 @@ i18n
                     createdDate: 'Created Date',
                     actions: "Actions",
                     phoneNumber: "Phone number",
+                    address: "Address",
+                    placeHolderAddress: "Enter the address",
                     editInfo: "Edit information",
                     createInfo: "Add information",
                     selectStatus: "Status",
@@ -207,8 +222,8 @@ i18n
                     placeHolderDescription: "Enter description",
                     newRecord: "New record",
                     placeHolderGeneralName: "Type a name",
-
-
+                    document: "Documento",
+                    placeHolderDocument: "Ingrese el número de documento",
 
 
                     //employeesComponent
@@ -266,6 +281,15 @@ i18n
                     //subcategories
                     titleListSubcategories: "Subcategories list",
                     subcategory: "Subcategory",
+
+                    //Providers
+                    parentProvider: "Providers",
+                    titleListProviders: "Providers list",
+                    provider: "Providers",
+                    placeHolderProvider: "Enter the provider name",
+                    giro: "Commercial business",
+                    placeHolderGiro: "Enter the comemercial business",
+
                     // Product
                     product: "Product",
                     titleCreateProduct: "Add product",

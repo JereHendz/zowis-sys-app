@@ -69,8 +69,8 @@ const CategoriesList = () => {
     <Fragment>
       <Breadcrumb parent={t("categories")} title={t("titleListCategories")} />
       <Container fluid={true}>
-        <Row>
-          <Col sm="12">
+      <Row className="justify-content-md-center">
+          <Col sm="12" xl="10">
             <Card>
               <CardBody>
                 <Row >

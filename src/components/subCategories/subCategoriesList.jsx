@@ -27,10 +27,12 @@ const ListSubCategories = () => {
   const [listStatus, setListStatus] = useState([]);
 
   // To get the status of SubCategories
-  const [statusSubCategory, setStatusSubCategory] = useState([]);
+  const [statusSubCategory, setStatusSubCategory] = useState('');
 
   // To determinate if the event is create or edit:  edit:true and create:false
   const [isEditPopup, setIsEditPopup] = useState(false);
+
+  const [controlOpenModal, setControlOpenModal] = useState(false);
 
   // Spaces
   const tab = '\u00A0';
@@ -73,6 +75,9 @@ const ListSubCategories = () => {
       });
   }, []);
 
+  const cellRenderAction = (data) => {
+    return <div align="center"><i style={{ cursor: 'pointer' }} className="icofont icofont-ui-edit" onClick={() => editPopupSubCategory(data)} /></div>;
+  }
 
   const createSubCategory = (e) => {
     setDataSubCategory(
@@ -87,12 +92,6 @@ const ListSubCategories = () => {
     setIsEditPopup(false);
     setControlOpenModal(!controlOpenModal);
   };
-
-  const cellRenderAction = (data) => {
-    return <div align="center"><i style={{ cursor: 'pointer' }} className="icofont icofont-ui-edit" onClick={() => editPopupSubCategory(data)} /></div>;
-  }
-
-  const [controlOpenModal, setControlOpenModal] = useState(false);
 
   const editPopupSubCategory = (e) => {
     setIsEditPopup(true);
@@ -182,7 +181,6 @@ const ListSubCategories = () => {
                   </Col>
                 </Row>
               </CardBody>
-
             </Card>
           </Col>
         </Row>
