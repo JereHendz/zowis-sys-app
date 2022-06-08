@@ -9,8 +9,7 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { SelectBox } from 'devextreme-react/select-box';
 import { height } from '@mui/system';
-import Files from 'react-files'
-
+import Files from 'react-files';
 
 
 const ProductCreate = () => {
@@ -39,7 +38,7 @@ const ProductCreate = () => {
   const [showAddStock, setShowAddStock] = useState(false);
   const [description, setDescription] = useState('');
   let arrayFile = [];
-
+  const [clickableB, setClickableB] = useState(false);
 
   //array que recibe los errores del modelo de base de datos
   const [error, setError] = useState(
@@ -284,26 +283,42 @@ const ProductCreate = () => {
   const [files, setFiles] = useState([]);
 
   function deleteFile(e) {
-    setFiles([]);
-    return files
-
+    arrayFile = [];
+    files.map(v => {
+      if (v.id !== e) {
+        arrayFile.push(v);
+      }
+    });
+    setFiles(arrayFile);
   }
 
   const onFilesChange = (file) => {
-     arrayFile = [];
+    arrayFile = [];
 
-    file.map(v=>{
+    file.map(v => {
       arrayFile.push(v)
     })
-    files.map(v=>{
+    files.map(v => {
       arrayFile.push(v)
     })
 
     setFiles(arrayFile);
+    setClickableB(false);
 
   }
   const onFilesError = (error, file) => {
     setFiles(file)
+  }
+
+  // Enable upload image throug the click on the button upload image
+  const uploadImage = () => {
+    setClickableB(true);
+  }
+
+  // Disable the window that allows upload files
+
+  const blockUploadImage = () => {
+    setClickableB(false);
   }
 
   return (
@@ -460,15 +475,13 @@ const ProductCreate = () => {
                     <Row>
                       <Col md="12 mb-2">
                         <Label>{t("productPhotos")}</Label>
-                        <Row>
+                        <Row >
                           <Col sm="12">
                             <Card>
                               <CardHeader>
                                 <h5>{"SelectSingleImageUploadddddd"}</h5>
                               </CardHeader>
                               <CardBody className="fileUploader">
-
-
                                 <Files
                                   className='files-dropzone fileContainer'
                                   onChange={onFilesChange}
@@ -477,58 +490,32 @@ const ProductCreate = () => {
                                   multiple={true}
                                   maxFileSize={100000000}
                                   minFileSize={0}
-                                  clickable
+                                  clickable={clickableB}
                                 >
+
                                   <div className="d-flex justify-content-center">
-                                    <button className="chooseFileButton me-2">Upload Image</button>
+                                    <input type="button" className="chooseFileButton me-2" onFocus={uploadImage} onBlur={blockUploadImage} value={"Upload Image"} />
                                   </div>
 
                                   <div className="uploadPicturesWrapper" >
 
                                     <div className='files-gallery divImg' >
+                                      
                                       {files.map((file, index) =>
-
-                                        <div className="uploadPictureContainer">
-                                          <div className="deleteImage">X</div>
-                                          <img className='files-gallery-item uploadPicture' src={file.preview.url} key={index} alt='' />
+                                        <div className="uploadPictureContainer" key={"up"+index}>
+                                          <div className="deleteImage" onClick={() => deleteFile(file.id)} key={"d"+index} > X</div>
+                                          <img className='files-gallery-item uploadPicture'  src={file.preview.url} key={index} alt='' />
                                         </div>
-                                      )}
+                                      )}                                    
+                                        
                                     </div>
                                   </div>
-
-
-
                                 </Files>
-                                {/* {files.length > 0 ?
-                                  <div className="d-flex justify-content-center">
-                                    <button className="btn btn-success mt-2" type="button" onClick={() => deleteFile(files)}>
-                                      Delete
-                                    </button></div> : ''} */}
 
                               </CardBody>
                             </Card>
                           </Col>
                         </Row>
-                        {/* <div className="col-sm-12">
-                          <div className="card">
-                            <div className="card-body">
-                              <div className="fileUploader ">
-                                <div className="fileContainer">
-                                  <p className />
-                                  <div className="errorsContainer" />
-                                  <button type="button" className="chooseFileButton ">Upload Images</button>
-                                  <input type="file" name multiple accept="image/*" />
-                                  <div className="uploadPicturesWrapper">
-                                    <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', width: '100%' }} />
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div> */}
-
-
-
 
                       </Col>
                     </Row>
