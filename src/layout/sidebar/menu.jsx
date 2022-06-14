@@ -1,17 +1,29 @@
-import { Home, Airplay, Box, FolderPlus, Command, Cloud, FileText, Server, BarChart, Users,Archive, Layers, ShoppingBag, List, Mail, MessageCircle, GitPullRequest, Monitor, Heart, Clock, Zap, CheckSquare, Calendar, Image, Film, HelpCircle, Radio, Map, Edit, Sunrise, Package, Slack, Globe } from 'react-feather'
+import { Home, Airplay, Box, FolderPlus, Command, Cloud, FileText, Server, BarChart, Users,Archive, Layers, ShoppingBag, ShoppingCart, List, Mail, MessageCircle, GitPullRequest, Monitor, Heart, Clock, Zap, CheckSquare, Calendar, Image, Film, HelpCircle, Radio, Map, Edit, Sunrise, Package, Slack, Globe } from 'react-feather'
 
 export const MENUITEMS = [
 
+    // {
+    //     menutitle: "DASHBOARDS",
+    //     menucontent: "Administra las ventas",
+    //     Items: [
+    //         {
+    //             title: 'Dashboard', icon: Home, type: 'sub', badge: "badge badge-success", badgetxt: "2", active: false, children: [
+    //                 { path: `${process.env.PUBLIC_URL}/dashboard/default`, title: 'Default', type: 'link' },
+    //                 { path: `${process.env.PUBLIC_URL}/dashboard/ecommerce`, title: 'Ecommerce', type: 'link' },
+    //             ]
+    //         },
+    //     ]
+    // },
     {
         menutitle: "VENTAS",
         menucontent: "Administra las ventas",
         Items: [
-            // {
-            //     title: 'Dashboard', icon: Home, type: 'sub', badge: "badge badge-success", badgetxt: "2", active: false, children: [
-            //         { path: `${process.env.PUBLIC_URL}/dashboard/default`, title: 'Default', type: 'link' },
-            //         { path: `${process.env.PUBLIC_URL}/dashboard/ecommerce`, title: 'Ecommerce', type: 'link' },
-            //     ]
-            // },
+            {
+                title: 'VENTAS', icon: ShoppingCart, type: 'sub', active: false, children: [
+                    { path: `${process.env.PUBLIC_URL}/app/sales/salesList`, title: 'Ventas', type: 'link' },
+                    { path: `${process.env.PUBLIC_URL}/app/sales/createSale`, title: 'Nueva venta', type: 'link' },
+                ]
+            },
         ]
     },
     {

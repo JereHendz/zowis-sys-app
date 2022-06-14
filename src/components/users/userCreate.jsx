@@ -6,11 +6,9 @@ import axios from 'axios';
 import { classes } from '../../data/layouts';
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
-import { Typeahead } from 'react-bootstrap-typeahead';
 import { useTranslation } from 'react-i18next';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from "@material-ui/core/styles";
 
 
 const UserCreateForm = () => {

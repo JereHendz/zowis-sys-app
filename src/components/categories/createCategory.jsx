@@ -4,8 +4,6 @@ import { Row, Form, Label, Col, FormGroup, Button, Modal, ModalHeader, ModalBody
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import axios from "axios";
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 
 export default function CreateCategory({
     createOpen, setCreateOpen,

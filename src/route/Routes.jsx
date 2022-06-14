@@ -221,6 +221,10 @@ import ListBrands from '../components/brands/listBrands';
 // Routes to products
 import ProductCreate from '../components/inventory/product/productCreate';
 
+//Routes to Brands
+import SalesList from '../components/sales/salesList';
+import CreateSale from '../components/sales/createSale';
+
 
 export const routes = [
         { path: `${process.env.PUBLIC_URL}/dashboard/default/:layout/`, Component: <Default /> },
@@ -348,11 +352,16 @@ export const routes = [
         { path: `${process.env.PUBLIC_URL}/app/users/userEdit/:layout`, Component: <UserEdit /> },
         { path: `${process.env.PUBLIC_URL}/app/users/userCards/:layout`, Component: <UserCards /> },
 
-          //Brands
-          { path: `${process.env.PUBLIC_URL}/app/brands/listBrands/:layout`, Component: <ListBrands /> },
+        //Brands
+        { path: `${process.env.PUBLIC_URL}/app/brands/listBrands/:layout`, Component: <ListBrands /> },
 
-           //Products
-           { path: `${process.env.PUBLIC_URL}/app/inventory/product/ProductCreate/:layout`, Component: <ProductCreate /> },
+        //Products
+        { path: `${process.env.PUBLIC_URL}/app/inventory/product/ProductCreate/:layout`, Component: <ProductCreate /> },
+
+        //Sales
+        { path: `${process.env.PUBLIC_URL}/app/sales/SalesList/:layout`, Component: <SalesList /> },
+        { path: `${process.env.PUBLIC_URL}/app/sales/CreateSale/:layout`, Component: <CreateSale /> },
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         { path: `${process.env.PUBLIC_URL}/app/calendar/basic-calendar/:layout`, Component: <BasicCalender /> },

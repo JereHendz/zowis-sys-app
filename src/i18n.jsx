@@ -62,6 +62,8 @@ i18n
                     placeHolderGeneralName: "Ingrese nombre",
                     document: "Documento",
                     placeHolderDocument: "Ingrese el número de documento",
+                    date: 'Fecha',
+                    search: 'Buscar',
 
 
                     //employeesComponent
@@ -167,8 +169,20 @@ i18n
                     enterProduct: "Agregar existencias",
                     positiveAnswer:"Si",
                     negativeAnswer:"No",
-                    questionRbtAddProduct:"¿Desea registrar existencias?"
+                    questionRbtAddProduct:"¿Desea registrar existencias?",
 
+                    //sales
+                    titleSales: "Lista de ventas",
+                    sale: 'Venta',
+                    sales: 'Ventas',
+                    orderNumber: '#Orden',
+                    total: 'Total',
+                    subTotal: 'Subtotal',
+                    discount: 'Descuento',
+                    client: 'Cliente',
+                    paymentType: 'Tipo de pago',
+                    text: 'Texto',
+                    searchProduct: 'Buscar productos',
 
                 }
             },
@@ -224,6 +238,8 @@ i18n
                     placeHolderGeneralName: "Type a name",
                     document: "Documento",
                     placeHolderDocument: "Ingrese el número de documento",
+                    date: 'Date',
+                    search: 'Search',
 
 
                     //employeesComponent
@@ -314,9 +330,20 @@ i18n
                     enterProduct: "Add stock",
                     positiveAnswer:"Yes",
                     negativeAnswer:"No",
-                    questionRbtAddProduct:"Would you like to record stock?"
+                    questionRbtAddProduct:"Would you like to record stock?",
 
-
+                    //sales
+                    titleSales: "Sales list",
+                    sale: 'Sale',
+                    sales: 'Sales',
+                    orderNumber: '#Order',
+                    total: 'Total',
+                    subTotal: 'Subtotal',
+                    discount: 'Discount',
+                    client: 'Client',
+                    paymentType: 'Payment type',
+                    text: 'Text',
+                    searchProduct: 'Search products',
 
                 }
             },
