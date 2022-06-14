@@ -5,7 +5,8 @@ import { Container, Row, Col, Card, CardHeader, Table, CardBody, Button, Modal, 
 import axios from "axios";
 import { classes } from "../../../data/layouts";
 import 'devextreme/dist/css/dx.material.teal.light.css';
-import PopupBrand from "./popupBrand";
+import { useNavigate } from "react-router-dom";
+
 
 
 import DataGrid, {
@@ -31,6 +32,8 @@ import { useTranslation } from 'react-i18next';
 
 
 const ListProduct = () => {
+  const navigate = useNavigate();
+
   // To traslate the words
   const { t } = useTranslation();
 
@@ -91,6 +94,7 @@ const ListProduct = () => {
 
 
   const createBrand = (e) => {
+    navigate(`${process.env.PUBLIC_URL}/app/inventory/product/ProductCreate/${layout}`);
     
   };
 
@@ -102,6 +106,8 @@ const ListProduct = () => {
 
   const editPopupBrand = (e) => {
     // setDataBrands(e.data);
+    // navigate(`${process.env.PUBLIC_URL}/app/inventory/product/createProduct/${layout}`);
+
   }
 
 
