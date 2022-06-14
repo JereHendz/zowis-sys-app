@@ -73,93 +73,94 @@ const ProductCreate = () => {
 
 
   //Evento que sucede al dar clic al botón de crear
-  const onSubmit: SubmitHandler<FormValues> = data => {
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
     // If all validations are met we'll call register method
-    // createUser(data);
+
     createProduct(data);
   }
 
   //Function to create product
   const createProduct = (data) => {
 
-    // Make sure that the category is not empty
-    if (idCategory === '' || idSubCategory === "") {
-      return false;
-    }
-    const informationProduct = {
-      productName: data.productName,
-      description: description,
-      stockProduct: 0,
-      stockLimit: data.stockLimit,
-      percentageProfit: data.percentageProfit,
-      idSubCategory: idSubCategory
-    };
-    // If showAddStock is false that means the user doesn't want to add stock
-    if (showAddStock === false) {
-      const detailProduct = {};
+    if (infoUserLogin.id !== null && infoUserLogin.id !== '') {
+      let detailProduct = {};
+      setLoading(true);
 
-      console.log(detailProduct);
-    } else {
-
-      if (idProvider === '' || idBrand === "") {
+      // Make sure that the category is not empty
+      if (idCategory === '' || idSubCategory === "") {
         return false;
       }
-
-      const detailProduct = {
-        barcode: data.barcode,
-        idProvider: idProvider,
-        idBrand: idBrand,
-        quantity: data.quantity,
-        unitPurchasePrice: data.unitPurchasePrice,
-        unitSalePrice: data.saleUnitPrice
+      const informationProduct = {
+        productName: data.productName,
+        description: description,
+        stockProduct: 0,
+        stockLimit: data.stockLimit,
+        percentageProfit: data.percentageProfit,
+        idSubCategory: idSubCategory,
+        whoCreated: infoUserLogin.id
       };
-      console.log(informationProduct);
+      // If showAddStock is false that means the user doesn't want to add stock
+      if (showAddStock === false) {
+        detailProduct = {};
 
+      } else {
 
+        // Information to make the first charge
 
+        if (idProvider === '' || idBrand === "") {
+          return false;
+        }
+
+        detailProduct = {
+          barcode: data.barcode,
+          idProvider: idProvider,
+          idBrand: idBrand,
+          quantity: data.amount,
+          unitPurchasePrice: data.unitPrice,
+          unitSalePrice: data.saleUnitPrice,
+          idBranchOffice: 1,
+          idWineries: 1,
+          idFirstLevelLocation: 1,
+          idSecondLevelLocation: 1,
+          idThirdLevelLocation: 1
+        };
+
+      }
+
+      // Create formData because we are gonna send images
+      let formData = new FormData();
+
+      formData.append('productName', data.productName);
+      formData.append("informationProduct", JSON.stringify(informationProduct));
+      formData.append("detailProduct", JSON.stringify(detailProduct));
+
+      // Upload multiples files
+      files.map((file, index) => {
+        formData.append(`file${index}`, file);
+      });
+
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        }
+      }
+
+      axios.post(`${process.env.REACT_APP_DOMAIN_SERVER}api/products`, formData, config)
+        .then((res) => {
+          setLoading(false);
+          toast.info(t('successCreated'));
+          navigate(`${process.env.PUBLIC_URL}/app/inventory/product/ListProduct/${layout}`);
+        })
+        .catch((err) => {
+          //si recibimos un error
+          setLoading(false);
+          // setError(err.response.data.messages);
+          toast.error(t('errorCreate'));
+        });
     }
 
-    // if (infoUserLogin.id !== null && infoUserLogin.id !== '') {
-    //   //seteamos la variable que hace que el botón cambie el texto
-    //   setLoading(true);
-    //   //creacion de objeto que enviaremso a la api para registrar
-    //   const info = { 
-    //     userName: data.userName, 
-    //     email: data.email, 
-    //     password: data.password, 
-    //     passConfirm: data.passConfirm, 
-    //     idEmployee: idEmployee,
-    //     whoCreated: infoUserLogin.id,
-    //   };
-
-    //   //llamada de api con envio de parametros del usuario a crear
-    //   axios.post(`${process.env.REACT_APP_DOMAIN_SERVER}api/users`, info)
-    //   .then((res)=>{//si la petición es exitosa redirigimos a la lista de usuarios
-    //     console.log(res.data);
-    //     toast.info(t('successCreated'));
-    //     navigate(`${process.env.PUBLIC_URL}/app/users/userList/${layout}`);
-    //   })
-    //   .catch((err)=>{//si recibimos un error
-    //     setLoading(false);
-    //     setError(err.response.data.messages);
-    //     toast.error(t('errorCreate'));
-    //   });
-    // } else {
-    //   setTimeout(() => {
-    //     toast.error(t('errorLogin'));
-    //   }, 200);
-    // }
   };
 
-  //funcion que lee el cambio de un empleado en el select
-  // function handleChange(e){
-  //   if(e.length > 0){
-  //     var aux = e[0].id;
-  //     setIdEmployee(aux);
-  //   }else{
-  //     setIdEmployee("");
-  //   }
-  // }
 
   function clearData(e) {
     reset({
@@ -178,12 +179,12 @@ const ProductCreate = () => {
     setIdCategory('');
     setIdSubCategory('');
     setIdBrand('');
+    setValidateClass(false);
 
   }
 
 
   const handleChangeCategory = (newvalue) => {
-    console.log(newvalue);
     if (newvalue.value !== null) {
       // Set the id
       if (newvalue.value !== undefined) {
@@ -300,6 +301,7 @@ const ProductCreate = () => {
     })
     files.map(v => {
       arrayFile.push(v)
+      console.log(files);
     })
 
     setFiles(arrayFile);
@@ -346,6 +348,7 @@ const ProductCreate = () => {
                       <Label>{t("category")}</Label>
                       <SelectBox
                         dataSource={dataCategory}
+                        value={dataCategory.length > 0 ? dataCategory.find(v => v.id === idCategory) : ''}
                         displayExpr="name"
                         searchEnabled={true}
                         className={'form-control dxSelectBorder'}
@@ -463,7 +466,7 @@ const ProductCreate = () => {
                       <Col md="4 mb-3">
                         <Label>{t("unitPrice")}</Label>
                         <input className="form-control btn-pill" name="unitPrice" type="number" step="0.001" min="0" max="999999999.999" placeholder={t('unitPrice')} {...register('unitPrice', { required: showAddStock ? true : false })} />
-                        <span>{errors.unitPrice && t("errorunitPrice")}</span>
+                        <span>{errors.unitPrice && t("errorUnitPrice")}</span>
                       </Col>
                       <Col md="4 mb-3">
                         <Label>{t("saleUnitPrice")}</Label>
@@ -479,7 +482,7 @@ const ProductCreate = () => {
                           <Col sm="12">
                             <Card>
                               <CardHeader>
-                                <h5>{"SelectSingleImageUploadddddd"}</h5>
+                                <h5>{t("choosePicture")}</h5>
                               </CardHeader>
                               <CardBody className="fileUploader">
                                 <Files
@@ -500,17 +503,18 @@ const ProductCreate = () => {
                                   <div className="uploadPicturesWrapper" >
 
                                     <div className='files-gallery divImg' >
-                                      
+
                                       {files.map((file, index) =>
-                                        <div className="uploadPictureContainer" key={"up"+index}>
-                                          <div className="deleteImage" onClick={() => deleteFile(file.id)} key={"d"+index} > X</div>
-                                          <img className='files-gallery-item uploadPicture'  src={file.preview.url} key={index} alt='' />
+                                        <div className="uploadPictureContainer" key={"up" + index}>
+                                          <div className="deleteImage" onClick={() => deleteFile(file.id)} key={"d" + index} > X</div>
+                                          <img className='files-gallery-item uploadPicture' src={file.preview.url} key={index} alt='' />
                                         </div>
-                                      )}                                    
-                                        
+                                      )}
+
                                     </div>
                                   </div>
                                 </Files>
+                                {/* devjson cloudinary*/}
 
                               </CardBody>
                             </Card>
