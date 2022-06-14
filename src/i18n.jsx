@@ -133,7 +133,7 @@ i18n
                     giro: "Giro",
                     placeHolderGiro: "Ingrese el rubro",
                     placeHolderProvider: "Ingrese el nombre del proveedor",
-
+                    errorProvider:"Debe de seleccionar un proveedor",
 
                     // List brands
                     titleListBrands: "Lista de marcas",
@@ -148,10 +148,11 @@ i18n
                     titleCreateProduct: "Agregar producto",
                     productName: "Nombre del producto",
                     stockLimit: "Límite de existencias",
+                    stockProduct: "Existencias",
                     percentageProfit: "Porcentaje de ganancia",
                     barcode: "Código de barra",
                     amount: "Cantidad",
-                    unitPrice: "Precio unitario",
+                    unitPrice: "Precio unitario de compra",
                     saleUnitPrice: "Precio de venta",
                     productPhotos: "Seleccionar fotos",
                     errorProductName: "Debe ingresar un nombre de producto",
@@ -163,12 +164,15 @@ i18n
                     errorAmount: "Debe ingresar una cantidad",
                     errorUnitPrice: "Debe ingresar un precio unitario",
                     errorUnitSalePrice: "Debe ingresar un precio de venta",
+                    errorPercentageProfit: "Debe ingresar un porcentaje de ganancia",                    
                     generalInformation: "Información general",
                     enterProduct: "Agregar existencias",
                     positiveAnswer:"Si",
                     negativeAnswer:"No",
-                    questionRbtAddProduct:"¿Desea registrar existencias?"
-
+                    questionRbtAddProduct:"¿Desea registrar existencias?",
+                    choosePicture:"Seleccione imágenes",
+                    parentProducts: "Productos",
+                    titleListProducts: "Lista de productos",
 
                 }
             },
@@ -289,6 +293,7 @@ i18n
                     placeHolderProvider: "Enter the provider name",
                     giro: "Commercial business",
                     placeHolderGiro: "Enter the comemercial business",
+                    errorProvider:"You must choose a provider",
 
                     // Product
                     product: "Product",
@@ -298,7 +303,7 @@ i18n
                     percentageProfit: "Percentage of profit",
                     barcode: "Barcode",
                     amount: "Amount",
-                    unitPrice: "Unit price",
+                    unitPrice: "Unit purchase price",
                     saleUnitPrice: "Unit sale price",
                     productPhotos: "Choose images",
                     errorProductName: "You must enter a product name",
@@ -310,11 +315,18 @@ i18n
                     errorAmount: "You must enter a amount",
                     errorUnitPrice: "You must enter an unit price",
                     errorUnitSalePrice: "You must enter an unit price of sale",
+                    errorPercentageProfit: "You must enter a percentage profit",                
                     generalInformation: "General information",
                     enterProduct: "Add stock",
                     positiveAnswer:"Yes",
                     negativeAnswer:"No",
-                    questionRbtAddProduct:"Would you like to record stock?"
+                    questionRbtAddProduct:"Would you like to record stock?",
+                    choosePicture:"Choose images",
+                    parentProducts: "Products",
+                    titleListProducts: "Productss list",
+                    stockProduct: "Stock",
+
+
 
 
 

@@ -1,9 +1,9 @@
 import React, { Fragment, useState, useEffect } from "react";
-import Breadcrumb from "../../layout/breadcrumb";
+import Breadcrumb from "../../../layout/breadcrumb";
 import { Container, Row, Col, Card, CardHeader, Table, CardBody, Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 import axios from "axios";
-import { classes } from "../../data/layouts";
+import { classes } from "../../../data/layouts";
 import 'devextreme/dist/css/dx.material.teal.light.css';
 import PopupBrand from "./popupBrand";
 
@@ -35,19 +35,19 @@ const ListProduct = () => {
   const { t } = useTranslation();
 
   // To get the information of the brand
-  const [dataBrands, setDataBrands] = useState([]);
+  const [dataProducts, setDataProducts] = useState([]);
 
   // To get the list of brands
-  const [listBrands, setListBrands] = useState([]);
+  const [listProducts, setListProducts] = useState([]);
 
   // To get the list of status
   const [listStatus, setListStatus] = useState([]);
 
   // To get the status of brands
-  const [statusBrand, setStatusBrand] = useState([]);
+  const [statusProduct, setStatusProduct] = useState([]);
 
   // To determinate if the event is create or edit:  edit:true and create:false
-  const [isEditPopup, setIsEditPopup] = useState(false);
+  // const [isEditPopup, setIsEditPopup] = useState(false);
 
 
 
@@ -65,9 +65,9 @@ const ListProduct = () => {
   // Use effect is launch one time when the page load
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_DOMAIN_SERVER}/api/brands`)
+      .get(`${process.env.REACT_APP_DOMAIN_SERVER}/api/products`)
       .then((response) => {
-        setListBrands(response.data.listBrands);
+        setListProducts(response.data.listProducts);
       })
       .catch((error) => {
         console.log(error);
@@ -81,7 +81,6 @@ const ListProduct = () => {
     axios
       .get(`${process.env.REACT_APP_DOMAIN_SERVER}/api/processstate/${1}`)
       .then((response) => {
-        console.log(response.data);
         setListStatus(response.data.listStatus);
       })
       .catch((error) => {
@@ -91,17 +90,8 @@ const ListProduct = () => {
 
 
 
-  const createEmployee = (e) => {
-    setDataBrands(
-      {
-        createDate: "",
-        description: "",
-        id: "",
-        name: ""
-      }
-    );
-    setIsEditPopup(false);
-    setControlOpenModal(!controlOpenModal);
+  const createBrand = (e) => {
+    
   };
 
   const cellRenderAction = (data) => {
@@ -111,16 +101,13 @@ const ListProduct = () => {
   const [controlOpenModal, setControlOpenModal] = useState(false);
 
   const editPopupBrand = (e) => {
-    setIsEditPopup(true);
-    setDataBrands(e.data);
-    setStatusBrand(e.data.status);
-    setControlOpenModal(!controlOpenModal);
+    // setDataBrands(e.data);
   }
 
 
   return (
     <Fragment>
-      <Breadcrumb parent="Brands" title={t("titleListBrands")} />
+      <Breadcrumb parent="Products" title={t("titleListProducts")} />
       <Container fluid={true}>
         <Row className="justify-content-md-center">
           <Col sm="12" xl="10">
@@ -131,26 +118,12 @@ const ListProduct = () => {
                     <div className="table-responsive">
                       <div id="data-grid-demo" className="table-primary">
 
-                        {/* Popup */}
-                        <PopupBrand
-                          controlOpenModal={controlOpenModal}
-                          setControlOpenModal={setControlOpenModal}
-                          dataBrands={dataBrands}
-                          setDataBrands={setDataBrands}
-                          isEditPopup={isEditPopup}
-                          statusBrand={statusBrand}
-                          setStatusBrand={setStatusBrand}
-                          listStatus={listStatus}
-                          setListBrands={setListBrands}
-                        />
-
-
                         <div className="btn-showcase ">
-                          <Button className="btn-pill" color="primary" onClick={createEmployee}><i className="icofont icofont-ui-add"></i>{tab + tab}{t('create')}</Button>
+                          <Button className="btn-pill" color="primary" onClick={createBrand}><i className="icofont icofont-ui-add"></i>{tab + tab}{t('create')}</Button>
                         </div>
 
                         <DataGrid
-                          dataSource={listBrands}
+                          dataSource={listProducts}
                           keyExpr="id"
                           showBorders={true}
                           rowAlternationEnabled={true}
@@ -179,10 +152,19 @@ const ListProduct = () => {
 
                           <Column caption={t('actions')} cellRender={cellRenderAction} width={100} />
 
-                          <Column dataField="name" caption={t('nameBrand')} >
+                          <Column dataField="productName" caption={t('productName')} >
                             <RequiredRule />
                           </Column>
-                          <Column dataField="description" caption={t('descriptionBrand')} >
+                          <Column dataField="description" caption={t('description')} >
+                            <RequiredRule />
+                          </Column>
+                          <Column dataField="stockProduct" caption={t('stockProduct')} >
+                            <RequiredRule />
+                          </Column>
+                          <Column dataField="percentageProfit" caption={t('percentageProfit')} >
+                            <RequiredRule />
+                          </Column>
+                          <Column dataField="idSubCategory" caption={t('subcategory')} >
                             <RequiredRule />
                           </Column>
                           <Column dataField="status" caption={t("selectStatus")} >
@@ -203,5 +185,8 @@ const ListProduct = () => {
   );
 
 };
+
+
+
 
 export default ListProduct;
