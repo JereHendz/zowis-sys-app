@@ -113,6 +113,8 @@ i18n
                     nameFirst: "Nombre",
                     nameLast: "Apellido",
                     usrName: "Usuario",
+                    errorLoginSesion:"Vuelva a iniciar sesión, por favor",
+
 
                     //Category
                     categories: "Categorías",
@@ -227,8 +229,8 @@ i18n
                     newRecord: "New record",
                     placeHolderGeneralName: "Type a name",
                     document: "Documento",
-                    placeHolderDocument: "Ingrese el número de documento",
-
+                    placeHolderDocument: "Enter number of document",
+                    errorLoginSesion:"Back to login, please",
 
                     //employeesComponent
                     employee: "Employee",
