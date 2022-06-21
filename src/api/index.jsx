@@ -1,7 +1,10 @@
 import axios from "axios";
 
 export const fetchProductApi = () => {
-    return axios.get(`${process.env.PUBLIC_URL}/api/product.json`);
+    let p2= axios.get(`${process.env.REACT_APP_DOMAIN_SERVER}/api/getProductImages`);
+    // let p1= axios.get(`${process.env.PUBLIC_URL}/api/product.json`);
+
+    return p2;
 };
 
 export const fetchChatApi1 = () => {

@@ -221,6 +221,8 @@ import ListBrands from '../components/brands/listBrands';
 // Routes to products
 import ProductCreate from '../components/inventory/product/productCreate';
 import ListProduct from '../components/inventory/product/listProduct';
+import SeeProduct from '../components/inventory/product/seeProduct';
+
 
 
 
@@ -356,6 +358,8 @@ export const routes = [
            //Products
            { path: `${process.env.PUBLIC_URL}/app/inventory/product/ProductCreate/:layout`, Component: <ProductCreate /> },
            { path: `${process.env.PUBLIC_URL}/app/inventory/product/ListProduct/:layout`, Component: <ListProduct /> },
+           { path: `${process.env.PUBLIC_URL}/app/inventory/product/SeeProduct/:layout`, Component: <SeeProduct /> },
+
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
