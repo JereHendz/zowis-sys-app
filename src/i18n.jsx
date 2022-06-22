@@ -64,6 +64,10 @@ i18n
                     placeHolderDocument: "Ingrese el número de documento",
                     date: 'Fecha',
                     search: 'Buscar',
+                    pay: "Pagar",
+                    price: "Precio",
+                    code: "Código",
+                    quantity: "Cantidad",
 
 
                     //employeesComponent
@@ -178,6 +182,7 @@ i18n
 
                     //sales
                     titleSales: "Lista de ventas",
+                    titleSalesCreate: "Nueva venta",
                     sale: 'Venta',
                     sales: 'Ventas',
                     orderNumber: '#Orden',
@@ -188,6 +193,9 @@ i18n
                     paymentType: 'Tipo de pago',
                     text: 'Texto',
                     searchProduct: 'Buscar productos',
+                    searchTooltipSaleBar: 'Búsqueda por código de barra',
+                    searchTooltipSaleText: 'Búsqueda por texto',
+                    totalPay: "Total a pagar",
 
                 }
             },
@@ -245,6 +253,10 @@ i18n
                     placeHolderDocument: "Ingrese el número de documento",
                     date: 'Date',
                     search: 'Search',
+                    pay: "Pay",
+                    price: "Price",
+                    code: "Code",
+                    quantity: "Quantity",
 
 
                     //employeesComponent
@@ -345,6 +357,7 @@ i18n
 
                     //sales
                     titleSales: "Sales list",
+                    titleSalesCreate: 'New sale',
                     sale: 'Sale',
                     sales: 'Sales',
                     orderNumber: '#Order',
@@ -355,6 +368,9 @@ i18n
                     paymentType: 'Payment type',
                     text: 'Text',
                     searchProduct: 'Search products',
+                    searchTooltipSaleBar: 'Search by barcode',
+                    searchTooltipSaleText: 'Search by text',
+                    totalPay: "Total to pay",
 
                 }
             },
