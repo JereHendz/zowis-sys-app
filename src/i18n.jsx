@@ -119,6 +119,8 @@ i18n
                     nameFirst: "Nombre",
                     nameLast: "Apellido",
                     usrName: "Usuario",
+                    errorLoginSesion:"Vuelva a iniciar sesión, por favor",
+
 
                     //Category
                     categories: "Categorías",
@@ -258,6 +260,8 @@ i18n
                     code: "Code",
                     quantity: "Quantity",
 
+                    placeHolderDocument: "Enter number of document",
+                    errorLoginSesion:"Back to login, please",
 
                     //employeesComponent
                     employee: "Employee",

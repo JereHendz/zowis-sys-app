@@ -40,7 +40,7 @@ export const getColors = (products) => {
 
 export const getMinMaxPrice = (products) => {
     
-    let min = 100, max = 1000;
+    let min = 5, max = 1000;
 
     products.forEach((product, index) => {
         let v = product.price;

@@ -157,6 +157,8 @@ const ProductCreate = () => {
           // setError(err.response.data.messages);
           toast.error(t('errorCreate'));
         });
+    } else {
+      toast.error(t('errorLoginSesion'));
     }
 
   };
@@ -532,10 +534,20 @@ const ProductCreate = () => {
                   <Button type="button" color="secondary" onClick={clearData} >{t("cancel")}</Button>
                 </CardFooter>
               </Form>
+
+
+              {/* Loader  */}
+              {/* loderhide */}
+              <div class={loading ? 'loader-wrapper back' : 'loader-wrapper back loderhide'}><div class="loader-index">
+                <span></span></div>
+              </div>
+
             </Card>
           </Col>
         </Row>
       </Container >
+
+
     </Fragment >
   );
 };

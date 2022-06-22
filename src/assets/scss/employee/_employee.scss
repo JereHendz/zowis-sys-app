@@ -114,3 +114,21 @@
 .fileContainer .uploadPictureContainer img.uploadPicture {
     width: 100%;
 }
+
+.back {
+    position: fixed;
+    width: 100%;
+    
+    z-index: 1490;
+    top: 0;
+    left:0;
+    background: #000000cb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .standarSize{
+    width: 250px;
+    height: 270px;
+  }
