@@ -175,6 +175,14 @@ i18n
                     choosePicture:"Seleccione imágenes",
                     parentProducts: "Productos",
                     titleListProducts: "Lista de productos",
+                    image: "Imagen",
+                    priority:"Prioridad",
+                    visibleCustomer:"Visible para el cliente",
+                    placeHolderSelectProdut:"Seleccione un producto",
+                    errorSelectProduct:"Debe seleccionar un producto, por favor.",
+                    btnSearch:"Buscar",
+                    errorPriority:"Debe ingresar un númer válido",
+                    msgExistImage:"No hay images para este producto"
 
                 }
             },
@@ -327,9 +335,14 @@ i18n
                     parentProducts: "Products",
                     titleListProducts: "Productss list",
                     stockProduct: "Stock",
-
-
-
+                    image: "Image",
+                    priority:"Priority",
+                    visibleCustomer:"Visible to the customer",
+                    placeHolderSelectProdut:"Choose a product",
+                    errorSelectProduct:"You must select a product",
+                    btnSearch:"Search",
+                    errorPriority:"You must enter a valid number",
+                    msgExistImage:"There are not images for this product"
 
 
                 }

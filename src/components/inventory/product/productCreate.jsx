@@ -303,7 +303,6 @@ const ProductCreate = () => {
     })
     files.map(v => {
       arrayFile.push(v)
-      console.log(files);
     })
 
     setFiles(arrayFile);

@@ -222,6 +222,8 @@ import ListBrands from '../components/brands/listBrands';
 import ProductCreate from '../components/inventory/product/productCreate';
 import ListProduct from '../components/inventory/product/listProduct';
 import SeeProduct from '../components/inventory/product/seeProduct';
+import ManagementProductImage from '../components/inventory/product/managementProductImage';
+
 
 
 
@@ -359,6 +361,8 @@ export const routes = [
            { path: `${process.env.PUBLIC_URL}/app/inventory/product/ProductCreate/:layout`, Component: <ProductCreate /> },
            { path: `${process.env.PUBLIC_URL}/app/inventory/product/ListProduct/:layout`, Component: <ListProduct /> },
            { path: `${process.env.PUBLIC_URL}/app/inventory/product/SeeProduct/:layout`, Component: <SeeProduct /> },
+           { path: `${process.env.PUBLIC_URL}/app/inventory/product/ManagementProductImage/:layout`, Component: <ManagementProductImage /> },
+
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
