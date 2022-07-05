@@ -37,6 +37,10 @@ const ProductCreate = () => {
   const [idProvider, setIdProvider] = useState("");
   const [showAddStock, setShowAddStock] = useState(false);
   const [description, setDescription] = useState('');
+  const [percentageProfit, setPercentageProfit] = useState('');
+  const [unitSalePrice, setUnitSalePrice] = useState('');
+
+
   let arrayFile = [];
   const [clickableB, setClickableB] = useState(false);
 
@@ -90,6 +94,12 @@ const ProductCreate = () => {
       if (idCategory === '' || idSubCategory === "") {
         return false;
       }
+
+      // Make sure that the unit price sale is not empty
+      if (unitSalePrice === '' || unitSalePrice === undefined || unitSalePrice === null) {
+        return false;
+      }
+      
       const informationProduct = {
         productName: data.productName,
         description: description,
@@ -97,7 +107,8 @@ const ProductCreate = () => {
         stockLimit: data.stockLimit,
         percentageProfit: data.percentageProfit,
         idSubCategory: idSubCategory,
-        whoCreated: infoUserLogin.id
+        whoCreated: infoUserLogin.id,
+        barcode: data.barcode
       };
       // If showAddStock is false that means the user doesn't want to add stock
       if (showAddStock === false) {
@@ -112,12 +123,11 @@ const ProductCreate = () => {
         }
 
         detailProduct = {
-          barcode: data.barcode,
           idProvider: idProvider,
           idBrand: idBrand,
           quantity: data.amount,
           unitPurchasePrice: data.unitPrice,
-          unitSalePrice: data.saleUnitPrice,
+          unitSalePrice: unitSalePrice,
           idBranchOffice: 1,
           idWineries: 1,
           idFirstLevelLocation: 1,
@@ -182,6 +192,7 @@ const ProductCreate = () => {
     setIdSubCategory('');
     setIdBrand('');
     setValidateClass(false);
+    setFiles([]);
 
   }
 
@@ -324,6 +335,32 @@ const ProductCreate = () => {
     setClickableB(false);
   }
 
+  // Handle unit purchase price
+  const handleUnitPurchasePrice = (e) => {
+    if (e !== "" && e >= 0) {
+      let salePrice = parseFloat(e * (percentageProfit / 100)) + parseFloat(e);
+
+      if (salePrice !== undefined && salePrice !== null) {
+        salePrice = salePrice.toFixed(2);
+        setUnitSalePrice(salePrice);
+      } else {
+        setUnitSalePrice('');
+
+      }
+    }
+    // jere
+  }
+
+  // Handle percentage profit
+  const handlePercentageProfit = (e) => {
+    if (e !== "" && e >= 0) {
+      setPercentageProfit(e);
+    } else {
+      setPercentageProfit("");
+
+    }
+  }
+
   return (
     <Fragment>
       <Breadcrumb parent={t("product")} title={t("titleCreateProduct")} />
@@ -362,7 +399,7 @@ const ProductCreate = () => {
                       <span>{((idCategory === '' || idCategory === undefined) && validateClass) && t("errorCategory")}</span>
                     </Col>
                     <Col md="4 mb-3">
-                      <Label>{t("category")}</Label>
+                      <Label>{t("subcategory")}</Label>
                       <SelectBox
                         dataSource={dataSubCategory}
                         displayExpr="name"
@@ -386,7 +423,7 @@ const ProductCreate = () => {
                     </Col>
                     <Col md="4 mb-3">
                       <Label>{t("percentageProfit")}</Label>
-                      <input className="form-control btn-pill" name="percentageProfit" type="number" step="0.001" min="0" max="999999999.999" placeholder={t('percentageProfit')} {...register('percentageProfit', { required: true })} />
+                      <input className="form-control btn-pill" name="percentageProfit" type="number" step="0.001" min="0" max="999999999.999" placeholder={t('percentageProfit')} {...register('percentageProfit', { required: true })} onBlur={(e) => handlePercentageProfit(e.target.value)} />
                       <span>{errors.percentageProfit && t("errorPercentageProfit")}</span>
                     </Col>
                     <Col md="4 mb-3">
@@ -403,8 +440,15 @@ const ProductCreate = () => {
                       </FormGroup>
                     </Col>
                   </Row>
+                 
                   <Row>
-                    <Col md="12 mb-2">
+                  <Col md="4 mb-3">
+                    <Label>{t("barcode")}</Label>
+                    <input className="form-control btn-pill" name="barcode" type="text" placeholder={t('barcode')} {...register('barcode', { required: true })} />
+                    <span>{errors.barcode && t("errorBarcode")}</span>
+                    {/* <div className="valid-feedback">{"Looks good!"}</div> */}
+                  </Col>
+                    <Col md="12 mb-1">
                       <Label>{t("description")}</Label>
                       <Input type="textarea" className="form-control btn-pill" rows="2" name="description" placeholder={t("description")} onChange={(ev) => { setDescription(ev.target.value) }} />
                     </Col>
@@ -421,12 +465,7 @@ const ProductCreate = () => {
                         <h6 className="sub-title ">{t("enterProduct")}</h6>
 
                       </Col>
-                      <Col md="4 mb-3">
-                        <Label>{t("barcode")}</Label>
-                        <input className="form-control btn-pill" name="barcode" type="text" placeholder={t('barcode')} {...register('barcode', { required: showAddStock ? true : false })} />
-                        <span>{errors.barcode && t("errorBarcode")}</span>
-                        {/* <div className="valid-feedback">{"Looks good!"}</div> */}
-                      </Col>
+
                       <Col md="4 mb-3">
                         <Label>{t("provider")}</Label>
                         <SelectBox
@@ -457,75 +496,83 @@ const ProductCreate = () => {
                         <input type="hidden" />
                         <span>{((idBrand === '' || idBrand === undefined) && validateClass) && t("errorSubCategory")}</span>
                       </Col>
-                    </Row>
-                    <Row>
                       <Col md="4 mb-3">
                         <Label>{t("amount")}</Label>
                         <input className="form-control btn-pill" name="amount" type="number" placeholder={t('amount')} {...register('amount', { required: showAddStock ? true : false })} />
                         <span>{errors.amount && t("errorAmount")}</span>
                       </Col>
+                    </Row>
+                    <Row>
+
                       <Col md="4 mb-3">
                         <Label>{t("unitPrice")}</Label>
-                        <input className="form-control btn-pill" name="unitPrice" type="number" step="0.001" min="0" max="999999999.999" placeholder={t('unitPrice')} {...register('unitPrice', { required: showAddStock ? true : false })} />
+                        <input className="form-control btn-pill" name="unitPrice" type="number" step="0.001" min="0" max="999999999.999" placeholder={t('unitPrice')} {...register('unitPrice', { required: showAddStock ? true : false })} onBlur={(e) => handleUnitPurchasePrice(e.target.value)} />
                         <span>{errors.unitPrice && t("errorUnitPrice")}</span>
                       </Col>
                       <Col md="4 mb-3">
                         <Label>{t("saleUnitPrice")}</Label>
-                        <input className="form-control btn-pill" name="saleUnitPrice" type="number" step="0.001" min="0" max="999999999.999" placeholder={t('saleUnitPrice')} {...register('saleUnitPrice', { required: showAddStock ? true : false })} />
-                        <span>{errors.saleUnitPrice && t("errorUnitSalePrice")}</span>
+                        <input className="form-control btn-pill" name="saleUnitPrice" type="number" step="0.001" min="0" max="999999999.999" placeholder={t('saleUnitPrice')} defaultValue={unitSalePrice} />
+                        {
+                          showAddStock ? (
+                            <span>{unitSalePrice === '' && validateClass && t("errorUnitSalePrice")}</span>
+                          ) : ''
+                        }
                       </Col>
 
-                    </Row>
-                    <Row>
-                      <Col md="12 mb-2">
-                        <Label>{t("productPhotos")}</Label>
-                        <Row >
-                          <Col sm="12">
-                            <Card>
-                              <CardHeader>
-                                <h5>{t("choosePicture")}</h5>
-                              </CardHeader>
-                              <CardBody className="fileUploader">
-                                <Files
-                                  className='files-dropzone fileContainer'
-                                  onChange={onFilesChange}
-                                  onError={onFilesError}
-                                  accepts={['image/*']}
-                                  multiple={true}
-                                  maxFileSize={100000000}
-                                  minFileSize={0}
-                                  clickable={clickableB}
-                                >
-
-                                  <div className="d-flex justify-content-center">
-                                    <input type="button" className="chooseFileButton me-2" onFocus={uploadImage} onBlur={blockUploadImage} value={"Upload Image"} />
-                                  </div>
-
-                                  <div className="uploadPicturesWrapper" >
-
-                                    <div className='files-gallery divImg' >
-
-                                      {files.map((file, index) =>
-                                        <div className="uploadPictureContainer" key={"up" + index}>
-                                          <div className="deleteImage" onClick={() => deleteFile(file.id)} key={"d" + index} > X</div>
-                                          <img className='files-gallery-item uploadPicture' src={file.preview.url} key={index} alt='' />
-                                        </div>
-                                      )}
-
-                                    </div>
-                                  </div>
-                                </Files>
-                                {/* devjson cloudinary*/}
-
-                              </CardBody>
-                            </Card>
-                          </Col>
-                        </Row>
-
-                      </Col>
                     </Row>
                   </div>
                   {/* End add stock */}
+
+                  {/* Upload images */}
+                  <Row>
+                    <Col md="12 mb-2">
+                      <Label>{t("productPhotos")}</Label>
+                      <Row >
+                        <Col sm="12">
+                          <Card>
+                            <CardHeader>
+                              <h5>{t("choosePicture")}</h5>
+                            </CardHeader>
+                            <CardBody className="fileUploader">
+                              <Files
+                                className='files-dropzone fileContainer'
+                                onChange={onFilesChange}
+                                onError={onFilesError}
+                                accepts={['image/*']}
+                                multiple={true}
+                                maxFileSize={100000000}
+                                minFileSize={0}
+                                clickable={clickableB}
+                              >
+
+                                <div className="d-flex justify-content-center">
+                                  <input type="button" className="chooseFileButton me-2" onPointerEnter={uploadImage} onPointerLeave={blockUploadImage} value={"Upload Image"} />
+                                </div>
+
+                                <div className="uploadPicturesWrapper" >
+
+                                  <div className='files-gallery divImg' >
+
+                                    {files.map((file, index) =>
+                                      <div className="uploadPictureContainer" key={"up" + index}>
+                                        <div className="deleteImage" onClick={() => deleteFile(file.id)} key={"d" + index} > X</div>
+                                        <img className='files-gallery-item uploadPicture' src={file.preview.url} key={index} alt='' />
+                                      </div>
+                                    )}
+
+                                  </div>
+                                </div>
+                              </Files>
+                              {/* devjson cloudinary*/}
+
+                            </CardBody>
+                          </Card>
+                        </Col>
+                      </Row>
+
+                    </Col>
+                  </Row>
+
 
                 </CardBody>
                 <CardFooter>
@@ -537,7 +584,7 @@ const ProductCreate = () => {
 
               {/* Loader  */}
               {/* loderhide */}
-              <div class={loading ? 'loader-wrapper back' : 'loader-wrapper back loderhide'}><div class="loader-index">
+              <div className={loading ? 'loader-wrapper back' : 'loader-wrapper back loderhide'}><div className="loader-index">
                 <span></span></div>
               </div>
 
