@@ -92,14 +92,17 @@ const ProductCreate = () => {
 
       // Make sure that the category is not empty
       if (idCategory === '' || idSubCategory === "") {
+        setLoading(false);
         return false;
       }
 
       // Make sure that the unit price sale is not empty
       if (unitSalePrice === '' || unitSalePrice === undefined || unitSalePrice === null) {
+        setLoading(false);
+
         return false;
       }
-      
+
       const informationProduct = {
         productName: data.productName,
         description: description,
@@ -119,6 +122,8 @@ const ProductCreate = () => {
         // Information to make the first charge
 
         if (idProvider === '' || idBrand === "") {
+          setLoading(false);
+
           return false;
         }
 
@@ -347,8 +352,9 @@ const ProductCreate = () => {
         setUnitSalePrice('');
 
       }
+    } else {
+      setUnitSalePrice('');
     }
-    // jere
   }
 
   // Handle percentage profit
@@ -360,6 +366,12 @@ const ProductCreate = () => {
 
     }
   }
+
+  // Handle unit sale price
+  const handleUnitSalePrice = (e) => {
+    setUnitSalePrice(e);
+  }
+
 
   return (
     <Fragment>
@@ -440,14 +452,14 @@ const ProductCreate = () => {
                       </FormGroup>
                     </Col>
                   </Row>
-                 
+
                   <Row>
-                  <Col md="4 mb-3">
-                    <Label>{t("barcode")}</Label>
-                    <input className="form-control btn-pill" name="barcode" type="text" placeholder={t('barcode')} {...register('barcode', { required: true })} />
-                    <span>{errors.barcode && t("errorBarcode")}</span>
-                    {/* <div className="valid-feedback">{"Looks good!"}</div> */}
-                  </Col>
+                    <Col md="4 mb-3">
+                      <Label>{t("barcode")}</Label>
+                      <input className="form-control btn-pill" name="barcode" type="text" placeholder={t('barcode')} {...register('barcode', { required: true })} />
+                      <span>{errors.barcode && t("errorBarcode")}</span>
+                      {/* <div className="valid-feedback">{"Looks good!"}</div> */}
+                    </Col>
                     <Col md="12 mb-1">
                       <Label>{t("description")}</Label>
                       <Input type="textarea" className="form-control btn-pill" rows="2" name="description" placeholder={t("description")} onChange={(ev) => { setDescription(ev.target.value) }} />
@@ -511,7 +523,7 @@ const ProductCreate = () => {
                       </Col>
                       <Col md="4 mb-3">
                         <Label>{t("saleUnitPrice")}</Label>
-                        <input className="form-control btn-pill" name="saleUnitPrice" type="number" step="0.001" min="0" max="999999999.999" placeholder={t('saleUnitPrice')} defaultValue={unitSalePrice} />
+                        <input className="form-control btn-pill" key={unitSalePrice} name="saleUnitPrice" type="number" step="0.001" min="0" max="999999999.999" placeholder={t('saleUnitPrice')} defaultValue={unitSalePrice} onBlur={(e) => handleUnitSalePrice(e.target.value)} />
                         {
                           showAddStock ? (
                             <span>{unitSalePrice === '' && validateClass && t("errorUnitSalePrice")}</span>

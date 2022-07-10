@@ -182,7 +182,9 @@ i18n
                     errorSelectProduct:"Debe seleccionar un producto, por favor.",
                     btnSearch:"Buscar",
                     errorPriority:"Debe ingresar un númer válido",
-                    msgExistImage:"No hay images para este producto"
+                    msgExistImage:"No hay images para este producto",
+                    addStockMsg:"Agregar existencias"
+
 
                 }
             },
@@ -342,7 +344,8 @@ i18n
                     errorSelectProduct:"You must select a product",
                     btnSearch:"Search",
                     errorPriority:"You must enter a valid number",
-                    msgExistImage:"There are not images for this product"
+                    msgExistImage:"There are not images for this product",
+                    addStockMsg:"Add stock"
 
 
                 }
