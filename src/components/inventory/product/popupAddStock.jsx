@@ -41,10 +41,13 @@ export default function PopupAddStock(
     // To get the list of brands
     const [idBrand, setIdBrand] = useState("");
 
-    const [unitSalePrice, setUnitSalePrice] = useState('');
 
     // Define error array
     const [error, setError] = useState([]);
+
+    // To get the description
+    const [description, setDescription] = useState('');
+
 
 
 
@@ -63,7 +66,7 @@ export default function PopupAddStock(
             setLoading(true);
 
             // Make sure that the provider and brand are not empty
-            if (idProvider === '' || idProvider === undefined || idBrand === '' || idBrand === undefined || unitSalePrice === "") {
+            if (idProvider === '' || idProvider === undefined || idBrand === '' || idBrand === undefined ) {
                 setLoading(false);
                 return false;
             }
@@ -73,7 +76,7 @@ export default function PopupAddStock(
                 idBrand: idBrand,
                 quantity: data.amount,
                 unitPurchasePrice: data.unitPrice,
-                unitSalePrice: unitSalePrice,
+                descriptionDetail: description,
                 whoCreated: infoUserLogin.id,
                 idProduct: dataProducts.id,
                 idBranchOffice: 1,
@@ -82,7 +85,7 @@ export default function PopupAddStock(
                 idSecondLevelLocation: 1,
                 idThirdLevelLocation: 1
             };
-            
+
 
             axios.post(`${process.env.REACT_APP_DOMAIN_SERVER}api/addStockProduct`, infoCreate)
                 .then((response) => {
@@ -158,27 +161,7 @@ export default function PopupAddStock(
         }
     }
 
-    // Handle unit purchase price
-    const handleUnitPurchasePrice = (e) => {
-        if (e !== "" && e >= 0) {
-            let salePrice = parseFloat(e * (dataProducts.percentageProfit / 100)) + parseFloat(e);
-            if (salePrice !== undefined && salePrice !== null) {
-                salePrice = salePrice.toFixed(2);
-                setUnitSalePrice(salePrice);
-                console.log(salePrice);
-            } else {
-                setUnitSalePrice('');
-            }
-        } else {
-            setUnitSalePrice('');
-        }
-    }
-
-    // Handle unit sale price
-    const handleUnitSalePrice = (e) => {
-        setUnitSalePrice(e);
-    }
-
+  
     useEffect(() => {
         setValidateClass(false)
         reset({
@@ -189,7 +172,7 @@ export default function PopupAddStock(
 
         setIdProvider("");
         setIdBrand("");
-        setUnitSalePrice('');
+        setDescription('');
 
     }, [controlOpenModal])
 
@@ -207,7 +190,7 @@ export default function PopupAddStock(
                         <Container fluid={true}>
                             <Row style={{ marginTop: '15px' }} >
 
-                                <Col md="4 mb-3">
+                                <Col md="6 mb-2">
                                     <Label>{t("provider")}</Label>
                                     <SelectBox
                                         dataSource={dataProvider}
@@ -222,7 +205,7 @@ export default function PopupAddStock(
                                     <input type="hidden" />
                                     <span>{((idProvider === '' || idProvider === undefined) && validateClass) && t("errorProvider")}</span>
                                 </Col>
-                                <Col md="4 mb-3">
+                                <Col md="6 mb-2">
                                     <Label>{t("nameBrand")}</Label>
                                     <SelectBox
                                         dataSource={dataBrand}
@@ -237,20 +220,19 @@ export default function PopupAddStock(
                                     <input type="hidden" />
                                     <span>{((idBrand === '' || idBrand === undefined) && validateClass) && t("errorSubCategory")}</span>
                                 </Col>
-                                <Col md="4 mb-3">
+                                <Col md="6 mb-2">
                                     <Label>{t("amount")}</Label>
                                     <input className="form-control btn-pill" name="amount" type="number" placeholder={t('amount')} {...register('amount', { required: true })} />
                                     <span>{errors.amount && t("errorAmount")}</span>
                                 </Col>
-                                <Col md="4 mb-3">
+                                <Col md="6 mb-2">
                                     <Label>{t("unitPrice")}</Label>
-                                    <input className="form-control btn-pill" name="unitPrice" type="number" step="0.001" min="0" max="999999999.999" placeholder={t('unitPrice')} {...register('unitPrice', { required: true })} onBlur={(e) => handleUnitPurchasePrice(e.target.value)} />
+                                    <input className="form-control btn-pill" name="unitPrice" type="number" step="0.001" min="0" max="999999999.999" placeholder={t('unitPrice')} {...register('unitPrice', { required: true })} />
                                     <span>{errors.unitPrice && t("errorUnitPrice")}</span>
                                 </Col>
-                                <Col md="4 mb-3">
-                                    <Label>{t("saleUnitPrice")}</Label>
-                                    <input className="form-control btn-pill" key={unitSalePrice} name="saleUnitPrice" type="number" step="0.001" min="0" max="999999999.999" placeholder={t('saleUnitPrice')} defaultValue={unitSalePrice} onBlur={(e) => handleUnitSalePrice(e.target.value)} />
-                                    <span>{unitSalePrice === '' && validateClass && t("errorUnitSalePrice")}</span>
+                                <Col md="12 mb-1">
+                                    <Label>{t("description")}</Label>
+                                    <Input type="textarea" className="form-control btn-pill" rows="2" name="description" placeholder={t("description")} onChange={(ev) => { setDescription(ev.target.value) }} />
                                 </Col>
                             </Row>
 

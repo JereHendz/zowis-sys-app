@@ -58,7 +58,16 @@ const ListProduct = () => {
   const [dataBrand, setDataBrand] = useState([]);
   const [idBrand, setIdBrand] = useState("");
 
+  // To get the category 
+  const [dataCategory, setDataCategory] = useState([]);
+  const [idCategory, setIdCategory] = useState("");
+  const [dataSubCategory, setDataSubCategory] = useState([]);
+  const [idSubCategory, setIdSubCategory] = useState("");
+  // Create a copy of the category data
+  const [dataSubCategoryCopy, setDataSubCategoryCopy] = useState([]);
 
+// To get the description of the product selected
+  const [description, setDescription] = useState('');
 
 
   // To determinate if the event is create or edit:  edit:true and create:false
@@ -119,10 +128,18 @@ const ListProduct = () => {
   }
 
   const [controlOpenModal, setControlOpenModal] = useState(false);
+  const [controlOpenModalEdit, setControlOpenModalEdit] = useState(false);
+
 
   const editProductPopup = (e) => {
     setDataProducts(e.data);
-    setControlOpenModal(!controlOpenModal);
+    setControlOpenModalEdit(!controlOpenModalEdit);
+    setIdSubCategory(e.data.idSubCategory);
+
+    let dataSubCat = dataSubCategoryCopy.filter(item => item.id === e.data.idSubCategory);
+    setIdCategory( dataSubCat.length > 0 ? dataSubCat[0].idCategory : '');
+    setDataSubCategory(dataSubCategoryCopy.filter(item=>item.idCategory===dataSubCat[0].idCategory));
+    setStatusProduct(e.data.status);
   }
 
   // Add product to the stock
@@ -135,6 +152,9 @@ const ListProduct = () => {
   function getProviderAndBrand() {
     axios.get(`${process.env.REACT_APP_DOMAIN_SERVER}api/infoFormProduct`)
       .then((res) => {
+        setDataCategory(res.data.categories)
+        setDataSubCategory(res.data.subCategories)
+        setDataSubCategoryCopy(res.data.subCategories)        
         setDataBrand(res.data.brands)
         setDataProvider(res.data.providers)
       })
@@ -172,13 +192,25 @@ const ListProduct = () => {
                         />
 
                         <PopupEditProduct
-                          controlOpenModal={controlOpenModal}
-                          setControlOpenModal={setControlOpenModal}
+                          controlOpenModalEdit={controlOpenModalEdit}
+                          setControlOpenModalEdit={setControlOpenModalEdit}
                           dataProducts={dataProducts}
                           setDataProducts={setDataProducts}
                           setListProducts={setListProducts}
                           dataBrand={dataBrand}
                           dataProvider={dataProvider}
+                          dataCategory={dataCategory}
+                          idCategory={idCategory}
+                          dataSubCategory={dataSubCategory}
+                          idSubCategory={idSubCategory}
+                          setIdCategory = {setIdCategory}
+                          setDataSubCategory = {setDataSubCategory}
+                          setIdSubCategory = {setIdSubCategory}
+                          description={description}
+                          setDescription={setDescription}
+                          listStatus={listStatus}
+                          statusProduct={statusProduct}
+                          setStatusProduct={setStatusProduct}
                         />
 
                         <DataGrid

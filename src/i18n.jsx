@@ -148,7 +148,10 @@ i18n
                     // Product
                     product: "Producto",
                     titleCreateProduct: "Agregar producto",
+                    titleEditProduct: "Editar producto",
+
                     productName: "Nombre del producto",
+                    productCode: "Código de producto",
                     stockLimit: "Límite de existencias",
                     stockProduct: "Existencias",
                     percentageProfit: "Porcentaje de ganancia",
@@ -183,7 +186,9 @@ i18n
                     btnSearch:"Buscar",
                     errorPriority:"Debe ingresar un númer válido",
                     msgExistImage:"No hay images para este producto",
-                    addStockMsg:"Agregar existencias"
+                    addStockMsg:"Agregar existencias",
+                    productDiscount:"Descuento del producto",
+
 
 
                 }
@@ -309,8 +314,11 @@ i18n
 
                     // Product
                     product: "Product",
+                    titleEditProduct: "Edit product",
+
                     titleCreateProduct: "Add product",
                     productName: "Product Name",
+                    productCode: "Product code",
                     stockLimit: "Stock",
                     percentageProfit: "Percentage of profit",
                     barcode: "Barcode",
@@ -345,7 +353,9 @@ i18n
                     btnSearch:"Search",
                     errorPriority:"You must enter a valid number",
                     msgExistImage:"There are not images for this product",
-                    addStockMsg:"Add stock"
+                    addStockMsg:"Add stock",
+                    productDiscount:"Product discount",
+
 
 
                 }

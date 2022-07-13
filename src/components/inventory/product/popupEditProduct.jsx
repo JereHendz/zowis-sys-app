@@ -6,19 +6,32 @@ import { toast } from 'react-toastify';
 import axios from "axios";
 import { SelectBox } from 'devextreme-react/select-box';
 import Files from 'react-files';
+import { data } from 'autoprefixer';
 
 
 
 
 export default function PopupEditProduct(
     {
-        controlOpenModal,
-        setControlOpenModal,
+        controlOpenModalEdit,
+        setControlOpenModalEdit,
         dataProducts,
         setDataProducts,
         setListProducts,
         dataBrand,
         dataProvider,
+        dataCategory,
+        idCategory,
+        dataSubCategory,
+        idSubCategory,
+        setIdCategory,
+        setDataSubCategory,
+        setIdSubCategory,
+        description,
+        setDescription,
+        listStatus,
+        statusProduct,
+        setStatusProduct
     }
 ) {
 
@@ -51,40 +64,47 @@ export default function PopupEditProduct(
 
     const onSubmit: SubmitHandler<FormValues> = data => {
         // If all validations are met we'll call register method
-        addStockByProduct(data);
+        updateProduct(data);
 
     }
 
 
     // Function that allow update the record
-    const addStockByProduct = (data) => {
+    const updateProduct = (data) => {
 
         if (infoUserLogin.id !== null && infoUserLogin.id !== '') {
             setLoading(true);
 
-            // Make sure that the provider and brand are not empty
-            if (idProvider === '' || idProvider === undefined || idBrand === '' || idBrand === undefined || unitSalePrice === "") {
+            // Make sure that the category is not empty
+            if (idCategory === '' || idSubCategory === "") {
                 setLoading(false);
                 return false;
             }
 
-            let infoCreate = {
-                idProvider: idProvider,
-                idBrand: idBrand,
-                quantity: data.amount,
-                unitPurchasePrice: data.unitPrice,
-                unitSalePrice: unitSalePrice,
-                whoCreated: infoUserLogin.id,
-                idProduct: dataProducts.id,
-                idBranchOffice: 1,
-                idWineries: 1,
-                idFirstLevelLocation: 1,
-                idSecondLevelLocation: 1,
-                idThirdLevelLocation: 1
-            };
-            
+            // Make sure that the status  is not empty
+            if (statusProduct === '' || statusProduct === undefined || statusProduct === null) {
+                setLoading(false);
+                return false;
+            }
 
-            axios.post(`${process.env.REACT_APP_DOMAIN_SERVER}api/addStockProduct`, infoCreate)
+            const informationProduct = {
+                productCode: data.productCode,
+                barcode: data.barcode,
+                productName: data.productName,
+                description: description,
+                stockProduct: data.stockProduct,
+                stockLimit: data.stockLimit,
+                percentageProfit: data.percentageProfit,
+                productDiscount: data.productDiscount,
+                idSubCategory: idSubCategory,
+                whodidit: infoUserLogin.id,
+                unitSalePriceAvg: data.unitSalePriceAvg,
+                status:statusProduct
+            };
+
+            let idProduct = dataProducts.id;
+
+            axios.put(`${process.env.REACT_APP_DOMAIN_SERVER}api/products/${idProduct}`, informationProduct)
                 .then((response) => {
                     setValidateClass(false);
                     setLoading(false);
@@ -113,7 +133,7 @@ export default function PopupEditProduct(
             .get(`${process.env.REACT_APP_DOMAIN_SERVER}/api/products`)
             .then((response) => {
                 setListProducts(response.data.listProducts);
-                setControlOpenModal(!controlOpenModal);
+                setControlOpenModalEdit(!controlOpenModalEdit);
 
             })
             .catch((error) => {
@@ -123,61 +143,70 @@ export default function PopupEditProduct(
 
 
     const changeStatusModal = () => {
-        setControlOpenModal(!controlOpenModal)
+        setControlOpenModalEdit(!controlOpenModalEdit)
     };
 
-    const handleChangeProvider = (newvalue) => {
+
+    const handleChangeCategory = (newvalue) => {
+        if (newvalue.value !== null) {
+            // Set the id
+            if (newvalue.value !== undefined) {
+                setIdCategory(newvalue.value.id);
+
+                // Clean object in sub-category
+                setIdSubCategory('');
+                setDataSubCategory([]);
+
+                // Get the sub categories by id category
+                axios
+                    .get(`${process.env.REACT_APP_DOMAIN_SERVER}/api/subCateByIdCate/${newvalue.value.id}`)
+                    .then((payload) => {
+                        // If everything is good, load the array of category
+                        setDataSubCategory(payload.data.sub_category);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
+
+        } else {
+            // Clear the information 
+            setIdCategory('');
+            // Clean object in sub-category
+            setIdSubCategory('');
+            setDataSubCategory([]);
+
+        }
+    }
+
+
+    const handleChangeSubCategory = (newvalue) => {
 
         if (newvalue.value !== null) {
 
             // Set the id
             if (newvalue.value !== undefined) {
-                setIdProvider(newvalue.value.id);
+                setIdSubCategory(newvalue.value.id);
             }
 
         } else {
             // Clear the information 
-            setIdProvider('');
+            setIdSubCategory('');
 
         }
     }
 
-    const handleChangeBrand = (newvalue) => {
-
-        if (newvalue.value !== null) {
-
+    const handleStatusProduct = (newvalue) => {
+        if (newvalue.value !== null && newvalue.value !== undefined) {
             // Set the id
-            if (newvalue.value !== undefined) {
-                setIdBrand(newvalue.value.id);
-            }
-
+            setStatusProduct(newvalue.value.id);
         } else {
-            // Clear the information 
-            setIdBrand('');
-
+            // Clear the information of Status product
+            setStatusProduct('');
         }
     }
 
-    // Handle unit purchase price
-    const handleUnitPurchasePrice = (e) => {
-        if (e !== "" && e >= 0) {
-            let salePrice = parseFloat(e * (dataProducts.percentageProfit / 100)) + parseFloat(e);
-            if (salePrice !== undefined && salePrice !== null) {
-                salePrice = salePrice.toFixed(2);
-                setUnitSalePrice(salePrice);
-                console.log(salePrice);
-            } else {
-                setUnitSalePrice('');
-            }
-        } else {
-            setUnitSalePrice('');
-        }
-    }
 
-    // Handle unit sale price
-    const handleUnitSalePrice = (e) => {
-        setUnitSalePrice(e);
-    }
 
     useEffect(() => {
         setValidateClass(false)
@@ -191,70 +220,118 @@ export default function PopupEditProduct(
         setIdBrand("");
         setUnitSalePrice('');
 
-    }, [controlOpenModal])
+    }, [controlOpenModalEdit])
 
     return (
         <Fragment>
             <Modal
-                size="lg" isOpen={controlOpenModal} centered>
+                size="lg" isOpen={controlOpenModalEdit} centered>
                 <Form id='formEditImage' className={`needs-validation tooltip-validation ${validateClass ? 'validateClass' : ''}`} noValidate="" onSubmit={handleSubmit(onSubmit)}>
 
                     <ModalHeader toggle={changeStatusModal}>
-                        {t("addStockMsg")}
+                        {t("titleEditProduct")}
                     </ModalHeader>
                     <ModalBody>
 
-                        <Container fluid={true}>
-                            <Row style={{ marginTop: '15px' }} >
+                        <Row style={{ marginTop: '15px' }} >
+                            <Col md="6 mb-2">
+                                <Label>{t("productCode")}</Label>
+                                <input className="form-control btn-pill" name="productCode" type="number" placeholder={t('productCode')} {...register('productCode', { required: true })} defaultValue={dataProducts.productCode} />
+                                <span>{errors.productCode && t("errorProductCode")}</span>
+                            </Col>
+                            <Col md="6 mb-2">
+                                <Label>{t("barcode")}</Label>
+                                <input className="form-control btn-pill" name="barcode" type="text" placeholder={t('barcode')} {...register('barcode', { required: true })} defaultValue={dataProducts.barcode} />
+                                <span>{errors.barcode && t("errorBarcode")}</span>
+                            </Col>
+                            <Col md="6 mb-2">
+                                <Label>{t("productName")}</Label>
+                                <input className="form-control btn-pill" name="productName" type="text" placeholder={t('productName')} {...register('productName', { required: true })} defaultValue={dataProducts.productName} />
+                                <span>{errors.productName && t("errorProductName")}</span>
+                            </Col>
+                            <Col md="6 mb-2">
+                                <Label>{t("stock")}</Label>
+                                <input className="form-control btn-pill" name="stockProduct" type="number" placeholder={t('stockProduct')} {...register('stockProduct', { required: true })} defaultValue={dataProducts.stockProduct} />
+                                <span>{errors.stockProduct && t("errorAmount")}</span>
+                            </Col>
+                            <Col md="6 mb-3">
+                                <Label>{t("stockLimit")}</Label>
+                                <input className="form-control btn-pill" name="stockLimit" type="number" placeholder={t('stockLimit')} {...register('stockLimit', { required: true })} defaultValue={dataProducts.stockLimit} />
+                                <span>{errors.stockLimit && t("errorStockLimit")}</span>
+                            </Col>
+                            <Col md="6 mb-2">
+                                <Label>{t("percentageProfit")}</Label>
+                                <input className="form-control btn-pill" name="percentageProfit" type="number" step="0.001" min="0" max="999999999.999" placeholder={t('percentageProfit')} {...register('percentageProfit', { required: true })} defaultValue={dataProducts.percentageProfit} />
+                                <span>{errors.percentageProfit && t("errorPercentageProfit")}</span>
+                            </Col>
 
-                                <Col md="4 mb-3">
-                                    <Label>{t("provider")}</Label>
-                                    <SelectBox
-                                        dataSource={dataProvider}
-                                        displayExpr="comercialName"
-                                        searchEnabled={true}
-                                        className={'form-control dxSelectBorder'}
-                                        placeholder={t('provider')}
-                                        showClearButton={true}
-                                        name="selectProvider"
-                                        onValueChanged={handleChangeProvider}
-                                    />
-                                    <input type="hidden" />
-                                    <span>{((idProvider === '' || idProvider === undefined) && validateClass) && t("errorProvider")}</span>
-                                </Col>
-                                <Col md="4 mb-3">
-                                    <Label>{t("nameBrand")}</Label>
-                                    <SelectBox
-                                        dataSource={dataBrand}
-                                        displayExpr="name"
-                                        searchEnabled={true}
-                                        className={'form-control dxSelectBorder'}
-                                        placeholder={t('nameBrand')}
-                                        showClearButton={true}
-                                        name="selectBrand"
-                                        onValueChanged={handleChangeBrand}
-                                    />
-                                    <input type="hidden" />
-                                    <span>{((idBrand === '' || idBrand === undefined) && validateClass) && t("errorSubCategory")}</span>
-                                </Col>
-                                <Col md="4 mb-3">
-                                    <Label>{t("amount")}</Label>
-                                    <input className="form-control btn-pill" name="amount" type="number" placeholder={t('amount')} {...register('amount', { required: true })} />
-                                    <span>{errors.amount && t("errorAmount")}</span>
-                                </Col>
-                                <Col md="4 mb-3">
-                                    <Label>{t("unitPrice")}</Label>
-                                    <input className="form-control btn-pill" name="unitPrice" type="number" step="0.001" min="0" max="999999999.999" placeholder={t('unitPrice')} {...register('unitPrice', { required: true })} onBlur={(e) => handleUnitPurchasePrice(e.target.value)} />
-                                    <span>{errors.unitPrice && t("errorUnitPrice")}</span>
-                                </Col>
-                                <Col md="4 mb-3">
-                                    <Label>{t("saleUnitPrice")}</Label>
-                                    <input className="form-control btn-pill" key={unitSalePrice} name="saleUnitPrice" type="number" step="0.001" min="0" max="999999999.999" placeholder={t('saleUnitPrice')} defaultValue={unitSalePrice} onBlur={(e) => handleUnitSalePrice(e.target.value)} />
-                                    <span>{unitSalePrice === '' && validateClass && t("errorUnitSalePrice")}</span>
-                                </Col>
-                            </Row>
+                            <Col md="6 mb-2">
+                                <Label>{t("productDiscount")}</Label>
+                                <input className="form-control btn-pill" name="productDiscount" type="number" step="0.001" min="0" max="999999999.999" placeholder={t('productDiscount')} {...register('productDiscount', { required: true })} defaultValue={dataProducts.productDiscount} />
+                                <span>{errors.productDiscount && t("errorProductDiscount")}</span>
+                            </Col>
+                            <Col md="6 mb-2">
+                                <Label>{t("saleUnitPrice")}</Label>
+                                <input className="form-control btn-pill" name="unitSalePriceAvg" type="number" step="0.001" min="0" max="999999999.999" placeholder={t('unitSalePriceAvg')} {...register('unitSalePriceAvg', { required: true })} defaultValue={dataProducts.unitSalePriceAvg} />
+                                <span>{errors.unitSalePriceAvg && t("errorUnitSalePriceAvg")}</span>
+                            </Col>
 
-                        </Container >
+                            <Col md="6 mb-2">
+                                <Label>{t("category")}</Label>
+                                <SelectBox
+                                    dataSource={dataCategory}
+                                    value={dataCategory.length > 0 ? dataCategory.find(v => v.id === idCategory) : ''}
+                                    displayExpr="name"
+                                    searchEnabled={true}
+                                    className={'form-control dxSelectBorder'}
+                                    placeholder={t('category')}
+                                    showClearButton={true}
+                                    name="selectCountry"
+                                    onValueChanged={handleChangeCategory}
+                                />
+                                <input type="hidden" />
+                                <span>{((idCategory === '' || idCategory === undefined) && validateClass) && t("errorCategory")}</span>
+                            </Col>
+                            <Col md="6 mb-2">
+                                <Label>{t("subcategory")}</Label>
+                                <SelectBox
+                                    dataSource={dataSubCategory}
+                                    displayExpr="name"
+                                    value={dataSubCategory.length > 0 ? dataSubCategory.find(v => v.id === idSubCategory) : ''}
+                                    searchEnabled={true}
+                                    className={'form-control dxSelectBorder'}
+                                    placeholder={t('category')}
+                                    showClearButton={true}
+                                    name="selectSubCategory"
+                                    onValueChanged={handleChangeSubCategory}
+                                />
+                                <input type="hidden" />
+                                <span>{((idSubCategory === '' || idSubCategory === undefined) && validateClass) && t("errorSubCategory")}</span>
+                            </Col>
+                            <Col md="6 mb-2">
+                                <Label>{t("selectStatus")}</Label>
+                                <SelectBox
+                                    dataSource={listStatus}
+                                    displayExpr="name"
+                                    value={listStatus.find(v => v.id === statusProduct)}
+                                    searchEnabled={true}
+                                    className={'form-control dxSelectBorder'}
+                                    placeholder={t('selectStatus')}
+                                    showClearButton={true}
+                                    name="selectStatus"
+                                    onValueChanged={handleStatusProduct}
+                                />
+                                <input type="hidden" />
+                                <span>{((statusProduct === '' || statusProduct === undefined) && validateClass) && t("errorRequired")}</span>
+                            </Col>
+
+                            <Col md="12 mb-1">
+                                <Label>{t("description")}</Label>
+                                <Input type="textarea" className="form-control btn-pill" rows="2" name="description" placeholder={t("description")} onChange={(ev) => { setDescription(ev.target.value) }} defaultValue={dataProducts.description} />
+                            </Col>
+
+                        </Row>
+
 
                     </ModalBody>
                     <ModalFooter>
