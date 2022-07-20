@@ -89,7 +89,7 @@ const ListProduct = () => {
   // Use effect is launch one time when the page load
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_DOMAIN_SERVER}/api/products`)
+      .get(`${process.env.REACT_APP_DOMAIN_SERVER}api/products`)
       .then((response) => {
         setListProducts(response.data.listProducts);
       })
@@ -103,7 +103,7 @@ const ListProduct = () => {
   useEffect(() => {
     // We pass like parameter 1 because 1 has the general status
     axios
-      .get(`${process.env.REACT_APP_DOMAIN_SERVER}/api/processstate/${1}`)
+      .get(`${process.env.REACT_APP_DOMAIN_SERVER}api/processstate/${1}`)
       .then((response) => {
         setListStatus(response.data.listStatus);
       })

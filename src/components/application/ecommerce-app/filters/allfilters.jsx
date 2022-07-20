@@ -16,7 +16,13 @@ const Allfilters = () => {
     // const prices = getMinMaxPrice(data);
     const brands = getBrands(data);
     const colors = getColors(data);
-    const filteredBrand = useSelector(content => content.filters.brand);
+    // const filteredBrand = useSelector(content => content.filters.brand);
+    const filteredBrand = brands;
+    console.log(brands);
+    console.log("oma");
+    console.log(filteredBrand);
+    // console.log("------------");
+
     const dispatch = useDispatch()
 
     const clickBrandHendle = (event, brands) => {

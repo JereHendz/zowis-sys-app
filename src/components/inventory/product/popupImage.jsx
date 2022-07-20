@@ -198,7 +198,7 @@ export default function PopupImage(
 
     function loadProductImages() {
         axios
-            .get(`${process.env.REACT_APP_DOMAIN_SERVER}/api/imagesById/${productId}`)
+            .get(`${process.env.REACT_APP_DOMAIN_SERVER}api/imagesById/${productId}`)
             .then((response) => {
                 setDataImagesProduct(response.data.imagesByProduct);
                 setControlOpenModal(!controlOpenModal);

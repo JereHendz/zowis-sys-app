@@ -82,7 +82,7 @@ const ManagementProductImage = () => {
   // Use effect is launch one time when the page load
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_DOMAIN_SERVER}/api/products`)
+      .get(`${process.env.REACT_APP_DOMAIN_SERVER}api/products`)
       .then((response) => {
         setListProducts(response.data.listProducts);
       })
@@ -96,7 +96,7 @@ const ManagementProductImage = () => {
   useEffect(() => {
     // We pass like parameter 3 because 1 has the image status: visble y no visible
     axios
-      .get(`${process.env.REACT_APP_DOMAIN_SERVER}/api/processstate/${3}`)
+      .get(`${process.env.REACT_APP_DOMAIN_SERVER}api/processstate/${3}`)
       .then((response) => {
         setListStatus(response.data.listStatus);
       })
@@ -104,19 +104,6 @@ const ManagementProductImage = () => {
         console.log(error);
       });
   }, []);
-
-
-  function searchImagesByProduct() {
-    axios
-      .get(`${process.env.REACT_APP_DOMAIN_SERVER}/api/imagesById/${productId}`)
-      .then((response) => {
-        setDataImagesProduct(response.data.imagesByProduct);
-        setSizeArrayImage(response.data.imagesByProduct.length);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
 
 
@@ -159,7 +146,7 @@ const ManagementProductImage = () => {
         setProductId(newvalue.value.id);
         // Search product
         axios
-          .get(`${process.env.REACT_APP_DOMAIN_SERVER}/api/imagesById/${newvalue.value.id}`)
+          .get(`${process.env.REACT_APP_DOMAIN_SERVER}api/imagesById/${newvalue.value.id}`)
           .then((response) => {
             setDataImagesProduct(response.data.imagesByProduct);
             setSizeArrayImage(response.data.imagesByProduct.length);
@@ -276,7 +263,9 @@ const ManagementProductImage = () => {
                           <Column dataField="productName" caption={t('productName')} >
                             <RequiredRule />
                           </Column>
-                          <Column dataField="visibleCustomer" caption={t('visibleCustomer')} >
+                          <Column dataField="visibleCustomerName" caption={t('visibleCustomer')} >
+                          </Column>
+                          <Column dataField="visibleCustomer" caption={t('visibleCustomer')} visible={false} >
                             <RequiredRule />
                           </Column>
                         </DataGrid>

@@ -56,7 +56,6 @@ export const getMinMaxPrice = (products) => {
 
 export const getVisibleproducts = (data, {brand,color, value,sortBy,searchBy}) => {
     console.log(data);
-    console.log("jeremias");
     if (data.length>0) {
         return data.filter(product => {
         

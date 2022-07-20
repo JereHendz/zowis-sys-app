@@ -113,7 +113,7 @@ export default function PopupAddStock(
 
     function loadProducts() {
         axios
-            .get(`${process.env.REACT_APP_DOMAIN_SERVER}/api/products`)
+            .get(`${process.env.REACT_APP_DOMAIN_SERVER}api/products`)
             .then((response) => {
                 setListProducts(response.data.listProducts);
                 setControlOpenModal(!controlOpenModal);

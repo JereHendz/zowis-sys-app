@@ -214,7 +214,7 @@ const ProductCreate = () => {
 
         // Get the sub categories by id category
         axios
-          .get(`${process.env.REACT_APP_DOMAIN_SERVER}/api/subCateByIdCate/${newvalue.value.id}`)
+          .get(`${process.env.REACT_APP_DOMAIN_SERVER}api/subCateByIdCate/${newvalue.value.id}`)
           .then((payload) => {
             // If everything is good, load the array of departments in the Typeahead or select
             setDataSubCategory(payload.data.sub_category);
