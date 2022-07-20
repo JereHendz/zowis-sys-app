@@ -154,7 +154,10 @@ i18n
                     // Product
                     product: "Producto",
                     titleCreateProduct: "Agregar producto",
+                    titleEditProduct: "Editar producto",
+
                     productName: "Nombre del producto",
+                    productCode: "Código de producto",
                     stockLimit: "Límite de existencias",
                     stockProduct: "Existencias",
                     percentageProfit: "Porcentaje de ganancia",
@@ -181,6 +184,18 @@ i18n
                     choosePicture:"Seleccione imágenes",
                     parentProducts: "Productos",
                     titleListProducts: "Lista de productos",
+                    image: "Imagen",
+                    priority:"Prioridad",
+                    visibleCustomer:"Visible para el cliente",
+                    placeHolderSelectProdut:"Seleccione un producto",
+                    errorSelectProduct:"Debe seleccionar un producto, por favor.",
+                    btnSearch:"Buscar",
+                    errorPriority:"Debe ingresar un númer válido",
+                    msgExistImage:"No hay images para este producto",
+                    addStockMsg:"Agregar existencias",
+                    productDiscount:"Descuento del producto",
+
+
 
                     //sales
                     titleSales: "Lista de ventas",
@@ -332,8 +347,11 @@ i18n
 
                     // Product
                     product: "Product",
+                    titleEditProduct: "Edit product",
+
                     titleCreateProduct: "Add product",
                     productName: "Product Name",
+                    productCode: "Product code",
                     stockLimit: "Stock",
                     percentageProfit: "Percentage of profit",
                     barcode: "Barcode",
@@ -380,6 +398,19 @@ i18n
                     warningSaleQuantity: "You must add at least one product",
                     invalidStock: "Insufficient stock",
                     detailSaleTitle: "Sales order detail",
+                    image: "Image",
+                    priority:"Priority",
+                    visibleCustomer:"Visible to the customer",
+                    placeHolderSelectProdut:"Choose a product",
+                    errorSelectProduct:"You must select a product",
+                    btnSearch:"Search",
+                    errorPriority:"You must enter a valid number",
+                    msgExistImage:"There are not images for this product",
+                    addStockMsg:"Add stock",
+                    productDiscount:"Product discount",
+
+
+
                 }
             },
             cn: {

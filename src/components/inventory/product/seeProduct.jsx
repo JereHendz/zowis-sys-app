@@ -225,10 +225,10 @@ const SeeProduct = (props) => {
                       <div className="left-filter">
                         <CardBody className="filter-cards-view animate-chk">
                           <Allfilters />
-                          <Carousal />
-                          <div className="product-filter text-center mt-2">
+                          {/* <Carousal /> */}
+                          {/* <div className="product-filter text-center mt-2">
                             <Media className="img-fluid banner-product m-auto" src={require("../../../assets/images/ecommerce/banner.jpg")} alt="" />
-                          </div>
+                          </div> */}
                         </CardBody>
                       </div>
                     </Card>

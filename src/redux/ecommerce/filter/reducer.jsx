@@ -1,8 +1,8 @@
 import { FILTER_BRAND, FILTER_COLOR, FILTER_PRICE, SEARCH_BY, SORT_BY } from '../../actionTypes'
 
 const filtersReducerDefaultState = {
-    brand: ["Diesel", "Hudson", "Lee"],
-    value: { min: 100, max: 950 },
+    brand: [],
+    value: { min: 1, max: 2000 },
     sortBy: "",
     searchBy: ""
 };

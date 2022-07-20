@@ -43,7 +43,7 @@ export const getColors = (products) => {
 
 export const getMinMaxPrice = (products) => {
     
-    let min = 100, max = 1000;
+    let min = 1, max = 2000;
 
     products.forEach((product, index) => {
         let v = product.price;
@@ -56,7 +56,6 @@ export const getMinMaxPrice = (products) => {
 
 export const getVisibleproducts = (data, {brand,color, value,sortBy,searchBy}) => {
     console.log(data);
-    console.log("jeremias");
     if (data.length>0) {
         return data.filter(product => {
         

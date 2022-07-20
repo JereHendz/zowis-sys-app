@@ -35,6 +35,8 @@ export const MENUITEMS = [
                     { path: `${process.env.PUBLIC_URL}/app/inventory/product/productCreate`, type: 'link', title: 'Crear producto' },
                     { path: `${process.env.PUBLIC_URL}/app/inventory/product/listProduct`, type: 'link', title: 'Listar producto' },
                     { path: `${process.env.PUBLIC_URL}/app/inventory/product/seeProduct`, type: 'link', title: 'Ver productos' },
+                    { path: `${process.env.PUBLIC_URL}/app/inventory/product/managementProductImage`, type: 'link', title: 'Administrar imagenes' },
+
 
                 ]
             },

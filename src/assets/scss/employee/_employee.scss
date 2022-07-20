@@ -132,3 +132,16 @@
     width: 250px;
     height: 270px;
   }
+
+  .Toastify__progress-bar--warning {
+    background: #E91E63 !important;
+    background: lighten($warning-color, 5%) !important;
+}
+
+.Toastify__toast--warning {
+    background: #E91E63 !important;
+    color: #FFFFFF !important;
+    .Toastify__progress-bar {
+      background: #f8bbd0 !important;
+    }
+  }

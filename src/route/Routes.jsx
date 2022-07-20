@@ -187,10 +187,10 @@ import TaskApp from "../components/application/task-app"
 // Contact app
 import ContactApp from "../components/application/contact-app"
 
-// todo-app
+//todo-app
 import Todo from "../components/application/todo-app"
 
-// todo-firebase-app
+//todo-firebase-app
 import TodoFirebase from "../components/application/todo-firebase-app"
 import LeafletMapContain from '../components/map/LeafletMap'
 
@@ -222,8 +222,7 @@ import ListBrands from '../components/brands/listBrands';
 import ProductCreate from '../components/inventory/product/productCreate';
 import ListProduct from '../components/inventory/product/listProduct';
 import SeeProduct from '../components/inventory/product/seeProduct';
-
-
+import ManagementProductImage from '../components/inventory/product/managementProductImage';
 
 //Routes to Brands
 import SalesList from '../components/sales/salesList';
@@ -370,6 +369,8 @@ export const routes = [
         { path: `${process.env.PUBLIC_URL}/app/inventory/product/ProductCreate/:layout`, Component: <ProductCreate /> },
         { path: `${process.env.PUBLIC_URL}/app/inventory/product/ListProduct/:layout`, Component: <ListProduct /> },
         { path: `${process.env.PUBLIC_URL}/app/inventory/product/SeeProduct/:layout`, Component: <SeeProduct /> },
+        { path: `${process.env.PUBLIC_URL}/app/inventory/product/ManagementProductImage/:layout`, Component: <ManagementProductImage /> },
+
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

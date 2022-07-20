@@ -1429,8 +1429,8 @@ export const Bookmark = "Bookmark"
 export const AddNewBookmark = "Add New Bookmark"
 export const Back = "Back"
 export const STEP = 10;
-export const MIN = 100;
-export const MAX = 950;
+export const MIN = 1;
+export const MAX = 2000;
 
 
 

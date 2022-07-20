@@ -10,13 +10,19 @@ const Allfilters = () => {
     const step = STEP;
     const min = MIN;
     const max = MAX;
-    const [values, setValues] = useState([150, 650]);
+    const [values, setValues] = useState([1, 2000]);
 
     const data = useSelector(content => content.data.productItems);
     // const prices = getMinMaxPrice(data);
     const brands = getBrands(data);
     const colors = getColors(data);
-    const filteredBrand = useSelector(content => content.filters.brand);
+    // const filteredBrand = useSelector(content => content.filters.brand);
+    const filteredBrand = brands;
+    console.log(brands);
+    console.log("oma");
+    console.log(filteredBrand);
+    // console.log("------------");
+
     const dispatch = useDispatch()
 
     const clickBrandHendle = (event, brands) => {
@@ -63,7 +69,7 @@ const Allfilters = () => {
                 </div>
             </div>
 
-            <div className="product-filter slider-product">
+            {/* <div className="product-filter slider-product">
                 <h6 className="f-w-600">{Colors}</h6>
                 <div className="color-selector">
                     <ul>
@@ -75,7 +81,7 @@ const Allfilters = () => {
 
                     </ul>
                 </div>
-            </div>
+            </div> */}
 
 
             <div>
@@ -140,13 +146,7 @@ const Allfilters = () => {
                                     boxShadow: "0px 2px 6px #AAA"
                                 }}
                             >
-                                {/* <div
-                                    style={{
-                                        height: "16px",
-                                        width: "5px",
-                                        backgroundColor: isDragged ? "#7366ff" : "#CCC"
-                                    }}
-                                /> */}
+                              
                             </div>
 
                         )}
