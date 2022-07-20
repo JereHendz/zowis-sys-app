@@ -1,843 +1,416 @@
 import React, { useState, Fragment, useEffect } from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
-import axios from 'axios'
-import Lightbox from "react-image-lightbox";
-import { Container, Row, Col, Card, CardHeader, CardBody, Form, Input, Media, TabContent, TabPane, Nav, NavItem, NavLink, Pagination, PaginationItem, PaginationLink, InputGroup, InputGroupText } from 'reactstrap';
-import { All, Images, Videos, Settings, Tools, Previous, Next, PortfolioTitle, Audios } from '../../constant'
+import Breadcrumb from '../../layout/breadcrumb';
+import axios from 'axios';
+import { Table, Button, InputGroup, Input, Container, Row, Col, Card, CardHeader, CardBody, Form, InputGroupText, Tooltip } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
+import { XCircle } from 'react-feather';
+import { classes } from '../../data/layouts';
+import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 
-const Search = () => {
+const CreateSale = () => {
+    // To traslate the words
+    const { t } = useTranslation();
 
-  // To traslate the words
-  const { t } = useTranslation();
-  const [images, setImage] = useState([])
-  const [smallImages, setsmallImages] = useState([])
-  const [activeTab, setActiveTab] = useState('1');
+    //To use navigate function
+    const navigate = useNavigate();
 
-  useEffect(() => {
+    //default layout
+    const defaultLayoutObj = classes.find(item => Object.values(item).pop(1) === 'compact-wrapper');
+    const layout = localStorage.getItem('layout') || Object.keys(defaultLayoutObj).pop();
 
-    axios.get(`${process.env.PUBLIC_URL}/api/image-light.json`).then((response) => {
-      setImage(response.data.src);
-    })
+    // Get the information of the logged user
+    const infoUserLogin = JSON.parse(localStorage.getItem('infoUserLogin'));
 
-    axios.get(`${process.env.PUBLIC_URL}/api/image-big-light.json`).then((response) => {
-      setsmallImages(response.data.src);
-    })
+    //for control search 1->By barcode, 2->By text
+    const [activeTab, setActiveTab] = useState('1');
 
-  }, [])
+    //to contro the tooltip
+    const [tooltipBar, setTooltipBar] = useState(false);
+    const toggleBar = () => setTooltipBar(!tooltipBar);
 
-  const initilindex = { index: 0, isOpen: false }
-  const [photoIndex, setPhotoIndex] = useState(initilindex)
+    const [tooltipText, setTooltipText] = useState(false);
+    const toggleText = () => setTooltipText(!tooltipText);
 
-  const onMovePrev = () => {
-    const prev = (photoIndex.index + images.length - 1) % images.length
-    setPhotoIndex({ ...photoIndex, index: prev })
-  }
-  const onMoveNext = () => {
-    const next = (photoIndex.index + 1) % images.length
-    setPhotoIndex({ ...photoIndex, index: next })
-  }
+    //var to products cart
+    const [cart, setCart] = useState([]);
+    const [busqueda, setBusqueda] = useState('');
+    const [productsBusqueda, setProductsBusqueda] = useState([]);
 
-  return (
-    <Fragment>
-      <Breadcrumb parent="Pages" title="Search Page" />
-      <Container fluid={true} className="search-page">
-        <Row>
-          {smallImages.length > 0 ?
-            <Col sm="12">
-              <Card>
-                <CardHeader className="bg-light-primary">
-                  <Form className="theme-form">
-                    <InputGroup className="m-0">
-                        <InputGroupText className={activeTab === '1' ? 'theme-form' : 'bg-light-primary'} onClick={() => setActiveTab('1')}>
-                            <i className="fa fa-barcode"></i>
-                        </InputGroupText>
-                        <InputGroupText className={activeTab === '2' ? 'theme-form' : 'bg-light-primary'} onClick={() => setActiveTab('2')}>
-                        <i className="icofont icofont-underline"></i>
-                        </InputGroupText>
-                        <Input className="form-control-plaintext" type="search" placeholder={t('searchProduct')} />
-                        <InputGroupText className="btn btn-primary">{t('search')}</InputGroupText>
-                    </InputGroup>
-                  </Form>
-                </CardHeader>
-                <CardBody>
-                  <TabContent activeTab={activeTab}>
-                    <TabPane tabId="1" className="search-links fade show">
-                      <Row>
-                        <Col xl="8" className="box-col-12">
-                          <h6 className="mb-2">{"Search result for 'Pixelstrap'"}</h6>
-                          <div className="info-block"><a href="#javascript">{"https://themeforest.net/user/pixelstrap/portfolio/"}</a>
-                            <h6>{"PixelStrap - Portfolio | ThemeForest"}</h6>
-                            <p>{"2022's Best Selling Creative WP Themes. The #1 Source of Premium WP Themes! ThemeForest 45,000+ WP Themes & Website Templates From $2. Check it Out! "}</p>
-                            <div className="star-ratings">
-                              <ul className="search-info">
-                                <li>{"3 stars"}</li>
-                                <li>{"590 votes"}</li>
-                                <li>{"Theme"}</li>
-                              </ul>
-                            </div>
-                          </div>
-                          <div className="info-block"><a href="#javascript">{"PixelStrap - Portfolio | ThemeForestthemeforest.net › user › "}</a>
-                            <h6>{"PixelStrap - Portfolio | ThemeForest"}</h6>
-                            <p>{"The #1 marketplace for premium website templates, including themes for WordPress, Magento, Drupal, Joomla, and more. Create a website, fast."}</p>
-                            <div className="star-ratings">
-                              <ul className="search-info">
-                                <li>{"3 stars"}</li>
-                                <li>{"590 votes"}</li>
-                                <li>{"Theme"}</li>
-                              </ul>
-                            </div>
-                          </div>
-                          <div className="info-block"><a href="#javascript">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                            <h6>{"Morbi feugiat mauris vel semper fringilla."}</h6>
-                            <p>{"Cuba introduces a IELTS Coaching, TOEFL Coaching, GRE Coaching, GMAT Coaching, SAT Coaching in Surat."}</p>
-                            <div className="star-ratings">
-                              <ul className="search-info">
-                                <li><i className="icofont icofont-ui-rating"></i><i className="icofont icofont-ui-rating"></i><i className="icofont icofont-ui-rating"></i><i className="icofont icofont-ui-rate-blank"></i><i className="icofont icofont-ui-rate-blank"></i></li>
-                                <li>{"3 stars"}</li>
-                                <li>{"590 votes"}</li>
-                                <li>{"Theme"}</li>
-                              </ul>
-                            </div>
-                          </div>
-                          <div className="info-block"><a href="#javascript">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                            <h6>{"Morbi feugiat mauris vel semper fringilla."}</h6>
-                            <p>{"Cuba introduces a IELTS Coaching, TOEFL Coaching, GRE Coaching, GMAT Coaching, SAT Coaching in Surat."}</p>
-                            <div className="star-ratings">
-                              <ul className="search-info">
-                                <li><i className="icofont icofont-ui-rating"></i><i className="icofont icofont-ui-rating"></i><i className="icofont icofont-ui-rating"></i><i className="icofont icofont-ui-rate-blank"></i><i className="icofont icofont-ui-rate-blank"></i></li>
-                                <li>{"3 stars"}</li>
-                                <li>{"590 votes"}</li>
-                                <li>{"Theme"}</li>
-                              </ul>
-                            </div>
-                          </div>
-                        </Col>
-                        <Col xl="4" className="box-col-12 mt-4">
-                          <div className="card o-hidden">
-                            <div className="blog-box blog-shadow"><img className="img-fluid" src={require("../../assets/images/blog/blog.jpg")} alt="" />
-                              <div className="blog-details">
-                                <p>{"25 July 2022"}</p>
-                                <h4>{"Accusamus et iusto odio dignissimos ducimus qui blanditiis."}</h4>
-                                <ul className="blog-social">
-                                  <li><i className="icofont icofont-user"></i>{"Mark Jecno"}</li>
-                                  <li><i className="icofont icofont-thumbs-up"></i>{"02 Hits"}</li>
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="info-block"><a href="#javascript">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                            <h6>{"Pixelstrap Website Templates from       ThemeForest"}                                  </h6>
-                            <p>{"Get 59 pixelstrap website templates on ThemeForest. Buy pixelstrap website templates from $7. All created by our Global Community of independent Web ..."}</p>
-                            <div className="star-ratings">
-                              <ul className="search-info">
-                                <li><i className="icofont icofont-ui-rating"></i><i className="icofont icofont-ui-rating"></i><i className="icofont icofont-ui-rating"></i><i className="icofont icofont-ui-rate-blank"></i><i className="icofont icofont-ui-rate-blank"></i></li>
-                                <li>{"3 stars"}</li>
-                                <li>{"590 votes"}</li>
-                                <li>{"Theme"}</li>
-                              </ul>
-                            </div>
-                          </div>
-                          <div className="info-block"><a href="#javascript">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                            <h6>{"Morbi feugiat mauris vel semper fringilla."}</h6>
-                            <p>{"Cuba introduces a IELTS Coaching, TOEFL Coaching, GRE Coaching, GMAT Coaching, SAT Coaching in Surat."}</p>
-                            <div className="star-ratings">
-                              <ul className="search-info">
-                                <li><i className="icofont icofont-ui-rating"></i><i className="icofont icofont-ui-rating"></i><i className="icofont icofont-ui-rating"></i><i className="icofont icofont-ui-rate-blank"></i><i className="icofont icofont-ui-rate-blank"></i></li>
-                                <li>{"3 stars"}</li>
-                                <li>{"590 votes"}</li>
-                                <li>{"Theme"}</li>
-                              </ul>
-                            </div>
-                          </div>
-                        </Col>
-                        <Col xs="12" className="m-t-30">
-                          <Nav>
-                            <Pagination className="pagination-primary">
-                              <PaginationItem disabled>
-                                <PaginationLink href="#javascript">{Previous}</PaginationLink>
-                              </PaginationItem>
-                              <PaginationItem>
-                                <PaginationLink href="#javascript">{"1"}</PaginationLink>
-                              </PaginationItem>
-                              <PaginationItem active>
-                                <PaginationLink href="#javascript">{"2"}<span className="sr-only">{"(current)"}</span></PaginationLink>
-                              </PaginationItem>
-                              <PaginationItem>
-                                <PaginationLink href="#javascript">{"3"}</PaginationLink>
-                              </PaginationItem>
-                              <PaginationItem>
-                                <PaginationLink href="#javascript">{Next}</PaginationLink>
-                              </PaginationItem>
-                            </Pagination>
-                          </Nav>
-                        </Col>
-                      </Row>
-                    </TabPane>
+    //loading component 
+    const [loading, setLoading] = useState(false);
 
-                    <TabPane tabId="2">
-                      <div>
-                        <h6 className="mb-2">{"About 12,120 results (0.50 seconds)"}</h6>
-                        <div className="my-gallery row gallery-with-description" id="aniimated-thumbnials">
-                          <figure className="col-xl-3 col-sm-6" itemProp="associatedMedia"><a href="#javascript" data-size="1600x950">
-                            <Media
-                              src={require(`../../assets/images/${smallImages[0]}`)}
-                              alt="Gallery"
-                              className="img-thumbnail"
-                              onClick={() =>
-                                setPhotoIndex({ ...photoIndex, index: 0, isOpen: true })
-                              }
-                            />
-                            <div className="caption">
-                              <h4>{PortfolioTitle}</h4>
-                              <p>{"is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy."}</p>
-                            </div></a>
+    const symbol = "$";
 
-                          </figure>
-                          <figure className="col-xl-3 col-sm-6" itemProp="associatedMedia" itemScope=""><a href="#javascript" itemProp="contentUrl" data-size="1600x950">
-                            <Media
-                              src={require(`../../assets/images/${smallImages[1]}`)}
-                              alt="Gallery"
-                              className="img-thumbnail"
-                              onClick={() =>
-                                setPhotoIndex({ ...photoIndex, index: 1, isOpen: true })
-                              }
-                            />
-                            <div className="caption">
-                              <h4>{PortfolioTitle}</h4>
-                              <p>{"is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy."}</p>
-                            </div></a>
+    //define sucursal of sale
+    let idBranchOffice = 1;
 
-                          </figure>
-                          <figure className="col-xl-3 col-sm-6" itemProp="associatedMedia" itemScope=""><a href="#javascript" itemProp="contentUrl" data-size="1600x950">
-                            <Media
-                              src={require(`../../assets/images/${smallImages[2]}`)}
-                              alt="Gallery"
-                              className="img-thumbnail"
-                              onClick={() =>
-                                setPhotoIndex({ ...photoIndex, index: 2, isOpen: true })
-                              }
-                            />
-                            <div className="caption">
-                              <h4>{PortfolioTitle}</h4>
-                              <p>{"is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy."}</p>
-                            </div></a>
+    //define sucursal of sale
+    let idClient = 1;
 
-                          </figure>
-                          <figure className="col-xl-3 col-sm-6" itemProp="associatedMedia" itemScope=""><a href="#javascript" itemProp="contentUrl" data-size="1600x950">
-                            <Media
-                              src={require(`../../assets/images/${smallImages[3]}`)}
-                              alt="Gallery"
-                              className="img-thumbnail"
-                              onClick={() =>
-                                setPhotoIndex({ ...photoIndex, index: 3, isOpen: true })
-                              }
-                            />
-                            <div className="caption">
-                              <h4>{PortfolioTitle}</h4>
-                              <p>{"is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy."}</p>
-                            </div></a>
+    const blurQuantity = idProduct => e => {
+        let newArr = [...cart]; // copying the old datas array
+        newArr.map(v => {
+            if (v.idProduct == idProduct) {
+                var new_quantity = parseInt(e.target.value);
+                if(new_quantity > 0){
+                    if(new_quantity <= v.stock){
+                        v.quantity = parseInt(new_quantity);
+                        v.total = parseFloat((v.quantity * v.price) - (v.quantity * v.price * (v.discount / 100)));
+                    }else{
+                        toast.info(t('invalidStock'));
+                        document.getElementById('quantity'+idProduct).value = v.quantity;
+                    }
+                    
+                }else{
+                    document.getElementById('quantity'+idProduct).value = v.quantity;
+                }
+            }
+        });
 
-                          </figure>
-                          <figure className="col-xl-3 col-sm-6" itemProp="associatedMedia" itemScope=""><a href="#javascript" itemProp="contentUrl" data-size="1600x950">
-                            <Media
-                              src={require(`../../assets/images/${smallImages[4]}`)}
-                              alt="Gallery"
-                              className="img-thumbnail"
-                              onClick={() =>
-                                setPhotoIndex({ ...photoIndex, index: 4, isOpen: true })
-                              }
-                            />
-                            <div className="caption">
-                              <h4>{PortfolioTitle}</h4>
-                              <p>{"is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy."}</p>
-                            </div></a>
+        setCart(newArr);
+    }
 
-                          </figure>
-                          <figure className="col-xl-3 col-sm-6" itemProp="associatedMedia" itemScope=""><a href="#javascript" itemProp="contentUrl" data-size="1600x950">
-                            <Media
-                              src={require(`../../assets/images/${smallImages[5]}`)}
-                              alt="Gallery"
-                              className="img-thumbnail"
-                              onClick={() =>
-                                setPhotoIndex({ ...photoIndex, index: 5, isOpen: true })
-                              }
-                            />
-                            <div className="caption">
-                              <h4>{PortfolioTitle}</h4>
-                              <p>{"is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy."}</p>
-                            </div></a>
+    const incrementQty = (item, quantity) => {
+        let newArr = [...cart]; // copying the old datas array
+        newArr.map(v => {
+            if (v.idProduct == item.idProduct) {
+                if((item.quantity + quantity) <= item.stock){
+                    v.quantity += quantity;
+                    v.total = parseFloat((v.quantity * v.price) - (v.quantity * v.price * (v.discount / 100)));
+                }else{
+                    toast.info(t('invalidStock'));
+                }
+                
+            }
+        });
 
-                          </figure>
-                          <figure className="col-xl-3 col-sm-6" itemProp="associatedMedia" itemScope=""><a href="#javascript" itemProp="contentUrl" data-size="1600x950">
-                            <Media
-                              src={require(`../../assets/images/${smallImages[6]}`)}
-                              alt="Gallery"
-                              className="img-thumbnail"
-                              onClick={() =>
-                                setPhotoIndex({ ...photoIndex, index: 6, isOpen: true })
-                              }
-                            />
-                            <div className="caption">
-                              <h4>{PortfolioTitle}</h4>
-                              <p>{"is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy."}</p>
-                            </div></a>
+        setCart(newArr);
+    }
 
-                          </figure>
-                          <figure className="col-xl-3 col-sm-6" itemProp="associatedMedia" itemScope=""><a href="#javascript" itemProp="contentUrl" data-size="1600x950">
-                            <Media
-                              src={require(`../../assets/images/${smallImages[7]}`)}
-                              alt="Gallery"
-                              className="img-thumbnail"
-                              onClick={() =>
-                                setPhotoIndex({ ...photoIndex, index: 7, isOpen: true })
-                              }
-                            />
-                            <div className="caption">
-                              <h4>{PortfolioTitle}</h4>
-                              <p>{"is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy."}</p>
-                            </div></a>
+    const decrementQuantity = (idProduct, quantity) => {
+        let newArr = [...cart]; // copying the old datas array
+        newArr.map(v => {
+            if (v.idProduct == idProduct) {
+                if(v.quantity > 1){
+                    v.quantity -= quantity;
+                    v.total = parseFloat((v.quantity * v.price) - (v.quantity * v.price * (v.discount / 100)));
+                }
+            }
+        });
 
-                          </figure>
-                        </div>
+        setCart(newArr);
+    }
 
-                      </div>
-                      <div className="info-block">
-                        <Pagination className="pagination-primary">
-                          <PaginationItem disabled>
-                            <PaginationLink href="#javascript">{Previous}</PaginationLink>
-                          </PaginationItem>
-                          <PaginationItem>
-                            <PaginationLink href="#javascript">{"1"}</PaginationLink>
-                          </PaginationItem>
-                          <PaginationItem active>
-                            <PaginationLink href="#javascript">{"2"}</PaginationLink>
-                          </PaginationItem>
-                          <PaginationItem>
-                            <PaginationLink href="#javascript">{"3"}</PaginationLink>
-                          </PaginationItem>
-                          <PaginationItem>
-                            <PaginationLink href="#javascript">{Next}</PaginationLink>
-                          </PaginationItem>
-                        </Pagination>
-                      </div>
-                    </TabPane>
+    const blurDiscount = idProduct => e => {
+        let newArr = [...cart]; // copying the old datas array
+        newArr.map(v => {
+            if (v.idProduct == idProduct) {
+                if(e.target.value >= 0 && e.target.value <= 100){
+                    v.discount = parseInt(e.target.value);
+                }else{
+                    document.getElementById('discount'+idProduct).value = v.discount;
+                }
+            }
+        });
 
-                    <TabPane tabId="3">
-                      <Row>
-                        <Col xl="6">
-                          <h6 className="mb-2">{"About 6,000 results (0.60 seconds)"}</h6>
-                          <Media className="info-block">
-                            <iframe className="me-3" width="200" height="100" src="https://www.youtube.com/embed/CJnfAXlBRTE" title="myFrame"></iframe>
-                            <Media body>
-                              <a href="https://themeforest.net/user/pixelstrap/portfolio">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                              <h6>{"Lorem Ipsum is simply dummy text of the printing and typesetting industry"}</h6>
+        setCart(newArr);
+    }
 
-                              <div className="star-ratings">
-                                <ul className="search-info">
-                                  <li>{"3 stars"}</li>
-                                  <li>{"590 votes"}</li>
-                                  <li>{"Theme"}</li>
-                                </ul>
-                              </div>
-                            </Media>
-                          </Media>
-                          <Media className="info-block">
-                            <iframe className="me-3" width="200" height="100" src="https://www.youtube.com/embed/-L4gEk7cOfk" title="myFrame"></iframe>
-                            <Media body>
-                              <a href="https://themeforest.net/user/pixelstrap/portfolio">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                              <h6>{"Lorem Ipsum is simply dummy text of the printing."}</h6>
+    const incrementDiscount = (item, quantity) => {
+        let newArr = [...cart]; // copying the old datas array
+        newArr.map(v => {
+            if (v.idProduct == item.idProduct) {
+                if(v.discount < 100){
+                    v.discount += quantity;
+                }
+            }
+        });
 
-                              <div className="star-ratings">
-                                <ul className="search-info">
-                                  <li>{"3 stars"}</li>
-                                  <li>{"590 votes"}</li>
-                                  <li>{"Theme"}</li>
-                                </ul>
-                              </div>
-                            </Media>
-                          </Media>
-                          <Media className="info-block">
-                            <iframe className="me-3" width="200" height="100" src="https://www.youtube.com/embed/wpmHZspl4EM" title="myFrame"></iframe>
-                            <Media body>
-                              <a href="https://themeforest.net/user/pixelstrap/portfolio">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                              <h6>{"Morbi eget quam et purus commodo dapibus."}</h6>
+        setCart(newArr);
+    }
 
-                              <div className="star-ratings">
-                                <ul className="search-info">
-                                  <li>{"3 stars"}</li>
-                                  <li>{"590 votes"}</li>
-                                  <li>{"Theme"}</li>
-                                </ul>
-                              </div>
-                            </Media>
-                          </Media>
+    const decrementDiscount = (idProduct, quantity) => {
+        let newArr = [...cart]; // copying the old datas array
+        newArr.map(v => {
+            if (v.idProduct == idProduct) {
+                if(v.discount > 0){
+                    v.discount -= quantity;
+                }
+            }
+        });
 
-                        </Col>
-                        <Col xl="6">
-                          <p className="pb-4">{"About 6,000 results (0.60 seconds)"}</p>
-                          <Media className="info-block">
-                            <iframe className="me-3" width="200" height="100" src="https://www.youtube.com/embed/CJnfAXlBRTE" title="myFrame"></iframe>
-                            <Media body>
-                              <a href="https://themeforest.net/user/pixelstrap/portfolio">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                              <h6>{"Lorem Ipsum is simply dummy text of the printing and typesetting industry"}</h6>
+        setCart(newArr);
+    }
 
-                              <div className="star-ratings">
-                                <ul className="search-info">
-                                  <li>{"3 stars"}</li>
-                                  <li>{"590 votes"}</li>
-                                  <li>{"Theme"}</li>
-                                </ul>
-                              </div>
-                            </Media>
-                          </Media>
-                          <Media className="info-block">
-                            <iframe className="me-3" width="200" height="100" src="https://www.youtube.com/embed/-L4gEk7cOfk" title="myFrame"></iframe>
-                            <Media body>
-                              <a href="https://themeforest.net/user/pixelstrap/portfolio">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                              <h6>{"Lorem Ipsum is simply dummy text of the printing."}</h6>
+    const removefromcart = (idProduct) => {
+        setCart(cart.filter(item => item.idProduct !== idProduct));
+    }
 
-                              <div className="star-ratings">
-                                <ul className="search-info">
-                                  <li>{"3 stars"}</li>
-                                  <li>{"590 votes"}</li>
-                                  <li>{"Theme"}</li>
-                                </ul>
-                              </div>
-                            </Media>
-                          </Media>
-                          <Media className="info-block">
-                            <iframe className="me-3" width="200" height="100" src="https://www.youtube.com/embed/wpmHZspl4EM" title="myFrame"></iframe>
-                            <Media body>
-                              <a href="https://themeforest.net/user/pixelstrap/portfolio">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                              <h6>{"Morbi eget quam et purus commodo dapibus."}</h6>
+    const getDiscountTotal = cartItems => {
+        var discount = 0;
+        var totalDiscount = 0;
+        for (var i = 0; i < cartItems.length; i++) {
+            discount = cartItems[i].quantity * cartItems[i].price * (cartItems[i].discount / 100);
+            totalDiscount += discount;
+        }
+        return totalDiscount;
+    }
 
-                              <div className="star-ratings">
-                                <ul className="search-info">
-                                  <li>{"3 stars"}</li>
-                                  <li>{"590 votes"}</li>
-                                  <li>{"Theme"}</li>
-                                </ul>
-                              </div>
-                            </Media>
-                          </Media>
+    const getCartTotal = cartItems => {
+        var total = 0;
+        var items = 0;
+        for (var i = 0; i < cartItems.length; i++) {
 
-                        </Col>
-                        <Col xl="12" className="m-t-30">
-                          <Nav>
-                            <Pagination className="pagination-primary">
-                              <PaginationItem disabled>
-                                <PaginationLink href="#javascript">{Previous}</PaginationLink>
-                              </PaginationItem>
-                              <PaginationItem>
-                                <PaginationLink href="#javascript">{"1"}</PaginationLink>
-                              </PaginationItem>
-                              <PaginationItem active>
-                                <PaginationLink href="#javascript">{"2"}</PaginationLink>
-                              </PaginationItem>
-                              <PaginationItem>
-                                <PaginationLink href="#javascript">{"3"}</PaginationLink>
-                              </PaginationItem>
-                              <PaginationItem>
-                                <PaginationLink href="#javascript">{Next}</PaginationLink>
-                              </PaginationItem>
-                            </Pagination>
-                          </Nav>
-                        </Col>
-                      </Row>
-                    </TabPane>
+            items = cartItems[i].quantity * cartItems[i].price
+            total += items;
+        }
+        var discount = getDiscountTotal(cartItems);
+        total = total - discount;
+        return total;
+    }
 
-                    <TabPane tabId="4">
-                      < Row>
-                        <Col xl="6">
-                          <h6 className="mb-2">{"About 6,000 results (0.60 seconds)"}</h6>
-                          <Media className="info-block">
-                            <iframe className="me-3" width="200" height="100" src="https://www.youtube.com/embed/CJnfAXlBRTE" title="myFrame"></iframe>
-                            <Media body>
-                              <a href="https://themeforest.net/user/pixelstrap/portfolio">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                              <h6>{"Lorem Ipsum is simply dummy text of the printing and typesetting industry"}</h6>
+    const searchProduct = (ev) => {
+        // Get the list of status only load once time
+        if (busqueda !== '') {
+            setLoading(true);
+            axios
+                .get(`${process.env.REACT_APP_DOMAIN_SERVER}api/searchProduct/${busqueda}/${activeTab}/${idBranchOffice}`)
+                .then((response) => {
+                    setProductsBusqueda(response.data.product);
+                    setLoading(false);
+                })
+                .catch((error) => {
+                    setLoading(false);
+                });
+        }else{
+            setProductsBusqueda([])
+        }
+    }
+    const getUnitTotal = (item) => {
+        var total = (item.price * item.quantity) - (item.price * item.quantity * (item.discount / 100));
+        return total;
+    }
 
-                              <div className="star-ratings">
-                                <ul className="search-info">
-                                  <li>{"3 stars"}</li>
-                                  <li>{"590 votes"}</li>
-                                  <li>{"Theme"}</li>
-                                </ul>
-                              </div>
-                            </Media>
-                          </Media>
-                          <Media className="info-block">
-                            <iframe className="me-3" width="200" height="100" src="https://www.youtube.com/embed/-L4gEk7cOfk" title="myFrame"></iframe>
-                            <Media body>
-                              <a href="https://themeforest.net/user/pixelstrap/portfolio">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                              <h6>{"Lorem Ipsum is simply dummy text of the printing."}</h6>
+    const addProduct = (data) => {
+        let banNoExiste = true;
+        var item = {
+            idProduct: data.id,
+            link: data.link,
+            barcode: data.barcode,
+            nameProduct: data.productName,
+            quantity: 1,
+            stock: parseFloat(data.stock),
+            price: parseFloat(data.unitSalePriceAvg),
+            discount: parseInt(data.productDiscount ? data.productDiscount : 0),
+            total: parseFloat(data.unitSalePriceAvg)
+        };
 
-                              <div className="star-ratings">
-                                <ul className="search-info">
-                                  <li>{"3 stars"}</li>
-                                  <li>{"590 votes"}</li>
-                                  <li>{"Theme"}</li>
-                                </ul>
-                              </div>
-                            </Media>
-                          </Media>
-                          <Media className="info-block">
-                            <iframe className="me-3" width="200" height="100" src="https://www.youtube.com/embed/wpmHZspl4EM" title="myFrame"></iframe>
-                            <Media body>
-                              <a href="https://themeforest.net/user/pixelstrap/portfolio">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                              <h6>{"Morbi eget quam et purus commodo dapibus."}</h6>
+        cart.map(v => {
+            if (v.idProduct == item.idProduct) {
+                incrementQty(item, 1);
+                banNoExiste = false;
+            }
+        });
 
-                              <div className="star-ratings">
-                                <ul className="search-info">
-                                  <li>{"3 stars"}</li>
-                                  <li>{"590 votes"}</li>
-                                  <li>{"Theme"}</li>
-                                </ul>
-                              </div>
-                            </Media>
-                          </Media>
+        if(banNoExiste){
+            setCart([...cart, item]);
+        }
 
-                        </Col>
-                        <Col xl="6">
-                          <p className="pb-4">{"About 6,000 results (0.60 seconds)"}</p>
-                          <Media className="info-block">
-                            <iframe className="me-3" width="200" height="100" src="https://www.youtube.com/embed/CJnfAXlBRTE" title="myFrame"></iframe>
-                            <Media body>
-                              <a href="https://themeforest.net/user/pixelstrap/portfolio">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                              <h6>{"Lorem Ipsum is simply dummy text of the printing and typesetting industry"}</h6>
+        setProductsBusqueda([]);
+        document.getElementById('search').value = '';
+    }
 
-                              <div className="star-ratings">
-                                <ul className="search-info">
-                                  <li>{"3 stars"}</li>
-                                  <li>{"590 votes"}</li>
-                                  <li>{"Theme"}</li>
-                                </ul>
-                              </div>
-                            </Media>
-                          </Media>
-                          <Media className="info-block">
-                            <iframe className="me-3" width="200" height="100" src="https://www.youtube.com/embed/-L4gEk7cOfk" title="myFrame"></iframe>
-                            <Media body>
-                              <a href="https://themeforest.net/user/pixelstrap/portfolio">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                              <h6>{"Lorem Ipsum is simply dummy text of the printing."}</h6>
+    const createSale = () => {
+        let data = {
+            cart: cart,
+            idBranchOffice: idBranchOffice,
+            idClient: idClient,
+            whoCreated: infoUserLogin.id
+        }
+        if(cart.length > 0){
+            setLoading(true);
+            axios.post(`${process.env.REACT_APP_DOMAIN_SERVER}api/sales`, data)
+            .then((response) => {
+                setLoading(false);
+                toast.info(t('successCreated'));
+                navigate(`${process.env.PUBLIC_URL}/app/sales/salesList/${layout}`);
+            })
+            .catch((errors) => {
+                setLoading(false);
+                toast.warning(t('errorSaleCreate'));
+            });
+        }else{
+            toast.warning(t('warningSaleQuantity'));
+        }
+    }
 
-                              <div className="star-ratings">
-                                <ul className="search-info">
-                                  <li>{"3 stars"}</li>
-                                  <li>{"590 votes"}</li>
-                                  <li>{"Theme"}</li>
-                                </ul>
-                              </div>
-                            </Media>
-                          </Media>
-                          <Media className="info-block">
-                            <iframe className="me-3" width="200" height="100" src="https://www.youtube.com/embed/wpmHZspl4EM" title="myFrame"></iframe>
-                            <Media body>
-                              <a href="https://themeforest.net/user/pixelstrap/portfolio">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                              <h6>{"Morbi eget quam et purus commodo dapibus."}</h6>
+    return (
+        <Fragment>
+            <Breadcrumb parent={t('sales')} title={t('titleSalesCreate')} />
+            <Container fluid={true} className="search-page">
+                <Row>
+                    <Col sm="12">
+                        <Card>
+                            <CardHeader className="bg-light-primary">
+                                <Form className="theme-form">
+                                    <InputGroup className="m-0">
+                                        <InputGroupText id="tooltipSaleBar" className={activeTab === '1' ? 'theme-form' : 'bg-light-primary'} onClick={() => setActiveTab('1')}>
+                                            <i className="fa fa-barcode"></i>
+                                        </InputGroupText>
+                                        <Tooltip
+                                            placement="top"
+                                            isOpen={tooltipBar}
+                                            target="tooltipSaleBar"
+                                            toggle={toggleBar}>
+                                            {t('searchTooltipSaleBar')}
+                                        </Tooltip>
+                                        <InputGroupText id="tooltipSaleText" className={activeTab === '2' ? 'theme-form' : 'bg-light-primary'} onClick={() => setActiveTab('2')}>
+                                            <i className="icofont icofont-underline"></i>
+                                        </InputGroupText>
+                                        <Tooltip
+                                            placement="top"
+                                            isOpen={tooltipText}
+                                            target="tooltipSaleText"
+                                            toggle={toggleText}>
+                                            {t('searchTooltipSaleText')}
+                                        </Tooltip>
+                                        {activeTab === '1' ?
+                                            <Input id="search" onBlur={searchProduct} className="form-control-plaintext" type="search" placeholder={t('searchProduct')} onChange={(e) => setBusqueda(e.target.value)} />
+                                            :
+                                            <Input id="search" onKeyUp={searchProduct} className="form-control-plaintext" type="search" placeholder={t('searchProduct')} onChange={(e) => setBusqueda(e.target.value)} />
+                                        }
+                                        <InputGroupText className="btn btn-primary">{t('search')}</InputGroupText>
+                                    </InputGroup>
+                                </Form>
+                            </CardHeader>
+                            <CardBody className="cart">
+                                <div className="order-history table-responsive wishlist">
+                                    {productsBusqueda.length > 0 ?
+                                        <div className="order-history table-responsive wishlist">
+                                            <Table className="table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{t('product')}</th>
+                                                        <th>{t('code')}</th>
+                                                        <th>{t('productName')}</th>
+                                                        <th>{t('stockProduct')}</th>
+                                                        <th>{t('price')}</th>
+                                                        <th>% {t('discount')}</th>
+                                                        <th>{t('actions')}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {productsBusqueda.map((prod, i) => {
+                                                        return (
+                                                            <tr key={i}>
+                                                                <td><img className="img-fluid img-60" src={prod.link ? prod.link : require("../../assets/images/avtar/3.jpg")} alt="" /></td>
+                                                                <td>{prod.barcode}</td>
+                                                                <td>{prod.productName}</td>
+                                                                <td>{prod.stock}</td>
+                                                                <td>{symbol + parseFloat(prod.unitSalePriceAvg).toFixed(2)}</td>
+                                                                <td>{prod.productDiscount ? prod.productDiscount : 0}</td>
+                                                                <td>
+                                                                    <i style={{ cursor: 'pointer' }} className="fa fa-plus-circle fa-2x" onClick={() => addProduct(prod)}></i>
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    })}
+                                                </tbody>
+                                            </Table>
+                                            <br></br><br></br>
+                                        </div>
+                                        :
+                                        ''}
+                                    <Table className="table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>{t('product')}</th>
+                                                <th>{t('code')}</th>
+                                                <th>{t('productName')}</th>
+                                                <th>{t('quantity')}</th>
+                                                <th>{t('price')}</th>
+                                                <th>%{t('discount')}</th>
+                                                <th>{t('total')}</th>
+                                                <th>{t('actions')}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {cart.map((item, index) => {
+                                                return (
+                                                    <tr key={index}>
+                                                        <td><img className="img-fluid img-60" src={item.link ? item.link : require("../../assets/images/avtar/3.jpg")} alt="" /></td>
+                                                        <td>{item.barcode}</td>
+                                                        <td>{item.nameProduct}</td>
+                                                        <td>
+                                                            <fieldset className="qty-box">
+                                                                <div className="input-group">
+                                                                    <span className="input-group-prepend">
+                                                                        <Button className="quantity-left-minus" onClick={() => decrementQuantity(item.idProduct, 1)}>
+                                                                            <i className="fa fa-minus"></i>
+                                                                        </Button>
+                                                                    </span>
+                                                                    <input id={"quantity"+item.idProduct} key={item.quantity} type="text" name="quantity" defaultValue={item.quantity} style={{ textAlign: "center" }} className="form-control input-number" onBlur={blurQuantity(item.idProduct)}/>
+                                                                    <span className="input-group-append">
+                                                                        <Button className="quantity-right-plus" onClick={() => incrementQty(item, 1)}>
+                                                                            <i className="fa fa-plus"></i>
+                                                                        </Button>
+                                                                    </span>
+                                                                </div>
+                                                            </fieldset>
+                                                        </td>
+                                                        <td>{symbol}{item.price.toFixed(2)}</td>
+                                                        <td>
+                                                            <fieldset className="qty-box">
+                                                                <div className="input-group">
+                                                                    <span className="input-group-prepend">
+                                                                        <Button className="quantity-left-minus" onClick={() => decrementDiscount(item.idProduct, 1)}>
+                                                                            <i className="fa fa-minus"></i>
+                                                                        </Button>
+                                                                    </span>
+                                                                    <input id={"discount"+item.idProduct} key={item.discount} type="text" name="discount" defaultValue={item.discount} style={{ textAlign: "center" }} className="form-control input-number" onBlur={blurDiscount(item.idProduct)}/>
+                                                                    <span className="input-group-append">
+                                                                        <Button className="quantity-right-plus" onClick={() => incrementDiscount(item, 1)}>
+                                                                            <i className="fa fa-plus"></i>
+                                                                        </Button>
+                                                                    </span>
+                                                                </div>
+                                                            </fieldset>
+                                                        </td>
+                                                        <td>{symbol} {getUnitTotal(item).toFixed(2)}</td>
+                                                        <td>
+                                                            <a style={{cursor: 'pointer'}} onClick={() => removefromcart(item.idProduct)}><XCircle /></a>
+                                                        </td>
+                                                    </tr>
 
-                              <div className="star-ratings">
-                                <ul className="search-info">
-                                  <li>{"3 stars"}</li>
-                                  <li>{"590 votes"}</li>
-                                  <li>{"Theme"}</li>
-                                </ul>
-                              </div>
-                            </Media>
-                          </Media>
-
-                        </Col>
-                        <Col xl="12" className="m-t-30">
-                          <Nav>
-                            <Pagination className="pagination-primary">
-                              <PaginationItem disabled>
-                                <PaginationLink href="#javascript">{Previous}</PaginationLink>
-                              </PaginationItem>
-                              <PaginationItem>
-                                <PaginationLink href="#javascript">{"1"}</PaginationLink>
-                              </PaginationItem>
-                              <PaginationItem active>
-                                <PaginationLink href="#javascript">{"2"}</PaginationLink>
-                              </PaginationItem>
-                              <PaginationItem>
-                                <PaginationLink href="#javascript">{"3"}</PaginationLink>
-                              </PaginationItem>
-                              <PaginationItem>
-                                <PaginationLink href="#javascript">{Next}</PaginationLink>
-                              </PaginationItem>
-                            </Pagination>
-                          </Nav>
-                        </Col>
-                      </Row>
-                    </TabPane>
-
-                    <TabPane tabId="5">
-                      <Row>
-                        <Col xl="6">
-                          <h6 className="mb-2">{"About 6,000 results (0.60 seconds)"}</h6>
-                          <Media className="info-block">
-                            <iframe className="me-3" width="200" height="100" src="https://www.youtube.com/embed/CJnfAXlBRTE" title="myFrame"></iframe>
-                            <Media body>
-                              <a href="https://themeforest.net/user/pixelstrap/portfolio">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                              <h6>{"Lorem Ipsum is simply dummy text of the printing and typesetting industry"}</h6>
-
-                              <div className="star-ratings">
-                                <ul className="search-info">
-                                  <li>{"3 stars"}</li>
-                                  <li>{"590 votes"}</li>
-                                  <li>{"Theme"}</li>
-                                </ul>
-                              </div>
-                            </Media>
-                          </Media>
-                          <Media className="info-block">
-                            <iframe className="me-3" width="200" height="100" src="https://www.youtube.com/embed/-L4gEk7cOfk" title="myFrame"></iframe>
-                            <Media body>
-                              <a href="https://themeforest.net/user/pixelstrap/portfolio">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                              <h6>{"Lorem Ipsum is simply dummy text of the printing."}</h6>
-
-                              <div className="star-ratings">
-                                <ul className="search-info">
-                                  <li>{"3 stars"}</li>
-                                  <li>{"590 votes"}</li>
-                                  <li>{"Theme"}</li>
-                                </ul>
-                              </div>
-                            </Media>
-                          </Media>
-                          <Media className="info-block">
-                            <iframe className="me-3" width="200" height="100" src="https://www.youtube.com/embed/wpmHZspl4EM" title="myFrame"></iframe>
-                            <Media body>
-                              <a href="https://themeforest.net/user/pixelstrap/portfolio">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                              <h6>{"Morbi eget quam et purus commodo dapibus."}</h6>
-
-                              <div className="star-ratings">
-                                <ul className="search-info">
-                                  <li>{"3 stars"}</li>
-                                  <li>{"590 votes"}</li>
-                                  <li>{"Theme"}</li>
-                                </ul>
-                              </div>
-                            </Media>
-                          </Media>
-
-                        </Col>
-                        <Col xl="6">
-                          <p className="pb-4">{"About 6,000 results (0.60 seconds)"}</p>
-                          <Media className="info-block">
-                            <iframe className="me-3" width="200" height="100" src="https://www.youtube.com/embed/CJnfAXlBRTE" title="myFrame"></iframe>
-                            <Media body>
-                              <a href="https://themeforest.net/user/pixelstrap/portfolio">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                              <h6>{"Lorem Ipsum is simply dummy text of the printing and typesetting industry"}</h6>
-
-                              <div className="star-ratings">
-                                <ul className="search-info">
-                                  <li>{"3 stars"}</li>
-                                  <li>{"590 votes"}</li>
-                                  <li>{"Theme"}</li>
-                                </ul>
-                              </div>
-                            </Media>
-                          </Media>
-                          <Media className="info-block">
-                            <iframe className="me-3" width="200" height="100" src="https://www.youtube.com/embed/-L4gEk7cOfk" title="myFrame"></iframe>
-                            <Media body>
-                              <a href="https://themeforest.net/user/pixelstrap/portfolio">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                              <h6>{"Lorem Ipsum is simply dummy text of the printing."}</h6>
-
-                              <div className="star-ratings">
-                                <ul className="search-info">
-                                  <li>{"3 stars"}</li>
-                                  <li>{"590 votes"}</li>
-                                  <li>{"Theme"}</li>
-                                </ul>
-                              </div>
-                            </Media>
-                          </Media>
-                          <Media className="info-block">
-                            <iframe className="me-3" width="200" height="100" src="https://www.youtube.com/embed/wpmHZspl4EM" title="myFrame"></iframe>
-                            <Media body>
-                              <a href="https://themeforest.net/user/pixelstrap/portfolio">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                              <h6>{"Morbi eget quam et purus commodo dapibus."}</h6>
-
-                              <div className="star-ratings">
-                                <ul className="search-info">
-                                  <li>{"3 stars"}</li>
-                                  <li>{"590 votes"}</li>
-                                  <li>{"Theme"}</li>
-                                </ul>
-                              </div>
-                            </Media>
-                          </Media>
-
-                        </Col>
-                        <Col xl="12" className="m-t-30">
-                          <Nav>
-                            <Pagination className="pagination-primary">
-                              <PaginationItem disabled>
-                                <PaginationLink href="#javascript">{Previous}</PaginationLink>
-                              </PaginationItem>
-                              <PaginationItem>
-                                <PaginationLink href="#javascript">{"1"}</PaginationLink>
-                              </PaginationItem>
-                              <PaginationItem active>
-                                <PaginationLink href="#javascript">{"2"}</PaginationLink>
-                              </PaginationItem>
-                              <PaginationItem>
-                                <PaginationLink href="#javascript">{"3"}</PaginationLink>
-                              </PaginationItem>
-                              <PaginationItem>
-                                <PaginationLink href="#javascript">{Next}</PaginationLink>
-                              </PaginationItem>
-                            </Pagination>
-                          </Nav>
-                        </Col>
-                      </Row>
-                    </TabPane>
-
-                    <TabPane tabId="6">
-                      <Row>
-                        <Col xl="6">
-                          <h6 className="mb-2">{"About 6,000 results (0.60 seconds)"}</h6>
-                          <Media className="info-block">
-                            <iframe className="me-3" width="200" height="100" src="https://www.youtube.com/embed/CJnfAXlBRTE" title="myFrame"></iframe>
-                            <Media body>
-                              <a href="https://themeforest.net/user/pixelstrap/portfolio">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                              <h6>{"Lorem Ipsum is simply dummy text of the printing and typesetting industry"}</h6>
-
-                              <div className="star-ratings">
-                                <ul className="search-info">
-                                  <li>{"3 stars"}</li>
-                                  <li>{"590 votes"}</li>
-                                  <li>{"Theme"}</li>
-                                </ul>
-                              </div>
-                            </Media>
-                          </Media>
-                          <Media className="info-block">
-                            <iframe className="me-3" width="200" height="100" src="https://www.youtube.com/embed/-L4gEk7cOfk" title="myFrame"></iframe>
-                            <Media body>
-                              <a href="https://themeforest.net/user/pixelstrap/portfolio">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                              <h6>{"Lorem Ipsum is simply dummy text of the printing."}</h6>
-
-                              <div className="star-ratings">
-                                <ul className="search-info">
-                                  <li>{"3 stars"}</li>
-                                  <li>{"590 votes"}</li>
-                                  <li>{"Theme"}</li>
-                                </ul>
-                              </div>
-                            </Media>
-                          </Media>
-                          <Media className="info-block">
-                            <iframe className="me-3" width="200" height="100" src="https://www.youtube.com/embed/wpmHZspl4EM" title="myFrame"></iframe>
-                            <Media body>
-                              <a href="https://themeforest.net/user/pixelstrap/portfolio">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                              <h6>{"Morbi eget quam et purus commodo dapibus."}</h6>
-
-                              <div className="star-ratings">
-                                <ul className="search-info">
-                                  <li>{"3 stars"}</li>
-                                  <li>{"590 votes"}</li>
-                                  <li>{"Theme"}</li>
-                                </ul>
-                              </div>
-                            </Media>
-                          </Media>
-
-                        </Col>
-                        <Col xl="6">
-                          <p className="pb-4">{"About 6,000 results (0.60 seconds)"}</p>
-                          <Media className="info-block">
-                            <iframe className="me-3" width="200" height="100" src="https://www.youtube.com/embed/CJnfAXlBRTE" title="myFrame"></iframe>
-                            <Media body>
-                              <a href="https://themeforest.net/user/pixelstrap/portfolio">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                              <h6>{"Lorem Ipsum is simply dummy text of the printing and typesetting industry"}</h6>
-
-                              <div className="star-ratings">
-                                <ul className="search-info">
-                                  <li>{"3 stars"}</li>
-                                  <li>{"590 votes"}</li>
-                                  <li>{"Theme"}</li>
-                                </ul>
-                              </div>
-                            </Media>
-                          </Media>
-                          <Media className="info-block">
-                            <iframe className="me-3" width="200" height="100" src="https://www.youtube.com/embed/-L4gEk7cOfk" title="myFrame"></iframe>
-                            <Media body>
-                              <a href="https://themeforest.net/user/pixelstrap/portfolio">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                              <h6>{"Lorem Ipsum is simply dummy text of the printing."}</h6>
-
-                              <div className="star-ratings">
-                                <ul className="search-info">
-                                  <li>{"3 stars"}</li>
-                                  <li>{"590 votes"}</li>
-                                  <li>{"Theme"}</li>
-                                </ul>
-                              </div>
-                            </Media>
-                          </Media>
-                          <Media className="info-block">
-                            <iframe className="me-3" width="200" height="100" src="https://www.youtube.com/embed/wpmHZspl4EM" title="myFrame"></iframe>
-                            <Media body>
-                              <a href="https://themeforest.net/user/pixelstrap/portfolio">{"https://themeforest.net/user/pixelstrap/portfolio"}</a>
-                              <h6>{"Morbi eget quam et purus commodo dapibus."}</h6>
-
-                              <div className="star-ratings">
-                                <ul className="search-info">
-                                  <li>{"3 stars"}</li>
-                                  <li>{"590 votes"}</li>
-                                  <li>{"Theme"}</li>
-                                </ul>
-                              </div>
-                            </Media>
-                          </Media>
-
-                        </Col>
-                        <Col xl="12" className="m-t-30">
-                          <Nav>
-                            <Pagination className="pagination-primary">
-                              <PaginationItem disabled>
-                                <PaginationLink href="#javascript">{Previous}</PaginationLink>
-                              </PaginationItem>
-                              <PaginationItem>
-                                <PaginationLink href="#javascript">{"1"}</PaginationLink>
-                              </PaginationItem>
-                              <PaginationItem active>
-                                <PaginationLink href="#javascript">{"2"}</PaginationLink>
-                              </PaginationItem>
-                              <PaginationItem>
-                                <PaginationLink href="#javascript">{"3"}</PaginationLink>
-                              </PaginationItem>
-                              <PaginationItem>
-                                <PaginationLink href="#javascript">{Next}</PaginationLink>
-                              </PaginationItem>
-                            </Pagination>
-                          </Nav>
-                        </Col>
-                      </Row>
-                    </TabPane>
-                  </TabContent>
-                </CardBody>
-              </Card>
-            </Col>
-            : ""}
-        </Row>
-      </Container>
-      {photoIndex.isOpen && (
-        <Lightbox
-          mainSrc={require(`../../assets/images/${images[photoIndex.index]}`)}
-          nextSrc={require(`../../assets/images/${images[(photoIndex.index + 1) % images.length]}`)}
-          prevSrc={require(`../../assets/images/${images[(photoIndex.index + images.length - 1) % images.length]}`)}
-          imageTitle={photoIndex.index + 1 + "/" + images.length}
-          onCloseRequest={() => setPhotoIndex({ ...photoIndex, isOpen: false })}
-          onMovePrevRequest={onMovePrev}
-          onMoveNextRequest={onMoveNext}
-        />
-      )}
-    </Fragment>
-  );
+                                                )
+                                            })}
+                                            <tr>
+                                                <td colSpan="5" className="text-start">
+                                                    <Button onClick={createSale}className="btn btn-primary cart-btn-transform text-uppercase">{t('pay')}</Button>
+                                                </td>
+                                                <td className="total-amount">
+                                                    <h6 className="m-0 text-end" style={{color: '#909090'}}><span className="f-w-600">{t("discount")} :</span></h6>
+                                                    <h6 className="m-0 text-end"><span className="f-w-600">{t("total")} :</span></h6>
+                                                </td>
+                                                <td>
+                                                    <h6 className="mt-2 mb-0" style={{color: '#909090'}}><b><span>{symbol}{getDiscountTotal(cart).toFixed(2)}</span></b></h6>
+                                                    <h5><b><span>{symbol}{getCartTotal(cart).toFixed(2)}</span></b></h5>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </Table>
+                                </div>
+                                <div className={loading ? 'loader-wrapper back' : 'loader-wrapper back loderhide'}><div className="loader-index">
+                                    <span></span></div>
+                                </div>
+                            </CardBody>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
+        </Fragment>
+    );
 }
 
-export default Search;
+export default CreateSale;

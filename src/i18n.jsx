@@ -198,7 +198,9 @@ i18n
                     searchTooltipSaleBar: 'Búsqueda por código de barra',
                     searchTooltipSaleText: 'Búsqueda por texto',
                     totalPay: "Total a pagar",
-
+                    warningSaleQuantity: "Debe agregar al menos un producto",
+                    invalidStock: "Existencias insuficientes",
+                    detailSaleTitle: "Detalle de la orden de venta",
                 }
             },
             en: {
@@ -375,7 +377,9 @@ i18n
                     searchTooltipSaleBar: 'Search by barcode',
                     searchTooltipSaleText: 'Search by text',
                     totalPay: "Total to pay",
-
+                    warningSaleQuantity: "You must add at least one product",
+                    invalidStock: "Insufficient stock",
+                    detailSaleTitle: "Sales order detail",
                 }
             },
             cn: {

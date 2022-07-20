@@ -3,7 +3,7 @@ import Breadcrumb from "../../layout/breadcrumb";
 import { Container, Row, Col, Card, CardHeader, Table, CardBody, Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import axios from "axios";
 import 'devextreme/dist/css/dx.material.teal.light.css';
-// import PopupSale from "./popupSale";
+import PopupDeatilSale from "./popupDetailSale";
 import DataGrid, { Column, Editing, Popup, Paging, Lookup, Form, SearchPanel, Scrolling, Pager, Export, HeaderFilter, RequiredRule } from 'devextreme-react/data-grid';
 import 'devextreme-react/text-area';
 import { useTranslation } from 'react-i18next';
@@ -35,6 +35,11 @@ const SalesList = () => {
 
     // To get the list of status
     const [listStatus, setListStatus] = useState([]);
+
+    //modal data
+    const [controlModal, setControlModal] = useState(false);
+    const [saleData, setSaleData] = useState([]);
+
 
     // Use effect is launch one time when the page load
     useEffect(() => {
@@ -75,9 +80,9 @@ const SalesList = () => {
         navigate(`${process.env.PUBLIC_URL}/app/sales/createSale/${layout}`);
     };
 
-    const editSale = (data) => {
-        let id_venta = data.id;
-        navigate(`${process.env.PUBLIC_URL}/app/sales/editSale/${layout}`, {id_venta: id_venta});
+    const editSale = (e) => {
+        setSaleData(e.data);
+        setControlModal(!controlModal);
     };
 
     const getEmploye = (item) => {
@@ -97,6 +102,11 @@ const SalesList = () => {
                         <Card>
                             <CardBody>
                                 <Row >
+                                    {/* Popup */}
+                                    <PopupDeatilSale
+                                    controlModal={controlModal} setControlModal={setControlModal}
+                                    saleData={saleData} setSaleData={setSaleData}
+                                    />
                                     <Col sm="12" lg="12" xl="12">
                                         <div className="table-responsive">
                                             <div id="data-grid-demo" className="table-primary">
